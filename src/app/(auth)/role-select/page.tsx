@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { ChevronLeft, Plane, Home, Users } from "lucide-react";
+import { useAuthStore } from "@/lib/store/auth";
 import { useSignupStore } from "@/lib/store/signup";
 import type { Role } from "@/lib/types";
 import { cn } from "@/lib/utils";
@@ -48,6 +49,7 @@ const roles: RoleCard[] = [
 export default function RoleSelectPage() {
   const router = useRouter();
   const setAccount = useSignupStore((s) => s.setAccount);
+  const setRole = useAuthStore((s) => s.setRole);
 
   return (
     <div className="relative min-h-dvh overflow-hidden bg-student px-4 pb-10 pt-[59px]">
@@ -74,6 +76,7 @@ export default function RoleSelectPage() {
           <button
             key={role}
             onClick={() => {
+              setRole(role);
               setAccount({ role });
               router.push("/signup/name");
             }}
