@@ -55,8 +55,10 @@ export default function SchoolDetailPage() {
           alt={school.name}
           className="size-full object-cover"
         />
-        {/* gradient */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-bg" />
+        {/* top gradient for status bar / chrome buttons */}
+        <div className="pointer-events-none absolute inset-x-0 top-0 h-[120px] bg-gradient-to-b from-black/45 to-transparent" />
+        {/* bottom gradient so white title stays readable on any theme */}
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-[160px] bg-gradient-to-t from-black/75 via-black/30 to-transparent" />
         {/* status bar on top of image */}
         <div className="absolute inset-x-0 top-0">
           <StatusBar color="text-white" />
@@ -101,11 +103,11 @@ export default function SchoolDetailPage() {
           </span>
         </div>
         {/* title over image */}
-        <div className="absolute inset-x-0 bottom-4 px-4">
-          <h1 className="text-[28px] font-bold leading-[32px] text-white">
+        <div className="absolute inset-x-0 bottom-4 px-4 [text-shadow:_0_1px_4px_rgb(0_0_0_/_0.55)]">
+          <h1 className="text-[28px] font-bold leading-[32px] text-white drop-shadow-md">
             {school.name}
           </h1>
-          <div className="mt-2 flex items-center gap-1.5 text-[13px] text-white/80">
+          <div className="mt-2 flex items-center gap-1.5 text-[13px] text-white/90">
             <MapPin size={14} />
             {school.city}, {school.country}
           </div>

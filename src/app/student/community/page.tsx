@@ -1,10 +1,5 @@
-import { ComingSoon } from "@/components/shared/coming-soon";
+import { CommunityFeed } from "@/components/community/feed";
 
 export default function StudentCommunityPage() {
-  return (
-    <ComingSoon
-      title="Community"
-      description="Connect with other exchange students around the world."
-    />
-  );
+  return <CommunityFeed view="student" />;
 }

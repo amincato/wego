@@ -1,12 +1,15 @@
 "use client";
 
+import { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import {
-  Globe,
-  CalendarDays,
   Cake,
-  Pencil,
+  ChevronLeft,
+  ChevronRight,
+  Flag,
   LogOut,
+  MapPin,
+  Pencil,
   Play,
   Settings,
 } from "lucide-react";
@@ -31,7 +34,13 @@ type StudentProfileRow =
   Database["public"]["Tables"]["student_profiles"]["Row"];
 
 const FALLBACK_PHOTO =
-  "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=800&q=80";
+  "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=1200&q=80";
+
+/** Matches the Figma spec for 2175:20601 (profile/detail). */
+const HERO_HEIGHT = 600;
+/** Gradient reaches the background color at the bottom of the hero. */
+const HERO_GRADIENT =
+  "linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0) 45%, rgba(0,0,0,0.15) 58%, var(--bg) 100%)";
 
 export function StudentProfileClient({
   profile,
@@ -44,9 +53,12 @@ export function StudentProfileClient({
   const { activeView, setActiveView } = useAuthStore();
   const role = profile.role;
 
+  // Freeze "now" at mount so the age computation stays pure across renders
+  // (keeps React 19 purity linter happy and avoids hydration drift).
+  const [nowMs] = useState(() => Date.now());
   const age = studentProfile?.birthday
     ? Math.floor(
-        (Date.now() - new Date(studentProfile.birthday).getTime()) /
+        (nowMs - new Date(studentProfile.birthday).getTime()) /
           (365.25 * 24 * 60 * 60 * 1000),
       )
     : null;
@@ -63,6 +75,27 @@ export function StudentProfileClient({
   const heroImages = [heroPhoto, ...gallery].slice(0, 5);
 
   const mobilityMonths = studentProfile?.mobility_duration_months;
+  const fullName = `${profile.first_name} ${profile.last_name}`.trim();
+  const nativeLang = languages.find((l) => l.level === "native") ?? languages[0];
+  const nativeLangLabel = nativeLang
+    ? LANGUAGE_META[nativeLang.code]?.label
+    : null;
+  const nativeCountry = nativeLang ? COUNTRY_BY_LANG[nativeLang.code] : null;
+
+  const scrollerRef = useRef<HTMLDivElement>(null);
+  const [slide, setSlide] = useState(0);
+  const onScroll = () => {
+    const el = scrollerRef.current;
+    if (!el) return;
+    const idx = Math.round(el.scrollLeft / el.clientWidth);
+    if (idx !== slide) setSlide(idx);
+  };
+  const nextSlide = () => {
+    const el = scrollerRef.current;
+    if (!el) return;
+    const next = Math.min(heroImages.length - 1, slide + 1);
+    el.scrollTo({ left: next * el.clientWidth, behavior: "smooth" });
+  };
 
   const signOut = async () => {
     const supabase = createClient();
@@ -74,126 +107,207 @@ export function StudentProfileClient({
 
   return (
     <div className="min-h-dvh bg-bg text-fg">
-      <StatusBar />
+      {/* ---------- HERO ---------- */}
+      <div
+        className="relative w-full overflow-hidden"
+        style={{ height: HERO_HEIGHT }}
+      >
+        {/* Image carousel */}
+        <div
+          ref={scrollerRef}
+          onScroll={onScroll}
+          className="flex size-full snap-x snap-mandatory overflow-x-auto no-scrollbar"
+        >
+          {heroImages.map((src, i) => (
+            <div
+              key={i}
+              className="relative h-full w-full shrink-0 snap-center"
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={src}
+                alt={fullName}
+                className="size-full object-cover"
+              />
+              {/* Gradient that fades into the theme background */}
+              <div
+                aria-hidden
+                className="pointer-events-none absolute inset-0"
+                style={{ background: HERO_GRADIENT }}
+              />
+            </div>
+          ))}
+        </div>
 
-      {/* Hero photo */}
-      <div className="relative h-[430px] w-full overflow-hidden">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={heroImages[0]}
-          alt={profile.first_name}
-          className="absolute inset-0 size-full object-cover"
-        />
+        {/* Top chrome (status bar + back + edit) */}
+        <div className="absolute inset-x-0 top-0">
+          <StatusBar color="text-white" />
+        </div>
+
+        <button
+          onClick={() => router.back()}
+          aria-label="Back"
+          className="absolute left-4 top-[62px] flex size-[35px] items-center justify-center rounded-full bg-black/40 text-white backdrop-blur-sm transition active:scale-95"
+        >
+          <ChevronLeft size={20} />
+        </button>
         <button
           onClick={() => router.push("/student/profile/edit")}
           aria-label="Edit profile"
-          className="absolute right-4 top-[54px] flex size-[35px] items-center justify-center rounded-full bg-bg/95 text-fg shadow-md transition active:scale-95"
+          className="absolute right-4 top-[62px] flex size-[35px] items-center justify-center rounded-full bg-black/40 text-white backdrop-blur-sm transition active:scale-95"
         >
           <Pencil size={16} />
         </button>
+
+        {/* Carousel next arrow (only if more slides remain) */}
+        {slide < heroImages.length - 1 && heroImages.length > 1 && (
+          <button
+            type="button"
+            onClick={nextSlide}
+            aria-label="Next photo"
+            className="absolute right-2 top-[45%] flex size-[45px] items-center justify-center rounded-full bg-black/30 text-white backdrop-blur-sm transition active:scale-95"
+          >
+            <ChevronRight size={22} />
+          </button>
+        )}
+
+        {/* Dots */}
         {heroImages.length > 1 && (
-          <div className="absolute left-1/2 top-[395px] flex -translate-x-1/2 items-center gap-[5px]">
-            <span className="h-[5px] w-5 rounded-full bg-white/80" />
-            {heroImages.slice(1).map((_, i) => (
-              <span key={i} className="size-[5px] rounded-full bg-white/80" />
+          <div className="absolute left-1/2 top-[360px] flex -translate-x-1/2 items-center gap-[5px]">
+            {heroImages.map((_, i) => (
+              <span
+                key={i}
+                className={cn(
+                  "h-[5px] rounded-full transition-all",
+                  i === slide ? "w-5 bg-white" : "w-[5px] bg-white/70",
+                )}
+              />
             ))}
           </div>
         )}
-      </div>
 
-      {/* Name */}
-      <h1 className="h-title px-4 pt-[10px] text-fg">
-        {profile.first_name} {profile.last_name}
-      </h1>
+        {/* Overlay info (name + meta chips + language pills) */}
+        <div className="absolute inset-x-0 bottom-0 px-4 pb-3 [text-shadow:_0_1px_4px_rgb(0_0_0_/_0.35)]">
+          <h1 className="text-[28px] font-bold leading-[42px] text-fg">
+            {fullName}
+            {age !== null && <span>, {age}</span>}
+          </h1>
 
-      {/* Info rows */}
-      <div className="mt-1 flex flex-col gap-1 px-4">
-        {studentProfile?.city && (
-          <InfoRow
-            icon={<Globe size={16} />}
-            label={studentProfile.city}
-          />
-        )}
-        {mobilityMonths != null && (
-          <InfoRow
-            icon={<CalendarDays size={16} />}
-            label={`Mobility ${mobilityMonths} months`}
-          />
-        )}
-        {age !== null && (
-          <InfoRow icon={<Cake size={16} />} label={`${age} years old`} />
-        )}
-      </div>
-
-      {/* Language chips */}
-      {languages.length > 0 && (
-        <div className="mt-4 flex flex-wrap gap-2 px-4">
-          {languages.map((l) => {
-            const meta = LANGUAGE_META[l.code];
-            if (!meta) return null;
-            return (
-              <span
-                key={l.code}
-                className="inline-flex items-center gap-2 rounded-full bg-chip px-3 py-[6px] shadow-[0_0_1px_0_rgba(0,0,0,0.15)]"
-              >
-                <span className="text-[18px] leading-none">{meta.flag}</span>
-                <span className="t-body-strong text-fg">
-                  {LEVEL_LABEL[l.level]}
-                </span>
-              </span>
-            );
-          })}
-        </div>
-      )}
-
-      <hr className="mx-4 my-5 border-t border-divider" />
-
-      {/* Bio */}
-      {studentProfile?.bio && (
-        <p className="px-4 text-[16px] font-medium leading-[24px] text-fg">
-          {studentProfile.bio}
-        </p>
-      )}
-
-      {/* Presentation video */}
-      <section className="mt-6 px-4">
-        <p className="t-label">PRESENTATION VIDEO</p>
-        {studentProfile?.video_url ? (
-          <video
-            src={studentProfile.video_url}
-            controls
-            className="mt-3 aspect-[361/432] w-full rounded-[22px] object-cover"
-          />
-        ) : (
-          <div className="mt-3 flex aspect-[361/432] w-full items-center justify-center rounded-[22px] bg-chip">
-            <div className="flex size-14 items-center justify-center rounded-full bg-bg/90 shadow">
-              <Play size={22} className="ml-0.5 text-fg" fill="currentColor" />
+          <div className="mt-[13px] flex flex-col gap-[7px]">
+            {mobilityMonths != null && (
+              <MetaChip
+                icon={<Cake size={13} strokeWidth={2.2} />}
+                label={`Mobility: ${mobilityMonths} months`}
+              />
+            )}
+            <div className="flex flex-wrap gap-[7px]">
+              {studentProfile?.city && (
+                <MetaChip
+                  icon={<MapPin size={13} strokeWidth={2.2} />}
+                  label={
+                    nativeCountry
+                      ? `${studentProfile.city}, ${nativeCountry}`
+                      : studentProfile.city
+                  }
+                />
+              )}
+              {nativeLangLabel && (
+                <MetaChip
+                  icon={<Flag size={13} strokeWidth={2.2} />}
+                  label={nativeLangLabel}
+                />
+              )}
             </div>
           </div>
-        )}
+
+          {languages.length > 0 && (
+            <div className="mt-[13px] flex flex-wrap gap-2">
+              {languages.map((l) => {
+                const meta = LANGUAGE_META[l.code];
+                if (!meta) return null;
+                return (
+                  <span
+                    key={l.code}
+                    className="inline-flex h-9 items-center gap-2 rounded-full bg-chip px-3 py-1.5 text-[13px] font-medium text-fg ring-1 ring-divider [text-shadow:none]"
+                  >
+                    <span className="text-[18px] leading-none">
+                      {meta.flag}
+                    </span>
+                    {LEVEL_LABEL[l.level]}
+                  </span>
+                );
+              })}
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* ---------- ABOUT ---------- */}
+      {studentProfile?.bio && (
+        <section className="px-4 pt-4">
+          <h2 className="text-[19px] font-bold leading-[25px] text-family">
+            About
+          </h2>
+          <p className="mt-3 whitespace-pre-wrap text-[16px] font-medium leading-[24px] text-fg">
+            {studentProfile.bio}
+          </p>
+        </section>
+      )}
+
+      {/* ---------- PRESENTATION VIDEO ---------- */}
+      <section className="mt-7 px-4">
+        <h2 className="text-[19px] font-bold leading-[25px] text-family">
+          Presentation video
+        </h2>
+        <div className="relative mt-3 aspect-[361/432] w-full overflow-hidden rounded-[22px] bg-chip">
+          {studentProfile?.video_url ? (
+            <video
+              src={studentProfile.video_url}
+              controls
+              className="size-full object-cover"
+            />
+          ) : (
+            <div className="size-full" />
+          )}
+          {!studentProfile?.video_url && (
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="flex size-[60px] items-center justify-center rounded-full bg-bg/90 shadow-lg">
+                <Play
+                  size={24}
+                  className="ml-0.5 text-fg"
+                  fill="currentColor"
+                />
+              </div>
+            </div>
+          )}
+        </div>
       </section>
 
-      {/* Hobbies */}
+      {/* ---------- HOBBIES ---------- */}
       {hobbies.length > 0 && (
-        <section className="mt-6 px-4">
-          <p className="t-label">HOBBIES &amp; FREE TIME</p>
-          <div className="mt-3 flex flex-wrap gap-2">
+        <section className="mt-7 px-4">
+          <h2 className="text-[19px] font-bold leading-[25px] text-family">
+            Hobbies &amp; free time
+          </h2>
+          <div className="mt-3 flex flex-wrap gap-[9px]">
             {hobbies.map((h) => (
               <span
                 key={h.slug}
-                className="inline-flex items-center gap-[6px] rounded-full bg-chip px-[10px] py-[5px] shadow-[0_0_1px_0_rgba(0,0,0,0.15)]"
+                className="inline-flex h-9 items-center gap-1 rounded-full bg-chip px-[10px] py-[5px] text-[14px] font-medium text-fg ring-1 ring-divider"
               >
-                <span className="text-[16px] leading-none">{h.emoji}</span>
-                <span className="t-body-strong text-fg">{h.label}</span>
+                <span className="text-[18px] leading-none">{h.emoji}</span>
+                {h.label}
               </span>
             ))}
           </div>
         </section>
       )}
 
-      {/* Lifestyle */}
-      <section className="mt-6 px-4">
-        <p className="t-label">LIFESTYLE</p>
+      {/* ---------- LIFESTYLE ---------- */}
+      <section className="mt-7 px-4">
+        <h2 className="text-[19px] font-bold leading-[25px] text-family">
+          Lifestyle
+        </h2>
         <div className="mt-3 overflow-hidden rounded-[18px] bg-surface ring-1 ring-divider">
           {LIFESTYLE_GROUPS.map((g, idx) => {
             const summary = lifestyleSummary(g.key, lifestyle[g.key]);
@@ -201,18 +315,18 @@ export function StudentProfileClient({
               <div
                 key={g.key}
                 className={cn(
-                  "flex items-start gap-3 px-4 py-3",
+                  "flex items-start gap-3 px-4 py-3.5",
                   idx > 0 && "border-t border-divider",
                 )}
               >
-                <span className="flex size-10 shrink-0 items-center justify-center text-[26px] leading-none">
+                <span className="flex size-9 shrink-0 items-center justify-center text-[28px] leading-none">
                   {g.icon}
                 </span>
                 <div className="min-w-0 flex-1">
-                  <div className="text-[15px] font-bold text-fg">
+                  <div className="text-[16px] font-bold text-fg">
                     {g.label}
                   </div>
-                  <div className="mt-0.5 text-[13px] text-fg-muted">
+                  <div className="mt-0.5 text-[14px] text-fg-muted">
                     {summary?.summary ?? "—"}
                   </div>
                 </div>
@@ -222,8 +336,8 @@ export function StudentProfileClient({
         </div>
       </section>
 
-      {/* Account */}
-      <section className="mt-6 px-4">
+      {/* ---------- ACCOUNT ---------- */}
+      <section className="mt-8 px-4 pb-6">
         <p className="t-label">ACCOUNT</p>
 
         {role === "both" && (
@@ -265,12 +379,11 @@ export function StudentProfileClient({
 
         <button
           onClick={() => router.push("/student/profile/edit")}
-          className="mt-3 flex w-full items-center justify-center gap-2 rounded-full bg-student py-3 text-[14px] font-semibold text-white"
+          className="mt-3 flex w-full items-center justify-center gap-2 rounded-full bg-family py-3 text-[14px] font-semibold text-white"
         >
           <Pencil size={16} />
           Edit profile
         </button>
-
         <button
           onClick={() => router.push("/settings")}
           className="mt-3 flex w-full items-center justify-center gap-2 rounded-full bg-surface py-3 text-[14px] font-semibold text-fg ring-1 ring-divider"
@@ -278,7 +391,6 @@ export function StudentProfileClient({
           <Settings size={16} />
           Settings
         </button>
-
         <button
           onClick={signOut}
           className="mt-3 flex w-full items-center justify-center gap-2 rounded-full py-3 text-[14px] font-semibold text-fg-muted"
@@ -291,13 +403,25 @@ export function StudentProfileClient({
   );
 }
 
-function InfoRow({ icon, label }: { icon: React.ReactNode; label: string }) {
+function MetaChip({
+  icon,
+  label,
+}: {
+  icon: React.ReactNode;
+  label: string;
+}) {
   return (
-    <div className="flex items-center gap-[6px]">
-      <span className="flex size-5 items-center justify-center text-fg">
-        {icon}
-      </span>
-      <span className="text-[14px] font-medium text-fg-muted">{label}</span>
-    </div>
+    <span className="inline-flex h-[31px] items-center gap-1.5 rounded-full bg-black/40 px-3 py-1.5 text-[13px] font-semibold text-white backdrop-blur-[2px] [text-shadow:none]">
+      <span className="flex size-3.5 items-center justify-center">{icon}</span>
+      {label}
+    </span>
   );
 }
+
+const COUNTRY_BY_LANG: Record<string, string> = {
+  it: "Italy",
+  fr: "France",
+  de: "Germany",
+  es: "Spain",
+  en: "UK",
+};

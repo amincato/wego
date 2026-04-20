@@ -9,15 +9,35 @@ import type { ActiveView } from "@/lib/types";
 import { cn } from "@/lib/utils";
 
 const botReplies: Record<string, string[]> = {
-  "user_rath": [
+  user_rath: [
     "Thanks for your message! We're really excited to meet you 😊",
     "Our daughter Lena can't wait to show you around Rostock 🌍",
     "Let us know if you have any questions about the trip.",
   ],
-  "user_giorgia": [
-    "Thank you so much for reaching out, Family Rath 💙",
-    "I'm really looking forward to meeting you and experiencing life in Rostock.",
-    "I'll let you know once I receive the confirmation from the school!",
+  user_giorgia: [
+    "Thank you so much 💙 I'm really looking forward to this.",
+    "I'll let you know once the school confirms!",
+    "That sounds wonderful. Danke schön!",
+  ],
+  user_coord_anna: [
+    "Got it — I'll forward this to the principal right away.",
+    "We usually confirm within 3–4 working days. Hang tight!",
+    "Feel free to email me the documents whenever you're ready.",
+  ],
+  user_lucas: [
+    "Haha yeah, Rostock winters are no joke. Bring a real coat 🧥",
+    "Totally. DM me anytime, I owe it to the ones who helped me in 2025.",
+    "Pro tip: join the school choir, it's the fastest way to make friends.",
+  ],
+  user_marco: [
+    "Piano and guitar — we're going to be THAT family with the Sunday jam 🎶",
+    "Can't wait! Should I bring anything from Italy?",
+    "Sounds great, thanks for being so welcoming!",
+  ],
+  user_miller: [
+    "Perfect, I'll start a shared doc with the logistics.",
+    "Great — we're aiming for the 2nd weekend of September.",
+    "Let me know if the Rath kids have any food preferences we should plan for.",
   ],
 };
 

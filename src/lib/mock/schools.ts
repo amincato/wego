@@ -1,7 +1,8 @@
 import { School } from "@/lib/types";
 
-/* Image URLs from Unsplash Source — stable & royalty-free.
- * We use small fixed IDs so the same school always gets the same cover. */
+/* School cover photos are the ones from the Figma file, stored under /public/schools.
+ * Gallery, coordinator and testimonial avatars still come from Unsplash Source
+ * (stable & royalty-free) since Figma does not expose them. */
 
 export const schools: School[] = [
   {
@@ -12,8 +13,7 @@ export const schools: School[] = [
     country: "Germany",
     description:
       "Founded in 1890, Alexander von Humboldt Gymnasium is one of Berlin's most prestigious academic institutions. We offer a comprehensive international program with a strong focus on languages and international relations.",
-    imageUrl:
-      "https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=800&q=80",
+    imageUrl: "/schools/friedrich-schiller.png",
     galleryItems: [
       {
         id: "g_fsg_1",
@@ -98,8 +98,7 @@ export const schools: School[] = [
     country: "France",
     description:
       "Lycée Thiers is one of the oldest and most prestigious high schools in southern France, with a strong tradition in literature, arts and sciences.",
-    imageUrl:
-      "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=800&q=80",
+    imageUrl: "/schools/lycee-thiers.png",
     galleryItems: [
       {
         id: "g_thiers_1",
@@ -143,8 +142,7 @@ export const schools: School[] = [
     country: "Germany",
     description:
       "A Bavarian high school with a humanistic tradition and a strong international exchange program.",
-    imageUrl:
-      "https://images.unsplash.com/photo-1568667256549-094345857637?auto=format&fit=crop&w=800&q=80",
+    imageUrl: "/schools/goethe-gymnasium.png",
     galleryItems: [],
     spotsLeft: 15,
     orientation: "linguistic",
@@ -183,8 +181,7 @@ export const schools: School[] = [
     country: "Germany",
     description:
       "Modern Gymnasium in Stuttgart with a focus on sustainability and the arts.",
-    imageUrl:
-      "https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=800&q=80",
+    imageUrl: "/schools/kathe-kollwitz.png",
     galleryItems: [],
     spotsLeft: 5,
     orientation: "artistic",
@@ -212,8 +209,7 @@ export const schools: School[] = [
     country: "France",
     description:
       "Historic lycée in Lille with a strong focus on scientific preparatory classes.",
-    imageUrl:
-      "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?auto=format&fit=crop&w=800&q=80",
+    imageUrl: "/schools/lycee-faidherbe.png",
     galleryItems: [],
     spotsLeft: 15,
     orientation: "scientific",
@@ -245,8 +241,7 @@ export const schools: School[] = [
     country: "France",
     description:
       "Large lycée in Nantes known for its multicultural environment and sports programs.",
-    imageUrl:
-      "https://images.unsplash.com/photo-1576495199011-eb94736d05d6?auto=format&fit=crop&w=800&q=80",
+    imageUrl: "/schools/lycee-clemenceau.png",
     galleryItems: [],
     spotsLeft: 15,
     orientation: "musical",

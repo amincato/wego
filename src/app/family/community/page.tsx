@@ -1,10 +1,5 @@
-import { ComingSoon } from "@/components/shared/coming-soon";
+import { CommunityFeed } from "@/components/community/feed";
 
 export default function FamilyCommunityPage() {
-  return (
-    <ComingSoon
-      title="Community"
-      description="Meet other host families in your area."
-    />
-  );
+  return <CommunityFeed view="family" />;
 }

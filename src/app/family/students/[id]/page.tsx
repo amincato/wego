@@ -71,7 +71,8 @@ export default function StudentDetailPage() {
           alt={student.firstName}
           className="size-full object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-bg" />
+        <div className="pointer-events-none absolute inset-x-0 top-0 h-[120px] bg-gradient-to-b from-black/45 to-transparent" />
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-[160px] bg-gradient-to-t from-black/75 via-black/30 to-transparent" />
         <div className="absolute inset-x-0 top-0">
           <StatusBar color="text-white" />
         </div>
@@ -91,11 +92,11 @@ export default function StudentDetailPage() {
             <Heart size={18} fill={wishlisted ? "#fff" : "none"} />
           </button>
         </div>
-        <div className="absolute inset-x-0 bottom-4 px-4">
-          <h1 className="text-[28px] font-bold leading-[32px] text-white">
+        <div className="absolute inset-x-0 bottom-4 px-4 [text-shadow:_0_1px_4px_rgb(0_0_0_/_0.55)]">
+          <h1 className="text-[28px] font-bold leading-[32px] text-white drop-shadow-md">
             {student.firstName} {student.lastName}, {student.age}
           </h1>
-          <div className="mt-1 flex items-center gap-1 text-[13px] text-white/80">
+          <div className="mt-1 flex items-center gap-1 text-[13px] text-white/90">
             <MapPin size={13} />
             {student.city}
           </div>
