@@ -1,26 +1,170 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ==========================================================
+   Design tokens
+   - All surface/foreground colors flip via [data-theme="dark"]
+   - Brand colors (student / family / both) stay constant
+   ========================================================== */
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Light theme surfaces */
+  --bg: #ffffff;
+  --bg-elevated: #f5f5f5;
+  --surface-card: #ffffff;
+  --surface-nav: #ffffff;
+  --chip: #f5f5f5;
+
+  /* Light theme foreground */
+  --fg: #0a0a0a;
+  --fg-muted: #515151;
+  --fg-subtle: rgba(0, 0, 0, 0.55);
+  --divider: rgba(0, 0, 0, 0.08);
+
+  /* Legacy token aliases (existing components keep working) */
+  --bg-primary: var(--bg);
+  --bg-card: var(--surface-card);
+  --bg-nav: var(--surface-nav);
+  --bg-light: var(--bg-elevated);
+  --text-dark: var(--fg);
+}
+
+.dark {
+  --bg: #050821;
+  --bg-elevated: #0c1240;
+  --surface-card: #12184d;
+  --surface-nav: #101544;
+  --chip: #12184d;
+
+  --fg: #ffffff;
+  --fg-muted: rgba(255, 255, 255, 0.72);
+  --fg-subtle: rgba(255, 255, 255, 0.45);
+  --divider: rgba(255, 255, 255, 0.08);
+
+  --bg-primary: var(--bg);
+  --bg-card: var(--surface-card);
+  --bg-nav: var(--surface-nav);
+  --bg-light: var(--bg);
+  --text-dark: var(--fg);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  /* ---- Font ---- */
+  --font-sans: var(--font-quicksand), ui-sans-serif, system-ui, sans-serif;
+
+  /* ---- Theme-aware surfaces (preferred going forward) ---- */
+  --color-bg: var(--bg);
+  --color-bg-elevated: var(--bg-elevated);
+  --color-surface: var(--surface-card);
+  --color-nav: var(--surface-nav);
+  --color-chip: var(--chip);
+
+  --color-fg: var(--fg);
+  --color-fg-muted: var(--fg-muted);
+  --color-fg-subtle: var(--fg-subtle);
+  --color-divider: var(--divider);
+
+  /* ---- Legacy aliases (kept so existing classes still work) ---- */
+  --color-bg-primary: var(--bg-primary);
+  --color-bg-card: var(--bg-card);
+  --color-bg-nav: var(--bg-nav);
+  --color-bg-light: var(--bg-light);
+  --color-text-dark: var(--text-dark);
+
+  /* ---- Brand (unchanged across themes) ---- */
+  --color-student: #6475e9;
+  --color-student-accent: #547be0;
+  --color-family: #ff7834;
+  --color-both: #520f33;
+
+  /* ---- Auxiliary ---- */
+  --color-placeholder: #9d9d9d;
+  --color-btn-disabled: #cecece;
+
+  /* ---- Semantic ---- */
+  --color-success-bg: #4eff86;
+  --color-success-fg: #014821;
+  --color-danger-bg: #ffada1;
+  --color-danger-fg: #bd2915;
+
+  /* ---- Radii ---- */
+  --radius-card: 20px;
+  --radius-card-lg: 24px;
+  --radius-input: 8px;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html,
+body {
+  height: 100%;
+}
+
+html {
+  color-scheme: light;
+}
+html.dark {
+  color-scheme: dark;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ==========================================================
+   Typography scale — use these classes for consistent hierarchy
+   ========================================================== */
+@layer components {
+  .h-display {
+    font-size: 28px;
+    line-height: 34px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+  .h-title {
+    font-size: 20px;
+    line-height: 28px;
+    font-weight: 700;
+  }
+  .h-section {
+    font-size: 18px;
+    line-height: 24px;
+    font-weight: 600;
+  }
+  .t-label {
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: var(--fg-muted);
+  }
+  .t-body {
+    font-size: 14px;
+    line-height: 22px;
+    font-weight: 400;
+  }
+  .t-body-strong {
+    font-size: 14px;
+    line-height: 22px;
+    font-weight: 600;
+  }
+  .t-caption {
+    font-size: 12px;
+    line-height: 16px;
+    font-weight: 500;
+    color: var(--fg-muted);
+  }
+}
+
+/* Hide scrollbar utility for horizontal carousels while keeping scroll */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
