@@ -17,6 +17,21 @@ export const metadata: Metadata = {
     "wego connects exchange students with partner schools and host families abroad.",
   applicationName: "wego",
   manifest: "/manifest.webmanifest",
+  icons: {
+    icon: [
+      { url: "/icon-192.svg", type: "image/svg+xml", sizes: "192x192" },
+      { url: "/icon-512.svg", type: "image/svg+xml", sizes: "512x512" },
+    ],
+    apple: [{ url: "/icon-192.svg", sizes: "192x192" }],
+  },
+  appleWebApp: {
+    capable: true,
+    title: "wego",
+    statusBarStyle: "black-translucent",
+  },
+  other: {
+    "mobile-web-app-capable": "yes",
+  },
 };
 
 export const viewport: Viewport = {
@@ -24,6 +39,7 @@ export const viewport: Viewport = {
   initialScale: 1,
   maximumScale: 1,
   userScalable: false,
+  viewportFit: "cover",
   themeColor: "#050821",
 };
 
