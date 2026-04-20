@@ -92,7 +92,9 @@ function splitDate(iso?: string) {
   return { mm: m ?? "", dd: d ?? "", yyyy: y ?? "" };
 }
 function isValidDate(mm: string, dd: string, yyyy: string) {
-  if (mm.length !== 2 || dd.length !== 2 || yyyy.length !== 4) return false;
+  if (mm.length < 1 || mm.length > 2) return false;
+  if (dd.length < 1 || dd.length > 2) return false;
+  if (yyyy.length !== 4) return false;
   const m = Number(mm);
   const d = Number(dd);
   const y = Number(yyyy);

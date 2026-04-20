@@ -35,7 +35,7 @@
   --bg-elevated: #0c1240;
   --surface-card: #12184d;
   --surface-nav: #101544;
-  --chip: #12184d;
+  --chip: #1c2670;
 
   --fg: #ffffff;
   --fg-muted: rgba(255, 255, 255, 0.72);
@@ -167,4 +167,16 @@ body {
 .no-scrollbar {
   -ms-overflow-style: none;
   scrollbar-width: none;
+}
+
+/* Scope `min-h-dvh` / `h-dvh` to the mobile frame's effective height on desktop
+   (852px) via the --app-h variable set in MobileFrame. Falls back to 100dvh
+   so pages outside the frame still behave as expected. */
+@layer utilities {
+  .min-h-dvh {
+    min-height: var(--app-h, 100dvh);
+  }
+  .h-dvh {
+    height: var(--app-h, 100dvh);
+  }
 }

@@ -6,8 +6,9 @@ import { ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
 /**
- * Dark bottom sheet used for Filters (student: blue titles, family: orange titles).
- * Fills the viewport from the bottom with a rounded top and a close button in the header.
+ * Side panel that slides in from the right. On mobile fills the screen;
+ * on desktop fits the mobile frame (393×852) centered in the viewport so it
+ * visually stays inside the phone chrome.
  */
 export function BottomSheet({
   open,
@@ -28,19 +29,24 @@ export function BottomSheet({
         <Dialog.Overlay
           className={cn(
             "fixed inset-0 z-40 bg-black/60",
-            "data-[state=open]:animate-in data-[state=closed]:animate-out",
+            "transition-opacity duration-200",
+            "data-[state=open]:opacity-100 data-[state=closed]:opacity-0",
           )}
         />
         <Dialog.Content
           className={cn(
-            "fixed inset-x-0 bottom-0 z-50 mx-auto w-full max-w-[393px]",
-            "rounded-t-[32px] bg-bg px-6 pt-6 pb-0 text-fg",
-            "max-h-[90vh] flex flex-col",
-            "data-[state=open]:animate-in data-[state=closed]:animate-out",
-            "data-[state=closed]:slide-out-to-bottom data-[state=open]:slide-in-from-bottom",
+            // mobile: full-height, anchored to the right edge
+            "fixed inset-y-0 right-0 z-50 w-full max-w-[393px]",
+            // desktop: 393×852, centered at the viewport (aligns with the phone frame)
+            "md:inset-y-auto md:top-1/2 md:h-[852px] md:-translate-y-1/2",
+            "md:right-[calc(50vw-196.5px)]",
+            "flex flex-col overflow-hidden bg-bg px-6 pt-6 pb-0 text-fg",
+            "will-change-transform",
+            "transition-transform duration-300 ease-out",
+            "data-[state=closed]:translate-x-full data-[state=open]:translate-x-0",
           )}
         >
-          <div className="flex items-center justify-between mb-5">
+          <div className="mb-5 flex items-center justify-between">
             <Dialog.Title className="text-2xl font-bold">{title}</Dialog.Title>
             <Dialog.Close
               aria-label="Close"
@@ -49,8 +55,12 @@ export function BottomSheet({
               <X size={18} />
             </Dialog.Close>
           </div>
-          <div className="flex-1 overflow-y-auto no-scrollbar pb-4">{children}</div>
-          {footer && <div className="sticky bottom-0 pt-3 pb-6 bg-bg">{footer}</div>}
+          <div className="no-scrollbar flex-1 overflow-y-auto pb-4">
+            {children}
+          </div>
+          {footer && (
+            <div className="sticky bottom-0 bg-bg pt-3 pb-6">{footer}</div>
+          )}
         </Dialog.Content>
       </Dialog.Portal>
     </Dialog.Root>

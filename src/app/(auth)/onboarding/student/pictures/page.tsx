@@ -7,6 +7,7 @@ import { WizardShell } from "@/components/auth/wizard-shell";
 import { useSignupStore } from "@/lib/store/signup";
 
 const DEMO_AVATARS = [
+  "/carlo-liberti.png",
   "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=400&q=80",
   "https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?auto=format&fit=crop&w=400&q=80",
   "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=400&q=80",

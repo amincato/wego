@@ -46,8 +46,8 @@ export function BottomNav({
   const accent = variant === "student" ? "text-student" : "text-family";
 
   return (
-    <div className="pointer-events-none fixed inset-x-0 bottom-0 mx-auto w-full max-w-[393px]">
-      <div className="pointer-events-auto relative mx-4 mb-6 flex items-center justify-between rounded-full border border-divider bg-nav/90 px-3 py-3 backdrop-blur-xl shadow-[0_8px_24px_-8px_rgba(0,0,0,0.35)]">
+    <div className="pointer-events-none sticky bottom-0 left-0 right-0 z-40 mx-auto w-full max-w-[393px]">
+      <div className="pointer-events-auto relative mx-4 mb-4 flex items-center justify-between rounded-full border border-divider bg-nav/90 px-2 py-2 backdrop-blur-xl shadow-[0_8px_24px_-8px_rgba(0,0,0,0.35)]">
         {items.map(({ label, href, Icon }) => {
           const full = `${basePath}${href}`;
           const active =
@@ -60,12 +60,12 @@ export function BottomNav({
                 key={href}
                 href={full}
                 className={cn(
-                  "flex items-center gap-2 rounded-full bg-bg px-4 py-2.5 font-bold shadow-sm",
+                  "flex items-center gap-1.5 rounded-full bg-bg px-3 py-2 font-bold shadow-sm",
                   accent,
                 )}
               >
-                <Icon size={18} />
-                <span className="text-sm">{label}</span>
+                <Icon size={16} />
+                <span className="text-[13px]">{label}</span>
               </Link>
             );
           }
@@ -73,10 +73,10 @@ export function BottomNav({
             <Link
               key={href}
               href={full}
-              className="flex size-10 items-center justify-center text-fg-muted hover:text-fg"
+              className="flex size-9 items-center justify-center text-fg-muted hover:text-fg"
               aria-label={label}
             >
-              <Icon size={22} />
+              <Icon size={20} />
             </Link>
           );
         })}

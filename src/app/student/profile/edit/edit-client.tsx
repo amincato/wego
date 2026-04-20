@@ -30,6 +30,7 @@ type StudentProfileRow =
   Database["public"]["Tables"]["student_profiles"]["Row"];
 
 const DEMO_PHOTO_POOL = [
+  "/carlo-liberti.png",
   "https://images.unsplash.com/photo-1529693662653-9d480530a697?auto=format&fit=crop&w=600&q=80",
   "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=600&q=80",
   "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=600&q=80",
