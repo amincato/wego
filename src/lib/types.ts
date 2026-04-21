@@ -146,10 +146,24 @@ export interface School {
 }
 
 /* ---- Application ---- */
+/**
+ * The application journey has five visible steps for the student:
+ *   1. `under_review`        — waiting for the school to respond
+ *   2. `accepted`            — school said yes, no host-family interest yet
+ *   3. `accepted`            — school said yes AND one or more host families
+ *                              have expressed interest (→ step 3 when
+ *                              `hostFamiliesInterested.length > 0` and no
+ *                              `matchedFamilyId` has been chosen yet)
+ *   4. `student_confirmed`   — student chose a family, awaiting the family's
+ *                              final confirmation
+ *   5. `ready`               — both sides confirmed, mobility is ready to go
+ */
 export type ApplicationStatus =
   | "draft"
   | "under_review"
   | "accepted"
+  | "student_confirmed"
+  | "ready"
   | "rejected";
 
 export interface Application {
@@ -162,7 +176,15 @@ export interface Application {
   letterOfMotivation: string;
   appliedAt: string;
   acceptedAt?: string;
-  hostFamiliesInterested: string[]; // family ids
+  hostFamiliesInterested: string[]; // family ids that reached out
+  /** Deadline for the student to confirm a match after the first family interest. */
+  familyInterestDeadline?: string;
+  /** Family the student chose (step 4+). */
+  matchedFamilyId?: string;
+  /** When the student clicked "Confirm match". */
+  studentConfirmedAt?: string;
+  /** When the family gave final confirmation. */
+  readyAt?: string;
 }
 
 /* ---- Messaging ---- */

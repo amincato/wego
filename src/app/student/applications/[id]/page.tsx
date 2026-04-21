@@ -2,9 +2,9 @@
 
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
-import { ChevronLeft, MapPin, FileText } from "lucide-react";
+import { ChevronLeft } from "lucide-react";
 import { useApplicationsStore } from "@/lib/store/applications";
-import { schools } from "@/lib/mock/schools";
+import { DEMO_FAMILY_ID } from "@/lib/mock/families";
 import { Button } from "@/components/ui/button";
 import { ApplicationCard } from "@/components/student/application-card";
 
@@ -15,6 +15,11 @@ export default function ApplicationDetailPage() {
     s.items.find((a) => a.id === id),
   );
   const updateStatus = useApplicationsStore((s) => s.updateStatus);
+  const expressFamilyInterest = useApplicationsStore(
+    (s) => s.expressFamilyInterest,
+  );
+  const confirmMatch = useApplicationsStore((s) => s.confirmMatch);
+  const familyConfirm = useApplicationsStore((s) => s.familyConfirm);
 
   if (!application) {
     return (
@@ -32,8 +37,7 @@ export default function ApplicationDetailPage() {
     );
   }
 
-  const school = schools.find((s) => s.id === application.schoolId);
-  if (!school) return null;
+  const demoNext = pickDemoStep(application);
 
   return (
     <div className="min-h-dvh bg-bg px-4 pt-[59px] pb-10">
@@ -45,56 +49,66 @@ export default function ApplicationDetailPage() {
         <ChevronLeft size={20} />
       </Link>
 
-      <h1 className="h-title mt-5 text-fg">Application details</h1>
-      <div className="mt-1 flex items-center gap-1 text-[13px] text-fg-muted">
-        <MapPin size={13} />
-        {school.city}, {school.country}
-      </div>
+      <h1 className="h-title mt-5 text-fg">Application</h1>
 
       <div className="mt-5">
-        <ApplicationCard application={application} />
+        <ApplicationCard application={application} defaultExpanded />
       </div>
 
-      <div className="mt-6 rounded-[20px] bg-surface p-4 ring-1 ring-divider">
-        <div className="flex items-center gap-2 text-[14px] font-semibold text-fg">
-          <FileText size={16} className="text-student-accent" />
-          Report card
-        </div>
-        <div className="mt-3 flex items-center gap-3 rounded-[12px] bg-chip p-3">
-          <div className="flex size-10 items-center justify-center rounded-md bg-[#e53e3e] text-[10px] font-bold text-white">
-            PDF
-          </div>
-          <div className="flex-1 min-w-0">
-            <div className="truncate text-[13px] font-semibold text-fg">
-              {application.reportCardFilename ?? "report.pdf"}
-            </div>
-            <div className="text-[12px] text-success-fg">Uploaded</div>
-          </div>
-        </div>
-      </div>
-
-      <div className="mt-5 rounded-[20px] bg-surface p-4 ring-1 ring-divider">
-        <div className="text-[14px] font-semibold text-fg">
-          Letter of motivation
-        </div>
-        <p className="mt-2 text-[13px] leading-relaxed text-fg-muted">
-          {application.letterOfMotivation}
-        </p>
-      </div>
-
-      {/* Demo-only action: simulate school acceptance */}
-      {application.status === "under_review" && (
-        <div className="mt-6">
+      {demoNext && (
+        <div className="mt-8">
+          <p className="mb-2 text-[11px] font-semibold uppercase tracking-wide text-fg-muted">
+            Demo
+          </p>
           <Button
             variant="primaryStudent"
             size="md"
             width="full"
-            onClick={() => updateStatus(application.id, "accepted")}
+            onClick={() => {
+              switch (demoNext.kind) {
+                case "accept":
+                  updateStatus(application.id, "accepted");
+                  break;
+                case "family_interest":
+                  expressFamilyInterest(application.id, DEMO_FAMILY_ID);
+                  break;
+                case "confirm_match": {
+                  const familyId =
+                    application.hostFamiliesInterested[0] ?? DEMO_FAMILY_ID;
+                  confirmMatch(application.id, familyId);
+                  break;
+                }
+                case "family_confirm":
+                  familyConfirm(application.id);
+                  break;
+              }
+            }}
           >
-            [Demo] Simulate school acceptance
+            {demoNext.label}
           </Button>
         </div>
       )}
     </div>
   );
+}
+
+type DemoAction =
+  | "accept"
+  | "family_interest"
+  | "confirm_match"
+  | "family_confirm";
+
+function pickDemoStep(a: {
+  status: string;
+  hostFamiliesInterested: string[];
+}): { kind: DemoAction; label: string } | null {
+  if (a.status === "under_review")
+    return { kind: "accept", label: "Simulate school acceptance" };
+  if (a.status === "accepted" && a.hostFamiliesInterested.length === 0)
+    return { kind: "family_interest", label: "Simulate family interest" };
+  if (a.status === "accepted")
+    return { kind: "confirm_match", label: "Confirm match" };
+  if (a.status === "student_confirmed")
+    return { kind: "family_confirm", label: "Simulate family confirmation" };
+  return null;
 }
