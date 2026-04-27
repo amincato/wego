@@ -100,7 +100,7 @@ export function LeafletMap({
     };
   }, []);
   const mySchoolIcon = useMemo(
-    () => pinIcon({ color: "#6475e9", ring: true }),
+    () => pinIcon({ color: "#547BE0", ring: true }),
     [],
   );
 
@@ -190,9 +190,9 @@ export function LeafletMap({
                 My school
               </div>
               <div className="text-sm font-bold text-fg">
-                Liceo Tommaso Salvini
+                Friedrich Schiller Gymnasium
               </div>
-              <div className="text-xs text-fg-muted">Milan, Italy</div>
+              <div className="text-xs text-fg-muted">Rostock, Germany</div>
               <Link
                 href="/my-school"
                 className="mt-3 inline-flex items-center rounded-full bg-student px-3 py-1 text-[11px] font-bold text-white hover:brightness-105"

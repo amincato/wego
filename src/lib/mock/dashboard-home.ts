@@ -1,7 +1,7 @@
 import type {
-  CapacityKpi,
   DashboardTask,
   EmergencyNotification,
+  HomeStatPair,
   Reminder,
 } from "@/lib/types-dashboard";
 
@@ -39,41 +39,17 @@ export const todaysTasks: DashboardTask[] = [
     completed: false,
     relatedTo: { kind: "student", id: "student_carlo" },
   },
-  {
-    id: "task_4",
-    title: "Approve budget for spring orientation event",
-    priority: "low",
-    dueAt: today(1, 10, 0),
-    completed: false,
-  },
-  {
-    id: "task_5",
-    title: "Sign welcome packet for Lily",
-    priority: "low",
-    dueAt: today(0, 9, 0),
-    completed: true,
-    relatedTo: { kind: "student", id: "student_lily" },
-  },
 ];
 
 export const emergencyNotifications: EmergencyNotification[] = [
   {
     id: "emrg_1",
     kind: "host_family_issue",
-    title: "Conflict reported by host family Rossi",
-    body: "Mismatch on house rules with student Matthis. Mediation requested.",
+    title: "Host family change requested by Matthis",
+    body: "Student is asking to be reassigned from family Rossi. Reason: persistent conflicts on house rules.",
     createdAt: today(0, 8, 12),
     acknowledged: false,
     studentId: "student_matthis",
-  },
-  {
-    id: "emrg_2",
-    kind: "documents_missing",
-    title: "Missing health insurance for Lily",
-    body: "Insurance document expired on April 22. New copy not yet uploaded.",
-    createdAt: today(-1, 16, 45),
-    acknowledged: false,
-    studentId: "student_lily",
   },
 ];
 
@@ -104,9 +80,15 @@ export const upcomingReminders: Reminder[] = [
   },
 ];
 
-export const capacityKpis: CapacityKpi[] = [
-  { label: "Incoming students", value: 17, total: 24, delta: +12 },
-  { label: "Outgoing students", value: 9, total: 12, delta: +4 },
-  { label: "Active host families", value: 21, total: 28, delta: +8 },
-  { label: "Open applications", value: 14, total: 14, delta: -3 },
+export const homeStats: HomeStatPair[] = [
+  {
+    label: "Incoming students",
+    primary: { value: 10, label: "Confirmed places" },
+    secondary: { value: 5, label: "Available places" },
+  },
+  {
+    label: "Host families",
+    primary: { value: 8, label: "Confirmed" },
+    secondary: { value: 2, label: "Pending acceptance" },
+  },
 ];

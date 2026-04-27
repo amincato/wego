@@ -18,7 +18,7 @@ export function UploadBox({
   defaultFileName,
   onUploaded,
   onCleared,
-  accentColor = "#6475e9",
+  accentColor = "#547BE0",
 }: {
   accept?: string;
   defaultFileName?: string;
@@ -128,7 +128,7 @@ export function UploadBox({
           </div>
           <div className="mt-1 h-[3px] w-full rounded-full bg-divider overflow-hidden">
             <div
-              className="h-full rounded-full bg-gradient-to-r from-[#6475e9] to-[#4eff86] transition-[width] duration-100"
+              className="h-full rounded-full bg-gradient-to-r from-[#547BE0] to-[#4eff86] transition-[width] duration-100"
               style={{ width: `${state.progress * 100}%` }}
             />
           </div>

@@ -39,9 +39,8 @@ export function FamilyHeader({
             {state ? <FamilyStatusPill state={state} /> : null}
           </div>
           <div className="mt-1 text-sm text-fg-muted">
-            {family.city}, {family.country} · {family.homeType} ·{" "}
-            {family.spareRooms} spare room{family.spareRooms === 1 ? "" : "s"} ·{" "}
-            {family.hasPets ? "Has pets" : "No pets"}
+            {family.city}, {family.country} · {family.members.length} member
+            {family.members.length === 1 ? "" : "s"}
           </div>
           {meta ? (
             <div className="mt-0.5 text-xs text-fg-subtle">{meta}</div>

@@ -10,7 +10,7 @@ import { cn } from "@/lib/utils";
 export function AirplaneProgressBar({
   progress,
   className,
-  color = "#6475e9",
+  color = "#547BE0",
   trackColor = "#e5e5e5",
 }: {
   progress: number; // 0..1

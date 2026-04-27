@@ -3,12 +3,29 @@
 import { useState, ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
+export type ListTabAccent = "default" | "student" | "family" | "school";
+
 export interface ListTabDef {
   id: string;
   label: string;
   count?: number;
   content: ReactNode;
+  accent?: ListTabAccent;
 }
+
+const ACTIVE_BG: Record<ListTabAccent, string> = {
+  default: "bg-bg text-fg shadow-sm",
+  student: "bg-student text-white shadow-sm",
+  family: "bg-family text-white shadow-sm",
+  school: "bg-school text-white shadow-sm",
+};
+
+const ACTIVE_COUNT: Record<ListTabAccent, string> = {
+  default: "bg-chip text-fg-muted",
+  student: "bg-white/25 text-white",
+  family: "bg-white/25 text-white",
+  school: "bg-white/25 text-white",
+};
 
 export function ListTabs({
   tabs,
@@ -25,6 +42,7 @@ export function ListTabs({
       <div className="flex flex-wrap gap-1 rounded-full bg-chip p-1">
         {tabs.map((tab) => {
           const isActive = tab.id === active;
+          const accent: ListTabAccent = tab.accent ?? "default";
           return (
             <button
               key={tab.id}
@@ -32,7 +50,7 @@ export function ListTabs({
               className={cn(
                 "inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-sm font-bold transition-colors",
                 isActive
-                  ? "bg-bg text-fg shadow-sm"
+                  ? ACTIVE_BG[accent]
                   : "text-fg-muted hover:text-fg",
               )}
             >
@@ -41,7 +59,7 @@ export function ListTabs({
                 <span
                   className={cn(
                     "rounded-full px-2 py-0.5 text-[10px] font-bold",
-                    isActive ? "bg-chip text-fg-muted" : "bg-bg/60 text-fg-muted",
+                    isActive ? ACTIVE_COUNT[accent] : "bg-bg/60 text-fg-muted",
                   )}
                 >
                   {tab.count}

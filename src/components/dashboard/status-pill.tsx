@@ -8,7 +8,7 @@ const STUDENT_STATE: Record<
   ApplicationLifecycleState,
   { label: string; tone: string }
 > = {
-  new_application: { label: "New", tone: "bg-student/15 text-student" },
+  new_application: { label: "New request", tone: "bg-student/15 text-student" },
   under_review: { label: "Under review", tone: "bg-chip text-fg" },
   accepted: { label: "Accepted", tone: "bg-success-bg/40 text-success-fg" },
   confirmed: { label: "Confirmed", tone: "bg-success-bg/60 text-success-fg" },

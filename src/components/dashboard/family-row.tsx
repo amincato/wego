@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ChevronRight, Home, Users } from "lucide-react";
+import { ChevronRight, Users } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { formatDate } from "@/lib/utils";
 import { FamilyStatusPill } from "./status-pill";
@@ -31,14 +31,11 @@ export function FamilyRow({ family, application, href, className }: Props) {
           <span className="truncate text-sm font-bold text-fg">
             {family.familyName}
           </span>
-          <span className="text-xs text-fg-subtle">· {family.city}</span>
+          <span className="text-xs text-fg-subtle">
+            · {family.city}, {family.country}
+          </span>
         </div>
         <div className="mt-0.5 flex flex-wrap items-center gap-x-3 gap-y-0.5 text-xs text-fg-muted">
-          <span className="inline-flex items-center gap-1">
-            <Home className="size-3" />
-            {family.homeType} · {family.spareRooms} room
-            {family.spareRooms === 1 ? "" : "s"}
-          </span>
           <span className="inline-flex items-center gap-1">
             <Users className="size-3" />
             {family.members.length} members

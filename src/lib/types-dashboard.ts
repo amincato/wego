@@ -170,6 +170,12 @@ export interface CapacityKpi {
   delta?: number; // percent vs previous period
 }
 
+export interface HomeStatPair {
+  label: string;
+  primary: { value: number; label: string };
+  secondary: { value: number; label: string };
+}
+
 /* ---- Community (My school) ---- */
 export type CommunityKind = "event" | "post" | "update";
 

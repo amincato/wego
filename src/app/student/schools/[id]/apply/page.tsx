@@ -225,7 +225,7 @@ export default function ApplyPage() {
         confirmLabel="Confirm"
         cancelLabel="Cancel"
         onConfirm={submit}
-        illustrationColor="#6475e9"
+        illustrationColor="#547BE0"
       />
     </div>
   );

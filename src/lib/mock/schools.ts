@@ -6,91 +6,6 @@ import { School } from "@/lib/types";
 
 export const schools: School[] = [
   {
-    id: "school_fsg",
-    name: "Friedrich Schiller Gymnasium",
-    shortName: "F. S. Gymnasium",
-    city: "Rostock",
-    country: "Germany",
-    description:
-      "Founded in 1890, Alexander von Humboldt Gymnasium is one of Berlin's most prestigious academic institutions. We offer a comprehensive international program with a strong focus on languages and international relations.",
-    imageUrl: "/schools/friedrich-schiller.png",
-    galleryItems: [
-      {
-        id: "g_fsg_1",
-        imageUrl:
-          "https://images.unsplash.com/photo-1544531586-fde5298cdd40?auto=format&fit=crop&w=800&q=80",
-        caption: "Giulia from France",
-      },
-      {
-        id: "g_fsg_2",
-        imageUrl:
-          "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=800&q=80",
-        caption: "Lily from Spain",
-      },
-      {
-        id: "g_fsg_3",
-        imageUrl:
-          "https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?auto=format&fit=crop&w=800&q=80",
-      },
-    ],
-    spotsLeft: 15,
-    orientation: "scientific",
-    language: "de",
-    destinationType: "medium_city",
-    exchangeStudentsPresence: "high",
-    mobilityOptions: [
-      { durationMonths: 3, priceEur: 2900 },
-      { durationMonths: 6, priceEur: 2300 },
-      { durationMonths: 10, priceEur: 2500 },
-    ],
-    highlights: {
-      admission: [
-        "Report card from the last school year",
-        "Letter of motivation (max 500 chars)",
-        "Interview with the school coordinator",
-      ],
-      schoolSchedule: [
-        "Monday – Friday, 8:00 – 15:30",
-        "Two-week orientation program in September",
-        "After-school clubs available on Tuesdays and Thursdays",
-      ],
-      subjectsAndActivities: [
-        "German language, literature & culture",
-        "Math, Physics, Chemistry",
-        "Music, Art, Sports (basketball, volleyball, swimming)",
-      ],
-    },
-    coordinator: {
-      name: "Anna Schmidt",
-      avatarUrl:
-        "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=200&q=80",
-    },
-    testimonials: [
-      {
-        id: "t_fsg_1",
-        studentName: "Lucas Martinez",
-        year: 2026,
-        origin: "Spain",
-        avatarUrl:
-          "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=80",
-        rating: 5,
-        text:
-          "My experience was amazing. I made many new friends and I'm still in contact with them. I improved the language and I got the C1 level at Goethe Institut. I'm very proud of my self.",
-      },
-      {
-        id: "t_fsg_2",
-        studentName: "Ulrike Werkstoff",
-        year: 2026,
-        origin: "Germany",
-        avatarUrl:
-          "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=200&q=80",
-        rating: 5,
-        text:
-          "My experience at Schiller Gymnasium was wonderful. Professors and classmates made me feel welcomed from the beginning. I felt fully integrated into the community and quickly at home in a new environment.",
-      },
-    ],
-  },
-  {
     id: "school_thiers",
     name: "Lycée Thiers",
     shortName: "Lycée Thiers",
@@ -98,7 +13,7 @@ export const schools: School[] = [
     country: "France",
     description:
       "Lycée Thiers is one of the oldest and most prestigious high schools in southern France, with a strong tradition in literature, arts and sciences.",
-    imageUrl: "/schools/lycee-thiers.png",
+    imageUrl: "/schools/friedrich-schiller.png",
     galleryItems: [
       {
         id: "g_thiers_1",
@@ -265,6 +180,171 @@ export const schools: School[] = [
     },
     testimonials: [],
   },
+  {
+    id: "school_galilei",
+    name: "Liceo Galileo Galilei",
+    shortName: "Liceo Galilei",
+    city: "Florence",
+    country: "Italy",
+    description:
+      "Historic Tuscan liceo with a strong scientific and humanistic tradition, set in the heart of Renaissance Florence.",
+    imageUrl:
+      "https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=800&q=80",
+    galleryItems: [],
+    spotsLeft: 12,
+    orientation: "classic",
+    language: "it",
+    destinationType: "medium_city",
+    exchangeStudentsPresence: "high",
+    mobilityOptions: [
+      { durationMonths: 3, priceEur: 2600 },
+      { durationMonths: 6, priceEur: 2200 },
+      { durationMonths: 10, priceEur: 2300 },
+    ],
+    highlights: {
+      admission: [
+        "Italian level A2 recommended",
+        "Letter of motivation in Italian or English",
+      ],
+      schoolSchedule: ["Monday – Saturday, 8:00 – 14:00"],
+      subjectsAndActivities: [
+        "Latin, Greek, Italian literature",
+        "Mathematics, physics, philosophy",
+        "Visits to local museums and Renaissance landmarks",
+      ],
+    },
+    coordinator: {
+      name: "Francesca Romano",
+      avatarUrl:
+        "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=200&q=80",
+    },
+    testimonials: [],
+  },
+  {
+    id: "school_cervantes",
+    name: "Instituto Cervantes",
+    shortName: "Inst. Cervantes",
+    city: "Madrid",
+    country: "Spain",
+    description:
+      "Vibrant high school in the heart of Madrid with a strong linguistic program and a rich cultural exchange tradition.",
+    imageUrl:
+      "https://images.unsplash.com/photo-1580582932707-520aed937b7b?auto=format&fit=crop&w=800&q=80",
+    galleryItems: [],
+    spotsLeft: 8,
+    orientation: "linguistic",
+    language: "es",
+    destinationType: "large_city",
+    exchangeStudentsPresence: "high",
+    mobilityOptions: [
+      { durationMonths: 3, priceEur: 2400 },
+      { durationMonths: 6, priceEur: 2000 },
+      { durationMonths: 10, priceEur: 2100 },
+    ],
+    highlights: {
+      admission: [
+        "Spanish level A2 required",
+        "Interview with the school coordinator",
+      ],
+      schoolSchedule: ["Monday – Friday, 8:30 – 15:30"],
+      subjectsAndActivities: [
+        "Spanish language and literature",
+        "History, philosophy, social studies",
+        "Flamenco club, football, theatre",
+      ],
+    },
+    coordinator: {
+      name: "Carlos Fernández",
+      avatarUrl:
+        "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=200&q=80",
+    },
+    testimonials: [],
+  },
+  {
+    id: "school_manzoni",
+    name: "Liceo Alessandro Manzoni",
+    shortName: "Liceo Manzoni",
+    city: "Milan",
+    country: "Italy",
+    description:
+      "Renowned Milanese liceo classico with a long humanistic tradition and a vibrant international exchange program.",
+    imageUrl:
+      "https://images.unsplash.com/photo-1591123120675-6f7f1aae0e5b?auto=format&fit=crop&w=800&q=80",
+    galleryItems: [],
+    spotsLeft: 10,
+    orientation: "linguistic",
+    language: "it",
+    destinationType: "large_city",
+    exchangeStudentsPresence: "high",
+    mobilityOptions: [
+      { durationMonths: 3, priceEur: 2700 },
+      { durationMonths: 6, priceEur: 2300 },
+      { durationMonths: 10, priceEur: 2400 },
+    ],
+    highlights: {
+      admission: [
+        "Italian level A2 recommended",
+        "Letter of motivation in Italian or English",
+      ],
+      schoolSchedule: ["Monday – Saturday, 8:00 – 14:00"],
+      subjectsAndActivities: [
+        "Latin, Greek, Italian literature",
+        "Philosophy and history of art",
+        "Theatre, choir, debate club",
+      ],
+    },
+    coordinator: {
+      name: "Giulia Conti",
+      avatarUrl:
+        "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=200&q=80",
+    },
+    testimonials: [],
+  },
+  {
+    id: "school_gaudi",
+    name: "IES Antoni Gaudí",
+    shortName: "IES Gaudí",
+    city: "Barcelona",
+    country: "Spain",
+    description:
+      "Catalan high school in central Barcelona with a strong artistic curriculum inspired by the city's modernist heritage.",
+    imageUrl:
+      "https://images.unsplash.com/photo-1607237138185-eedd9c632b0b?auto=format&fit=crop&w=800&q=80",
+    galleryItems: [],
+    spotsLeft: 7,
+    orientation: "artistic",
+    language: "es",
+    destinationType: "large_city",
+    exchangeStudentsPresence: "high",
+    mobilityOptions: [
+      { durationMonths: 3, priceEur: 2500 },
+      { durationMonths: 6, priceEur: 2100 },
+      { durationMonths: 10, priceEur: 2200 },
+    ],
+    highlights: {
+      admission: [
+        "Spanish level A2 required",
+        "Portfolio of personal artwork",
+      ],
+      schoolSchedule: ["Monday – Friday, 8:30 – 15:30"],
+      subjectsAndActivities: [
+        "Spanish and Catalan language",
+        "Visual arts, painting, sculpture",
+        "Architecture and design workshops",
+      ],
+    },
+    coordinator: {
+      name: "Marta Vidal",
+      avatarUrl:
+        "https://images.unsplash.com/photo-1542909168-82c3e7fdca5c?auto=format&fit=crop&w=200&q=80",
+    },
+    testimonials: [],
+  },
 ];
 
-export const countriesAvailable = ["France", "Germany", "Spain"] as const;
+export const countriesAvailable = [
+  "France",
+  "Germany",
+  "Italy",
+  "Spain",
+] as const;

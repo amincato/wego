@@ -22,7 +22,7 @@ export const incomingApplications: ApplicationExtended[] = [
     reportCardFilename: "matthis_report_card.pdf",
     letterOfMotivation:
       "I want to discover Italian culture, the food and the language. I plan to study art history while abroad.",
-    appliedAt: daysAgo(0, 8),
+    appliedAt: "2025-10-22T08:00:00.000Z",
     hostFamiliesInterested: [],
   },
   {
@@ -36,7 +36,7 @@ export const incomingApplications: ApplicationExtended[] = [
     reportCardFilename: "sofia_report_card.pdf",
     letterOfMotivation:
       "Italy has been my dream since I was a child. I would love to spend a semester in Milan.",
-    appliedAt: daysAgo(0, 11),
+    appliedAt: "2025-10-18T11:00:00.000Z",
     hostFamiliesInterested: [],
   },
   {
@@ -50,7 +50,7 @@ export const incomingApplications: ApplicationExtended[] = [
     reportCardFilename: "amelie_report_card.pdf",
     letterOfMotivation:
       "I want to live a quieter pace abroad and improve my Italian.",
-    appliedAt: daysAgo(1, 16),
+    appliedAt: "2025-10-12T16:00:00.000Z",
     hostFamiliesInterested: [],
   },
   {
@@ -65,8 +65,8 @@ export const incomingApplications: ApplicationExtended[] = [
     letterOfMotivation: "Looking forward to playing football for your school.",
     appliedAt: daysAgo(8, 10),
     acceptedAt: daysAgo(3, 12),
-    hostFamiliesInterested: ["family_bianchi", "family_rossi"],
-    hostFamilyRequestIds: ["family_bianchi", "family_rossi"],
+    hostFamiliesInterested: ["family_bianchi", "family_schmidt"],
+    hostFamilyRequestIds: ["family_bianchi", "family_schmidt"],
   },
   {
     id: "inc_app_carlo",
@@ -91,7 +91,7 @@ export const outgoingApplications: ApplicationExtended[] = [
   {
     id: "out_app_giorgia",
     studentId: "student_giorgia",
-    schoolId: "school_fsg",
+    schoolId: "school_thiers",
     status: "under_review",
     lifecycleState: "new_application",
     flow: "outgoing",
@@ -99,13 +99,13 @@ export const outgoingApplications: ApplicationExtended[] = [
     reportCardFilename: "giorgia_report_card.pdf",
     letterOfMotivation:
       "I'm excited to spend six months in Rostock to improve my German.",
-    appliedAt: daysAgo(2, 14),
+    appliedAt: "2025-10-08T14:00:00.000Z",
     hostFamiliesInterested: [],
   },
   {
     id: "out_app_giorgia_under_review",
-    studentId: "student_giorgia",
-    schoolId: "school_fsg",
+    studentId: "student_jonas",
+    schoolId: "school_thiers",
     status: "under_review",
     lifecycleState: "under_review",
     flow: "outgoing",
@@ -113,13 +113,13 @@ export const outgoingApplications: ApplicationExtended[] = [
     reportCardFilename: "giorgia_report_card.pdf",
     letterOfMotivation:
       "I'm excited to spend six months in Rostock to improve my German.",
-    appliedAt: daysAgo(12, 14),
+    appliedAt: "2025-09-25T14:00:00.000Z",
     hostFamiliesInterested: [],
   },
   {
     id: "out_app_carlo",
-    studentId: "student_carlo",
-    schoolId: "school_fsg",
+    studentId: "student_lukas",
+    schoolId: "school_thiers",
     status: "accepted",
     lifecycleState: "host_family_match",
     flow: "outgoing",
@@ -127,8 +127,8 @@ export const outgoingApplications: ApplicationExtended[] = [
     reportCardFilename: "carlo_report_card.pdf",
     letterOfMotivation:
       "Looking forward to studying abroad in Germany and improving my German.",
-    appliedAt: daysAgo(95, 9),
-    acceptedAt: daysAgo(70, 12),
+    appliedAt: "2025-09-15T09:00:00.000Z",
+    acceptedAt: "2025-10-05T12:00:00.000Z",
     hostFamiliesInterested: ["family_rath"],
     hostFamilyMatchId: "family_rath",
   },

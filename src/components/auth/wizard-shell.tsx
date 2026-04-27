@@ -36,7 +36,7 @@ export function WizardShell({
   secondaryOnClick?: () => void;
   variant?: "student" | "family";
 }) {
-  const accentColor = variant === "student" ? "#6475e9" : "#ff7834";
+  const accentColor = variant === "student" ? "#547BE0" : "#ff7834";
   const primaryVariant =
     variant === "student" ? "primaryStudent" : "primaryFamily";
   const outlineVariant =

@@ -73,8 +73,8 @@
   --color-text-dark: var(--text-dark);
 
   /* ---- Brand (unchanged across themes) ---- */
-  --color-student: #6475e9;
-  --color-student-accent: #547be0;
+  --color-student: #547BE0;
+  --color-student-accent: #547BE0;
   --color-family: #ff7834;
   --color-both: #520f33;
   --color-school: #14a87a;

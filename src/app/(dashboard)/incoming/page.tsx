@@ -39,15 +39,6 @@ export default function IncomingPage() {
             total={mySchool.hostingCapacity.totalSpots}
             accent="student"
           />
-          {mySchool.hostingCapacity.perDuration.map((row) => (
-            <KpiCard
-              key={row.months}
-              label={`${row.months}-month spots`}
-              value={row.filled}
-              total={row.total}
-              accent="student"
-            />
-          ))}
         </div>
       </section>
 

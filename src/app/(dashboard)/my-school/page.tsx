@@ -37,7 +37,6 @@ export default function MySchoolPage() {
             className="object-cover"
             priority
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-bg/95 via-bg/30 to-transparent" />
         </div>
         <div className="absolute inset-x-0 bottom-0 p-6">
           <div className="flex flex-wrap items-end justify-between gap-3">
@@ -46,7 +45,7 @@ export default function MySchoolPage() {
                 <MapPin className="size-3" />
                 {mySchool.city}, {mySchool.country}
               </span>
-              <h1 className="mt-2 h-display text-fg">{mySchool.name}</h1>
+              <h1 className="mt-2 h-display text-white">{mySchool.name}</h1>
             </div>
             <button className="inline-flex items-center gap-2 rounded-full bg-bg/95 px-3 py-2 text-xs font-bold text-fg ring-1 ring-divider hover:bg-bg">
               <Pencil className="size-3.5" />

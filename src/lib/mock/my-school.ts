@@ -2,13 +2,13 @@ import type { SchoolExtended } from "@/lib/types-dashboard";
 
 export const mySchool: SchoolExtended = {
   id: "school_my_lic_salvini",
-  name: "Liceo Tommaso Salvini",
-  shortName: "Liceo Salvini",
-  city: "Milan",
-  country: "Italy",
+  name: "Friedrich Schiller Gymnasium",
+  shortName: "FSG",
+  city: "Rostock",
+  country: "Germany",
   description:
     "Founded in 1923, Liceo Salvini is a public high school with a long tradition of international exchange. Our linguistic and scientific tracks welcome students from across Europe every year.",
-  imageUrl: "/schools/friedrich-schiller.png",
+  imageUrl: "/schools/my-school.png",
   galleryItems: [
     {
       id: "ms_g1",
@@ -57,19 +57,19 @@ export const mySchool: SchoolExtended = {
     ],
   },
   coordinator: {
-    name: "Anna Ricci",
+    name: "Anna Schmidt",
     avatarUrl:
       "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=200&q=80",
   },
   testimonials: [],
   hostingCapacity: {
-    totalSpots: 24,
-    filledSpots: 17,
-    reservedSpots: 4,
+    totalSpots: 15,
+    filledSpots: 10,
+    reservedSpots: 2,
     perDuration: [
-      { months: 3, total: 8, filled: 5 },
-      { months: 6, total: 10, filled: 7 },
-      { months: 10, total: 6, filled: 5 },
+      { months: 3, total: 5, filled: 3 },
+      { months: 6, total: 6, filled: 4 },
+      { months: 10, total: 4, filled: 3 },
     ],
   },
   academicInfo: {

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ChevronLeft, Mail, MessageSquare, Phone } from "lucide-react";
+import { ChevronLeft, MessageSquare, Phone } from "lucide-react";
 import { ApplicationStatusPill } from "./status-pill";
 import type { StudentProfile } from "@/lib/types";
 import type { ApplicationLifecycleState } from "@/lib/types-dashboard";
@@ -64,9 +64,6 @@ export function ProfileHeader({
         <div className="flex flex-wrap items-center gap-2">
           <button className="inline-flex items-center gap-2 rounded-full bg-student px-4 py-2 text-xs font-bold text-white hover:bg-student-accent">
             <MessageSquare className="size-3.5" /> Open chat
-          </button>
-          <button className="inline-flex items-center gap-2 rounded-full bg-surface px-3 py-2 text-xs font-bold text-fg ring-1 ring-divider hover:bg-chip">
-            <Mail className="size-3.5" /> Email
           </button>
           <button className="inline-flex items-center gap-2 rounded-full bg-surface px-3 py-2 text-xs font-bold text-fg ring-1 ring-divider hover:bg-chip">
             <Phone className="size-3.5" /> Call

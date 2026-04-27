@@ -3,7 +3,7 @@
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import { useState } from "react";
-import { ChevronLeft, MapPin, Users } from "lucide-react";
+import { ChevronLeft } from "lucide-react";
 import { PageHeader } from "@/components/dashboard/dashboard-shell";
 import { schools } from "@/lib/mock/schools";
 import { cn } from "@/lib/utils";
@@ -21,8 +21,8 @@ const LeafletMap = dynamic(
   },
 );
 
-const COUNTRIES = ["all", "Germany", "France", "Italy", "Spain", "United Kingdom"] as const;
-const LANGUAGES = ["all", "de", "fr", "it", "es", "en"] as const;
+const COUNTRIES = ["all", "Germany", "France", "Italy", "Spain"] as const;
+const LANGUAGES = ["all", "de", "fr", "it", "es"] as const;
 const ORIENTATIONS = [
   "all",
   "scientific",
@@ -80,46 +80,6 @@ export default function DestinationsPage() {
             setOrientation={setOrientation}
           />
 
-          <div className="rounded-card-lg bg-surface p-5 ring-1 ring-divider">
-            <div className="mb-3 flex items-center justify-between">
-              <h2 className="h-section text-fg">Matching schools</h2>
-              <span className="rounded-full bg-chip px-2 py-0.5 text-xs font-bold text-fg-muted">
-                {filtered.length}
-              </span>
-            </div>
-            {filtered.length === 0 ? (
-              <p className="text-sm text-fg-muted">
-                No schools match the selected filters.
-              </p>
-            ) : (
-              <ul className="flex flex-col gap-2">
-                {filtered.map((s) => (
-                  <li key={s.id}>
-                    <Link
-                      href={`/partners/${s.id}`}
-                      className="group flex items-center gap-3 rounded-input border border-divider bg-bg px-3 py-3 hover:border-fg/20 hover:bg-chip/40"
-                    >
-                      <span className="grid size-9 place-items-center rounded-full bg-school/15 text-school">
-                        <MapPin className="size-4" />
-                      </span>
-                      <div className="min-w-0 flex-1">
-                        <div className="truncate text-sm font-bold text-fg">
-                          {s.name}
-                        </div>
-                        <div className="text-xs text-fg-muted">
-                          {s.city}, {s.country} · {s.orientation}
-                        </div>
-                      </div>
-                      <span className="inline-flex items-center gap-1 text-xs text-fg-muted">
-                        <Users className="size-3" />
-                        {s.spotsLeft}
-                      </span>
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            )}
-          </div>
         </div>
       </div>
     </>
