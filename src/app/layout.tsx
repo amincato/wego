@@ -1,7 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Quicksand } from "next/font/google";
 import "./globals.css";
-import { MobileFrame } from "@/components/shared/mobile-frame";
 import { ThemeProvider } from "@/components/shared/theme-provider";
 
 const quicksand = Quicksand({
@@ -59,9 +58,7 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body className="min-h-full">
-        <ThemeProvider>
-          <MobileFrame>{children}</MobileFrame>
-        </ThemeProvider>
+        <ThemeProvider>{children}</ThemeProvider>
       </body>
     </html>
   );

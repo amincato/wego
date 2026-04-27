@@ -77,6 +77,8 @@
   --color-student-accent: #547be0;
   --color-family: #ff7834;
   --color-both: #520f33;
+  --color-school: #14a87a;
+  --color-school-accent: #0f8a63;
 
   /* ---- Auxiliary ---- */
   --color-placeholder: #9d9d9d;
@@ -179,4 +181,39 @@ body {
   .h-dvh {
     height: var(--app-h, 100dvh);
   }
+}
+
+/* ==========================================================
+   Dashboard scope
+   The web control dashboard is always rendered in a light,
+   desktop-friendly palette regardless of the global theme
+   selected by the mobile app. We re-declare the same CSS
+   variables so every existing component keeps working, but
+   on a soft neutral palette suited for data-dense screens.
+   The dashboard runs full-bleed on desktop, so we also unset
+   the --app-h scoping above to use the real viewport height.
+   ========================================================== */
+.dashboard-scope {
+  --bg: #f6f7fb;
+  --bg-elevated: #ffffff;
+  --surface-card: #ffffff;
+  --surface-nav: #ffffff;
+  --chip: #f1f3f9;
+
+  --fg: #0a0a0a;
+  --fg-muted: #515566;
+  --fg-subtle: rgba(10, 12, 25, 0.55);
+  --divider: rgba(10, 12, 25, 0.08);
+
+  --bg-primary: var(--bg);
+  --bg-card: var(--surface-card);
+  --bg-nav: var(--surface-nav);
+  --bg-light: var(--bg-elevated);
+  --text-dark: var(--fg);
+
+  --app-h: 100dvh;
+
+  background: var(--bg);
+  color: var(--fg);
+  color-scheme: light;
 }

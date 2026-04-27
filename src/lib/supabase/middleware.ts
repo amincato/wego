@@ -39,6 +39,14 @@ export async function updateSession(request: NextRequest) {
     pathname.startsWith("/login") ||
     pathname.startsWith("/role-select") ||
     pathname.startsWith("/signup") ||
+    pathname.startsWith("/dashboard") ||
+    pathname.startsWith("/incoming") ||
+    pathname.startsWith("/outgoing") ||
+    pathname.startsWith("/families") ||
+    pathname.startsWith("/partners") ||
+    pathname.startsWith("/my-school") ||
+    pathname.startsWith("/messages") ||
+    pathname.startsWith("/profile") ||
     pathname.startsWith("/_next") ||
     pathname.startsWith("/api") ||
     pathname.startsWith("/favicon") ||
