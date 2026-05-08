@@ -81,6 +81,13 @@ export interface StudentProfile {
 }
 
 /* ---- Host family ---- */
+export interface HostFamilyMember {
+  name: string;
+  role: "mother" | "father" | "son" | "daughter" | "other";
+  age: number;
+  photoUrl?: string;
+}
+
 export interface HostFamily {
   id: string;
   userId: string;
@@ -94,6 +101,13 @@ export interface HostFamily {
   homeType: "apartment" | "house";
   hasPets: boolean;
   spareRooms: number;
+  /** Optional extended profile (used on the coordinator dashboard). */
+  membersDetailed?: HostFamilyMember[];
+  languages?: LanguageSkill[];
+  lifestyle?: Lifestyle;
+  hobbies?: string[];
+  galleryUrls?: string[];
+  housePhotoUrls?: string[];
 }
 
 /* ---- School ---- */

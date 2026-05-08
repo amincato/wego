@@ -18,7 +18,7 @@ const ICON: Record<EmergencyKind, { icon: React.ReactNode; tone: string }> = {
   },
   host_family_issue: {
     icon: <Home className="size-4" />,
-    tone: "bg-family/15 text-family",
+    tone: "bg-danger-fg/15 text-danger-fg",
   },
   school_issue: {
     icon: <Triangle className="size-4" />,

@@ -11,33 +11,45 @@ interface Props {
   application?: FamilyApplication;
   href: string;
   className?: string;
+  /** Hide the orange left stripe (used for "current" rows). */
+  plain?: boolean;
 }
 
-export function FamilyRow({ family, application, href, className }: Props) {
+export function FamilyRow({
+  family,
+  application,
+  href,
+  className,
+  plain = false,
+}: Props) {
   return (
     <Link
       href={href}
       className={cn(
-        "group flex items-center gap-4 rounded-input border border-divider bg-bg px-3 py-3 transition-colors hover:border-fg/20 hover:bg-chip/40",
+        "group flex items-center gap-5 rounded-input border border-divider bg-surface px-5 py-5 transition-colors hover:border-fg/20",
+        plain
+          ? "hover:bg-chip/40"
+          : "border-l-4 border-l-family hover:border-l-family hover:bg-family/5",
         className,
       )}
     >
       <span
-        className="size-10 shrink-0 rounded-full bg-chip bg-cover bg-center"
+        className="size-14 shrink-0 rounded-full bg-chip bg-cover bg-center"
         style={{ backgroundImage: `url(${family.photoUrl})` }}
       />
+
       <div className="min-w-0 flex-1">
         <div className="flex items-center gap-2">
-          <span className="truncate text-sm font-bold text-fg">
+          <span className="truncate text-lg font-bold text-fg">
             {family.familyName}
           </span>
-          <span className="text-xs text-fg-subtle">
+          <span className="text-sm text-fg-subtle">
             · {family.city}, {family.country}
           </span>
         </div>
-        <div className="mt-0.5 flex flex-wrap items-center gap-x-3 gap-y-0.5 text-xs text-fg-muted">
+        <div className="mt-1.5 flex flex-wrap items-center gap-x-3 gap-y-0.5 text-sm text-fg-muted">
           <span className="inline-flex items-center gap-1">
-            <Users className="size-3" />
+            <Users className="size-3.5" />
             {family.members.length} members
           </span>
           {application ? (
@@ -46,8 +58,10 @@ export function FamilyRow({ family, application, href, className }: Props) {
         </div>
       </div>
       <div className="flex shrink-0 items-center gap-3">
-        {application ? <FamilyStatusPill state={application.state} /> : null}
-        <ChevronRight className="size-4 text-fg-subtle group-hover:text-fg" />
+        {application && !plain ? (
+          <FamilyStatusPill state={application.state} />
+        ) : null}
+        <ChevronRight className="size-5 text-fg-subtle group-hover:text-fg" />
       </div>
     </Link>
   );

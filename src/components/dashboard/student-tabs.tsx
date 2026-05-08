@@ -1,5 +1,6 @@
+import Image from "next/image";
 import Link from "next/link";
-import { FileText, Globe2, Heart, Home, ScrollText, UserRound } from "lucide-react";
+import { FileText, Home, ScrollText, UserRound } from "lucide-react";
 import { InfoCard, InfoGrid, InfoRow } from "./info-card";
 import { JourneyTimeline } from "./journey-timeline";
 import { PaymentsTable } from "./payments-table";
@@ -20,6 +21,45 @@ const NATIONALITY_LABEL: Record<StudentProfile["nationality"], string> = {
   de: "German",
   es: "Spanish",
   gb: "British",
+};
+
+const LANGUAGE_FLAG: Record<string, string> = {
+  it: "🇮🇹",
+  fr: "🇫🇷",
+  de: "🇩🇪",
+  es: "🇪🇸",
+  en: "🇬🇧",
+};
+
+const HOBBY_EMOJI: Record<string, string> = {
+  football: "⚽",
+  basket: "🏀",
+  basketball: "🏀",
+  tennis: "🎾",
+  volleyball: "🏐",
+  swimming: "🏊",
+  ski: "⛷️",
+  fitness: "💪",
+  running: "🏃",
+  cycling: "🚴",
+  yoga: "🧘",
+  hiking: "🥾",
+  travelling: "✈️",
+  travel: "✈️",
+  photography: "📷",
+  music: "🎵",
+  dance: "💃",
+  dancing: "💃",
+  drawing: "🎨",
+  painting: "🖌️",
+  reading: "📚",
+  writing: "✍️",
+  cooking: "🍳",
+  gaming: "🎮",
+  movies: "🎬",
+  cinema: "🎬",
+  theater: "🎭",
+  theatre: "🎭",
 };
 
 const LIFESTYLE_LABEL: Record<string, string> = {
@@ -44,6 +84,15 @@ const LIFESTYLE_LABEL: Record<string, string> = {
 export function PersonalInfoTab({ student }: { student: StudentProfile }) {
   return (
     <div className="grid gap-6 lg:grid-cols-2">
+      {student.bio ? (
+        <section className="lg:col-span-2">
+          <h3 className="h-section text-fg">About the student</h3>
+          <p className="mt-3 whitespace-pre-line text-sm leading-relaxed text-fg">
+            {student.bio}
+          </p>
+        </section>
+      ) : null}
+
       <InfoCard title="Personal info">
         <InfoGrid
           items={[
@@ -72,7 +121,9 @@ export function PersonalInfoTab({ student }: { student: StudentProfile }) {
               className="flex items-center justify-between gap-3 rounded-input bg-bg px-3 py-2 ring-1 ring-divider"
             >
               <span className="inline-flex items-center gap-2 text-sm font-semibold text-fg">
-                <Globe2 className="size-4 text-fg-subtle" />
+                <span className="text-base leading-none">
+                  {LANGUAGE_FLAG[l.code] ?? "🏳️"}
+                </span>
                 {l.code.toUpperCase()}
               </span>
               <span className="rounded-full bg-chip px-2 py-0.5 text-xs font-bold text-fg-muted capitalize">
@@ -102,21 +153,41 @@ export function PersonalInfoTab({ student }: { student: StudentProfile }) {
         </ul>
       </InfoCard>
 
-      <InfoCard title="Hobbies & bio">
+      <InfoCard title="Hobbies" className="self-start">
         <div className="flex flex-wrap gap-2">
           {student.hobbies.map((h) => (
             <span
               key={h}
-              className="inline-flex items-center gap-1 rounded-full bg-chip px-3 py-1 text-xs font-semibold capitalize text-fg"
+              className="inline-flex items-center gap-2 rounded-full bg-chip px-4 py-2 text-sm font-semibold capitalize text-fg"
             >
-              <Heart className="size-3 text-family" />
+              <span className="text-base leading-none">
+                {HOBBY_EMOJI[h.toLowerCase()] ?? "✨"}
+              </span>
               {h.replace(/_/g, " ")}
             </span>
           ))}
         </div>
-        <p className="mt-4 text-sm leading-relaxed text-fg-muted">
-          {student.bio}
-        </p>
+      </InfoCard>
+
+      <InfoCard title="Photos" className="lg:col-span-2">
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+          {["/students/G1.png", "/students/G2.png", "/students/G3.png"].map(
+            (src, i) => (
+              <div
+                key={src}
+                className="relative aspect-square overflow-hidden rounded-input bg-chip ring-1 ring-divider"
+              >
+                <Image
+                  src={src}
+                  alt={`${student.firstName} photo ${i + 1}`}
+                  fill
+                  sizes="(min-width: 1024px) 30vw, 100vw"
+                  className="object-cover"
+                />
+              </div>
+            ),
+          )}
+        </div>
       </InfoCard>
     </div>
   );
@@ -142,14 +213,6 @@ export function ApplicationSummaryTab({
                 "en-US",
                 { month: "long", day: "numeric", year: "numeric" },
               ),
-            },
-            {
-              label: "Current state",
-              value: application.lifecycleState.replace(/_/g, " "),
-            },
-            {
-              label: "Direction",
-              value: application.flow,
             },
           ]}
         />
@@ -188,7 +251,7 @@ export function ApplicationSummaryTab({
       >
         <div className="flex items-start gap-3 rounded-input bg-bg p-4 ring-1 ring-divider">
           <FileText className="mt-0.5 size-4 shrink-0 text-fg-subtle" />
-          <p className="text-sm leading-relaxed text-fg">
+          <p className="whitespace-pre-line text-sm leading-relaxed text-fg">
             {application.letterOfMotivation}
           </p>
         </div>
@@ -199,12 +262,11 @@ export function ApplicationSummaryTab({
 
 export function ContactTab({ student }: { student: StudentProfile }) {
   return (
-    <div className="max-w-3xl">
-      <ChatPanel
-        withName={`${student.firstName} ${student.lastName}`}
-        withAvatar={student.photoUrl}
-      />
-    </div>
+    <ChatPanel
+      withName={`${student.firstName} ${student.lastName}`}
+      withAvatar={student.photoUrl}
+      initialMessages={[]}
+    />
   );
 }
 

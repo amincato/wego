@@ -47,7 +47,7 @@ export const classAssignments: ClassAssignment[] = [
   },
   {
     studentId: "student_carlo",
-    className: "11. Klasse — Naturwissenschaftlich",
+    className: "11. Klasse",
     homeroomTeacher: "Frau Schmidt",
     schedule: [
       { day: "Mon", periods: ["Mathe", "Physik", "Deutsch", "Englisch"] },
@@ -63,6 +63,28 @@ export const classAssignments: ClassAssignment[] = [
       "Jonas Wagner",
       "Mia Schulz",
     ],
+  },
+  /* ---- Outgoing FSG students currently studying at Friedrich Schiller ---- */
+  {
+    studentId: "student_giorgia",
+    className: "11. Klasse",
+    homeroomTeacher: "Herr Becker",
+    schedule: [],
+    classmates: [],
+  },
+  {
+    studentId: "student_jonas",
+    className: "10. Klasse",
+    homeroomTeacher: "Frau Hoffmann",
+    schedule: [],
+    classmates: [],
+  },
+  {
+    studentId: "student_lukas",
+    className: "12. Klasse",
+    homeroomTeacher: "Herr Wagner",
+    schedule: [],
+    classmates: [],
   },
 ];
 

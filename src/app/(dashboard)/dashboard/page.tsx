@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { PageHeader } from "@/components/dashboard/dashboard-shell";
 import { StatPairCard } from "@/components/dashboard/stat-pair-card";
 import { SectionCard } from "@/components/dashboard/section-card";
@@ -42,14 +43,25 @@ export default function DashboardHomePage() {
 
   return (
     <>
-      <PageHeader
-        title={`Hello, ${currentCoordinator.firstName}`}
-        subtitle={`${mySchool.name} · ${mySchool.city}, ${mySchool.country}`}
-      />
+      <div className="mb-6 flex items-center gap-4">
+        <Image
+          src={currentCoordinator.avatarUrl}
+          alt={`${currentCoordinator.firstName} ${currentCoordinator.lastName}`}
+          width={64}
+          height={64}
+          priority
+          className="size-16 rounded-full object-cover ring-2 ring-divider"
+        />
+        <div>
+          <h1 className="h-display text-fg">{`Hello, ${currentCoordinator.firstName}`}</h1>
+          <p className="t-body mt-1 text-fg-muted">
+            {`${mySchool.name} · ${mySchool.city}, ${mySchool.country}`}
+          </p>
+        </div>
+      </div>
 
       {/* KPI ROW */}
       <section className="mb-6">
-        <h2 className="t-label mb-3">School capacity</h2>
         <div className="grid gap-4 md:grid-cols-2">
           {homeStats.map((s, i) => (
             <StatPairCard
@@ -69,7 +81,7 @@ export default function DashboardHomePage() {
           title="Today's tasks"
           count={openTasks}
           description="What needs your attention today."
-          action={{ label: "View all", href: "/messages/tickets" }}
+          action={{ label: "View all", href: "/calendar" }}
           className="xl:col-span-2"
         >
           <TaskList tasks={todaysTasks} />
@@ -79,7 +91,7 @@ export default function DashboardHomePage() {
           title="Emergency notifications"
           count={unackedAlerts}
           description="Issues that need a coordinator response."
-          action={{ label: "Workflows", href: "/messages/emergencies" }}
+          action={{ label: "View all", href: "/messages/emergencies" }}
         >
           <NotificationList notifications={emergencyNotifications} />
         </SectionCard>

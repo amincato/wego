@@ -1,4 +1,27 @@
-import { StudentProfile } from "@/lib/types";
+import { LanguageCode, StudentProfile } from "@/lib/types";
+
+function nativeLang(n: StudentProfile["nationality"]): LanguageCode {
+  switch (n) {
+    case "it":
+      return "it";
+    case "fr":
+      return "fr";
+    case "de":
+      return "de";
+    case "es":
+      return "es";
+    case "gb":
+      return "en";
+  }
+}
+
+const defaultLifestyle: StudentProfile["lifestyle"] = {
+  atHome: "time_with_family",
+  socialLife: "social_outgoing",
+  pets: "has_pet_ok",
+  dailyHabits: "flexible",
+  foodDiet: "not_specific",
+};
 
 export const students: StudentProfile[] = [
   {
@@ -42,6 +65,7 @@ export const students: StudentProfile[] = [
     languages: [
       { code: "fr", level: "native" },
       { code: "en", level: "advanced" },
+      { code: "de", level: "beginner" },
     ],
     lifestyle: {
       atHome: "often_out",
@@ -50,8 +74,8 @@ export const students: StudentProfile[] = [
       dailyHabits: "flexible",
       foodDiet: "vegetarian",
     },
-    hobbies: ["football", "photography", "music"],
-    bio: "Passionate about photography and outdoor sports.",
+    hobbies: ["football", "photography", "music", "travelling", "swimming"],
+    bio: "Hi! My name is Matthis and I'm a very active and sporty person ⚽\nI love spending time outdoors, trying new activities, and meeting new people from different countries 🌍\nI'm really excited about this exchange experience because I can't wait to discover a new culture, improve my language skills, and create unforgettable memories ✈️✨\nI'm friendly, open-minded, and always happy to make new friendships 😊",
     photoUrl: "/matthis-bernard.jpg",
     galleryUrls: [],
     mobilityDurationMonths: 10,
@@ -225,7 +249,158 @@ export const students: StudentProfile[] = [
     galleryUrls: [],
     mobilityDurationMonths: 6,
   },
+  /* ---- Confirmed incoming students currently arriving at FSG ---- */
+  ...buildConfirmedIncoming(),
 ];
+
+function buildConfirmedIncoming(): StudentProfile[] {
+  type Seed = {
+    id: string;
+    firstName: string;
+    lastName: string;
+    age: number;
+    city: string;
+    nationality: StudentProfile["nationality"];
+    gender: StudentProfile["gender"];
+    photoUrl: string;
+    months: StudentProfile["mobilityDurationMonths"];
+  };
+  const seeds: Seed[] = [
+    {
+      id: "student_lily_jacob",
+      firstName: "Lilly Louise",
+      lastName: "Jacob",
+      age: 16,
+      city: "Lyon",
+      nationality: "fr",
+      gender: "female",
+      photoUrl: "/students/confirmed/p6.png",
+      months: 6,
+    },
+    {
+      id: "student_marco_conti",
+      firstName: "Marco",
+      lastName: "Conti",
+      age: 17,
+      city: "Florence",
+      nationality: "it",
+      gender: "male",
+      photoUrl: "/students/confirmed/p1.png",
+      months: 10,
+    },
+    {
+      id: "student_camille_dubois",
+      firstName: "Camille",
+      lastName: "Dubois",
+      age: 16,
+      city: "Lille",
+      nationality: "fr",
+      gender: "female",
+      photoUrl: "/students/confirmed/p8.png",
+      months: 3,
+    },
+    {
+      id: "student_pablo_garcia",
+      firstName: "Pablo",
+      lastName: "García",
+      age: 17,
+      city: "Madrid",
+      nationality: "es",
+      gender: "male",
+      photoUrl: "/students/confirmed/p2.png",
+      months: 6,
+    },
+    {
+      id: "student_carmen_ruiz",
+      firstName: "Carmen",
+      lastName: "Ruiz",
+      age: 16,
+      city: "Barcelona",
+      nationality: "es",
+      gender: "female",
+      photoUrl: "/students/confirmed/p7.png",
+      months: 10,
+    },
+    {
+      id: "student_giulia_bianchi",
+      firstName: "Giulia",
+      lastName: "Bianchi",
+      age: 17,
+      city: "Milan",
+      nationality: "it",
+      gender: "female",
+      photoUrl: "/students/confirmed/p9.png",
+      months: 6,
+    },
+    {
+      id: "student_lucas_martin",
+      firstName: "Lucas",
+      lastName: "Martin",
+      age: 17,
+      city: "Marseille",
+      nationality: "fr",
+      gender: "male",
+      photoUrl: "/students/confirmed/p3.png",
+      months: 6,
+    },
+    {
+      id: "student_sofia_romero",
+      firstName: "Sofía",
+      lastName: "Romero",
+      age: 16,
+      city: "Madrid",
+      nationality: "es",
+      gender: "female",
+      photoUrl: "/students/confirmed/p10.png",
+      months: 3,
+    },
+    {
+      id: "student_alessandro_greco",
+      firstName: "Alessandro",
+      lastName: "Greco",
+      age: 17,
+      city: "Naples",
+      nationality: "it",
+      gender: "male",
+      photoUrl: "/students/confirmed/p4.png",
+      months: 10,
+    },
+    {
+      id: "student_sophie_laurent",
+      firstName: "Sophie",
+      lastName: "Laurent",
+      age: 16,
+      city: "Nantes",
+      nationality: "fr",
+      gender: "female",
+      photoUrl: "/students/confirmed/p6.png",
+      months: 6,
+    },
+  ];
+
+  return seeds.map((s) => ({
+    id: s.id,
+    userId: `user_${s.id.replace(/^student_/, "")}`,
+    firstName: s.firstName,
+    lastName: s.lastName,
+    birthday: `${2026 - s.age}-06-15`,
+    age: s.age,
+    city: s.city,
+    nationality: s.nationality,
+    gender: s.gender,
+    languages: [
+      { code: nativeLang(s.nationality), level: "native" },
+      { code: "en", level: "advanced" },
+      { code: "de", level: "intermediate" },
+    ],
+    lifestyle: defaultLifestyle,
+    hobbies: ["music", "travelling", "photography"],
+    bio: `Confirmed exchange student arriving at Friedrich Schiller Gymnasium for a ${s.months}-month mobility.`,
+    photoUrl: s.photoUrl,
+    galleryUrls: [],
+    mobilityDurationMonths: s.months,
+  }));
+}
 
 /** The student used for demo: Giorgia is the default logged-in user. */
 export const DEMO_STUDENT_ID = "student_giorgia";

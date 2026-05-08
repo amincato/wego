@@ -1,6 +1,6 @@
 "use client";
 
-import { Send } from "lucide-react";
+import { Phone, Send, Video } from "lucide-react";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 
@@ -56,15 +56,31 @@ export function ChatPanel({
   };
 
   return (
-    <div className="flex h-[480px] flex-col overflow-hidden rounded-card-lg ring-1 ring-divider">
+    <div className="flex h-[520px] w-full flex-col overflow-hidden rounded-card-lg ring-1 ring-divider">
       <header className="flex items-center gap-3 border-b border-divider bg-surface px-4 py-3">
         <span
           className="size-9 rounded-full bg-chip bg-cover bg-center"
           style={{ backgroundImage: `url(${withAvatar})` }}
         />
-        <div>
+        <div className="flex-1">
           <div className="text-sm font-bold text-fg">{withName}</div>
           <div className="text-xs text-fg-subtle">Online</div>
+        </div>
+        <div className="flex items-center gap-2">
+          <button
+            type="button"
+            aria-label="Video call"
+            className="grid size-10 place-items-center rounded-full bg-surface text-fg ring-1 ring-divider hover:bg-chip"
+          >
+            <Video className="size-4" />
+          </button>
+          <button
+            type="button"
+            aria-label="Call"
+            className="grid size-10 place-items-center rounded-full bg-surface text-fg ring-1 ring-divider hover:bg-chip"
+          >
+            <Phone className="size-4" />
+          </button>
         </div>
       </header>
 

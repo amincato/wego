@@ -57,9 +57,8 @@ export const mySchool: SchoolExtended = {
     ],
   },
   coordinator: {
-    name: "Anna Schmidt",
-    avatarUrl:
-      "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=200&q=80",
+    name: "Hans Schmidt",
+    avatarUrl: "/hans-coordinator.png",
   },
   testimonials: [],
   hostingCapacity: {
@@ -97,6 +96,6 @@ export const mySchool: SchoolExtended = {
     ],
     averageClassSize: 22,
   },
-  studentsHostedIds: ["student_matthis", "student_giorgio"],
+  studentsHostedIds: ["student_carlo"],
   studentsAbroadIds: ["student_carlo"],
 };

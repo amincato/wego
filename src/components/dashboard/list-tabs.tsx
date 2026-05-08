@@ -3,7 +3,12 @@
 import { useState, ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
-export type ListTabAccent = "default" | "student" | "family" | "school";
+export type ListTabAccent =
+  | "default"
+  | "student"
+  | "family"
+  | "school"
+  | "success";
 
 export interface ListTabDef {
   id: string;
@@ -14,17 +19,19 @@ export interface ListTabDef {
 }
 
 const ACTIVE_BG: Record<ListTabAccent, string> = {
-  default: "bg-bg text-fg shadow-sm",
+  default: "bg-student text-white shadow-sm",
   student: "bg-student text-white shadow-sm",
   family: "bg-family text-white shadow-sm",
   school: "bg-school text-white shadow-sm",
+  success: "bg-success-bg/40 text-success-fg shadow-sm",
 };
 
 const ACTIVE_COUNT: Record<ListTabAccent, string> = {
-  default: "bg-chip text-fg-muted",
+  default: "bg-white/25 text-white",
   student: "bg-white/25 text-white",
   family: "bg-white/25 text-white",
   school: "bg-white/25 text-white",
+  success: "bg-success-fg/15 text-success-fg",
 };
 
 export function ListTabs({
@@ -39,7 +46,7 @@ export function ListTabs({
 
   return (
     <div>
-      <div className="flex flex-wrap gap-1 rounded-full bg-chip p-1">
+      <div className="inline-flex flex-wrap items-center gap-1 rounded-full bg-chip p-1.5">
         {tabs.map((tab) => {
           const isActive = tab.id === active;
           const accent: ListTabAccent = tab.accent ?? "default";
@@ -48,7 +55,7 @@ export function ListTabs({
               key={tab.id}
               onClick={() => setActive(tab.id)}
               className={cn(
-                "inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-sm font-bold transition-colors",
+                "inline-flex items-center gap-2 rounded-full px-5 py-2 text-sm font-bold transition-colors",
                 isActive
                   ? ACTIVE_BG[accent]
                   : "text-fg-muted hover:text-fg",

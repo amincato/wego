@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { Home, UserRound } from "lucide-react";
 import { InfoCard, InfoGrid, InfoRow } from "./info-card";
@@ -12,6 +13,74 @@ import type {
 } from "@/lib/types-dashboard";
 import type { HostFamily } from "@/lib/types";
 
+const LANGUAGE_FLAG: Record<string, string> = {
+  it: "🇮🇹",
+  fr: "🇫🇷",
+  de: "🇩🇪",
+  es: "🇪🇸",
+  en: "🇬🇧",
+};
+
+const HOBBY_EMOJI: Record<string, string> = {
+  football: "⚽",
+  basket: "🏀",
+  basketball: "🏀",
+  tennis: "🎾",
+  volleyball: "🏐",
+  swimming: "🏊",
+  ski: "⛷️",
+  fitness: "💪",
+  running: "🏃",
+  cycling: "🚴",
+  yoga: "🧘",
+  hiking: "🥾",
+  travelling: "✈️",
+  travel: "✈️",
+  photography: "📷",
+  music: "🎵",
+  dance: "💃",
+  dancing: "💃",
+  drawing: "🎨",
+  painting: "🖌️",
+  reading: "📚",
+  writing: "✍️",
+  cooking: "🍳",
+  gaming: "🎮",
+  movies: "🎬",
+  cinema: "🎬",
+  theater: "🎭",
+  theatre: "🎭",
+  gardening: "🪴",
+  baking: "🥐",
+};
+
+const LIFESTYLE_LABEL: Record<string, string> = {
+  time_with_family: "Family-oriented",
+  often_out: "Often out",
+  invite_people: "Loves inviting friends",
+  quiet_private: "Quiet & private",
+  social_outgoing: "Social & outgoing",
+  small_circles: "Small circles",
+  on_my_own: "On my own",
+  has_pet_ok: "Has a pet · OK with pets",
+  no_pets: "No pets",
+  no_pets_please: "Prefers no pets",
+  structured: "Structured routine",
+  flexible: "Flexible routine",
+  no_schedule: "No fixed schedule",
+  not_specific: "No specific diet",
+  vegetarian: "Vegetarian",
+  vegan: "Vegan",
+};
+
+const ROLE_LABEL: Record<string, string> = {
+  father: "Father",
+  mother: "Mother",
+  son: "Son",
+  daughter: "Daughter",
+  other: "Other",
+};
+
 const FAMILY_FLOW: FamilyApplicationState[] = [
   "new_request",
   "site_visit_scheduled",
@@ -21,40 +90,170 @@ const FAMILY_FLOW: FamilyApplicationState[] = [
 ];
 
 export function FamilyPersonalInfoTab({ family }: { family: HostFamily }) {
+  const detailedMembers = family.membersDetailed;
+
   return (
     <div className="grid gap-6 lg:grid-cols-2">
-      <InfoCard title="Personal info">
-        <InfoGrid
-          items={[
-            { label: "Family name", value: family.familyName },
-            { label: "City", value: `${family.city}, ${family.country}` },
-            { label: "Home type", value: family.homeType },
-            { label: "Spare rooms", value: `${family.spareRooms}` },
-            { label: "Pets", value: family.hasPets ? "Yes" : "No" },
-            { label: "Members", value: `${family.members.length}` },
-          ]}
-        />
-      </InfoCard>
+      <section className="lg:col-span-2">
+        <h3 className="h-section text-fg">About the family</h3>
+        <p className="mt-3 whitespace-pre-line text-sm leading-relaxed text-fg">
+          {family.bio}
+        </p>
+      </section>
 
       <InfoCard title="Members">
-        <ul className="flex flex-col gap-2">
-          {family.members.map((m) => (
-            <li
-              key={m}
-              className="flex items-center gap-3 rounded-input bg-bg px-3 py-2 ring-1 ring-divider"
-            >
-              <span className="grid size-8 place-items-center rounded-full bg-family/15 text-family">
-                <UserRound className="size-4" />
-              </span>
-              <span className="text-sm font-semibold text-fg">{m}</span>
-            </li>
-          ))}
-        </ul>
+        {detailedMembers?.length ? (
+          <ul className="flex flex-col gap-2">
+            {detailedMembers.map((m) => (
+              <li
+                key={m.name}
+                className="flex items-center gap-2.5 rounded-input bg-bg px-2.5 py-1.5 ring-1 ring-divider"
+              >
+                {m.photoUrl ? (
+                  <span
+                    className="size-9 shrink-0 rounded-full bg-chip bg-cover bg-center ring-1 ring-divider"
+                    style={{ backgroundImage: `url(${m.photoUrl})` }}
+                  />
+                ) : (
+                  <span className="grid size-9 place-items-center rounded-full bg-family/15 text-family">
+                    <UserRound className="size-4" />
+                  </span>
+                )}
+                <div className="min-w-0">
+                  <div className="truncate text-sm font-bold text-fg">
+                    {m.name}
+                  </div>
+                  <div className="text-xs text-fg-muted">
+                    {ROLE_LABEL[m.role] ?? m.role} · {m.age} y/o
+                  </div>
+                </div>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <ul className="flex flex-col gap-2">
+            {family.members.map((m) => (
+              <li
+                key={m}
+                className="flex items-center gap-2.5 rounded-input bg-bg px-2.5 py-1.5 ring-1 ring-divider"
+              >
+                <span className="grid size-8 place-items-center rounded-full bg-family/15 text-family">
+                  <UserRound className="size-4" />
+                </span>
+                <span className="text-sm font-semibold text-fg">{m}</span>
+              </li>
+            ))}
+          </ul>
+        )}
       </InfoCard>
 
-      <InfoCard title="About the family" className="lg:col-span-2">
-        <p className="text-sm leading-relaxed text-fg">{family.bio}</p>
-      </InfoCard>
+      {family.lifestyle ? (
+        <InfoCard title="Lifestyle" className="">
+          <ul className="space-y-1">
+            <InfoRow
+              label="At home"
+              value={LIFESTYLE_LABEL[family.lifestyle.atHome]}
+            />
+            <InfoRow
+              label="Social life"
+              value={LIFESTYLE_LABEL[family.lifestyle.socialLife]}
+            />
+            <InfoRow label="Pets" value={LIFESTYLE_LABEL[family.lifestyle.pets]} />
+            <InfoRow
+              label="Daily habits"
+              value={LIFESTYLE_LABEL[family.lifestyle.dailyHabits]}
+            />
+            <InfoRow
+              label="Food / diet"
+              value={LIFESTYLE_LABEL[family.lifestyle.foodDiet]}
+            />
+          </ul>
+        </InfoCard>
+      ) : null}
+
+      {family.hobbies?.length ? (
+        <InfoCard title="Hobbies" className="">
+          <div className="flex flex-wrap gap-2">
+            {family.hobbies.map((h) => (
+              <span
+                key={h}
+                className="inline-flex items-center gap-2 rounded-full bg-chip px-4 py-2 text-sm font-semibold capitalize text-fg"
+              >
+                <span className="text-base leading-none">
+                  {HOBBY_EMOJI[h.toLowerCase()] ?? "✨"}
+                </span>
+                {h.replace(/_/g, " ")}
+              </span>
+            ))}
+          </div>
+        </InfoCard>
+      ) : null}
+
+      {family.languages?.length ? (
+        <InfoCard title="Languages" className="">
+          <ul className="flex flex-col gap-2">
+            {family.languages.map((l) => (
+              <li
+                key={l.code}
+                className="flex items-center justify-between gap-3 rounded-input bg-bg px-3 py-2 ring-1 ring-divider"
+              >
+                <span className="inline-flex items-center gap-2 text-sm font-semibold text-fg">
+                  <span className="text-base leading-none">
+                    {LANGUAGE_FLAG[l.code] ?? "🏳️"}
+                  </span>
+                  {l.code.toUpperCase()}
+                </span>
+                <span className="rounded-full bg-chip px-2 py-0.5 text-xs font-bold text-fg-muted capitalize">
+                  {l.level}
+                </span>
+              </li>
+            ))}
+          </ul>
+        </InfoCard>
+      ) : null}
+
+      {family.galleryUrls?.length ? (
+        <InfoCard title="Photos" className="lg:col-span-2">
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+            {family.galleryUrls.map((src, i) => (
+              <div
+                key={src}
+                className="relative aspect-square overflow-hidden rounded-input bg-chip ring-1 ring-divider"
+              >
+                <Image
+                  src={src}
+                  alt={`${family.familyName} photo ${i + 1}`}
+                  fill
+                  sizes="(min-width: 1024px) 30vw, 100vw"
+                  className="object-cover"
+                />
+              </div>
+            ))}
+          </div>
+        </InfoCard>
+      ) : null}
+
+      {family.housePhotoUrls?.length ? (
+        <InfoCard title="House" className="lg:col-span-2">
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+            {family.housePhotoUrls.map((src, i) => (
+              <div
+                key={src}
+                className="relative aspect-[4/3] overflow-hidden rounded-input bg-chip ring-1 ring-divider"
+              >
+                <Image
+                  src={src}
+                  alt={`${family.familyName} house ${i + 1}`}
+                  fill
+                  sizes="(min-width: 1024px) 30vw, 100vw"
+                  className="object-cover"
+                />
+              </div>
+            ))}
+          </div>
+        </InfoCard>
+      ) : null}
+
     </div>
   );
 }

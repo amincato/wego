@@ -66,15 +66,14 @@ export const threads: ChatThread[] = [
     lastMessageAt: "2026-04-25T11:20:00Z",
   },
 
-  /* ---- Giorgia (student) ↔ School coordinator Anna Schmidt ---- */
+  /* ---- Giorgia (student) ↔ School coordinator Hans Schmidt ---- */
   {
     id: "thread_coord_anna_giorgia",
     participants: [
       {
         userId: "user_coord_anna",
-        name: "Anna Schmidt · F. Schiller Gym.",
-        avatarUrl:
-          "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=200&q=80",
+        name: "Hans Schmidt · F. Schiller Gym.",
+        avatarUrl: "/hans-coordinator.png",
         role: "family",
       },
       {
@@ -90,7 +89,7 @@ export const threads: ChatThread[] = [
         id: "msg_coord_1",
         threadId: "thread_coord_anna_giorgia",
         from: "user_coord_anna",
-        text: "Hi Giorgia, Anna from the exchange office at Friedrich Schiller Gymnasium 👋 Your application landed on my desk this morning!",
+        text: "Hi Giorgia, Hans from the exchange office at Friedrich Schiller Gymnasium 👋 Your application landed on my desk this morning!",
         timestamp: "2026-04-24T09:00:00Z",
       },
       {
@@ -104,7 +103,7 @@ export const threads: ChatThread[] = [
         id: "msg_coord_3",
         threadId: "thread_coord_anna_giorgia",
         from: "user_giorgia",
-        text: "Hi Anna! Wednesday 15:00 is perfect for me 🙌 Should I prepare anything specific?",
+        text: "Hi Hans! Wednesday 15:00 is perfect for me 🙌 Should I prepare anything specific?",
         timestamp: "2026-04-24T10:15:00Z",
       },
       {

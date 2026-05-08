@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
@@ -38,7 +39,7 @@ const NAV: NavItem[] = [
     href: "/outgoing",
     label: "Outgoing students",
     icon: <PlaneTakeoff className="size-5" strokeWidth={2} />,
-    accent: "text-student",
+    accent: "text-school",
   },
   {
     href: "/families",
@@ -67,9 +68,14 @@ export function SidebarNav() {
     <aside className="sticky top-0 hidden h-dvh w-[260px] shrink-0 flex-col gap-2 overflow-y-auto border-r border-divider bg-surface px-4 py-6 lg:flex">
       <div className="px-2 pb-6">
         <Link href="/dashboard" className="flex items-center gap-2">
-          <div className="grid size-9 place-items-center rounded-xl bg-student text-white">
-            <span className="font-bold">w</span>
-          </div>
+          <Image
+            src="/wego-logo.png"
+            alt="wego"
+            width={36}
+            height={36}
+            priority
+            className="size-9 rounded-xl"
+          />
           <div className="flex flex-col leading-tight">
             <span className="font-bold text-fg">wego</span>
             <span className="text-[11px] uppercase tracking-wider text-fg-subtle">

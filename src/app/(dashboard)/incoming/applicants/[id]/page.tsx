@@ -39,8 +39,18 @@ export default async function IncomingApplicantPage({
       <ProfileHeader
         student={student}
         state={app.lifecycleState}
-        backHref="/incoming"
-        backLabel="Back to incoming students"
+        backHref="/dashboard"
+        backLabel="Back to home"
+        actions={
+          <>
+            <button className="inline-flex items-center gap-2 rounded-full bg-success-bg/40 px-4 py-2 text-xs font-bold text-success-fg hover:bg-success-bg/60">
+              Confirm application
+            </button>
+            <button className="inline-flex items-center gap-2 rounded-full bg-danger-bg/60 px-4 py-2 text-xs font-bold text-danger-fg hover:bg-danger-bg">
+              Reject application
+            </button>
+          </>
+        }
       />
 
       <ProfileTabs

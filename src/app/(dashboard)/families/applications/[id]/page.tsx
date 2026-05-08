@@ -32,6 +32,11 @@ export default async function FamilyApplicationPage({
         state={application.state}
         backHref="/families"
         backLabel="Back to host families"
+        actions={
+          <button className="inline-flex items-center gap-2 rounded-full bg-family px-4 py-2 text-xs font-bold text-white hover:brightness-105">
+            Schedule site visit
+          </button>
+        }
       />
 
       <ProfileTabs

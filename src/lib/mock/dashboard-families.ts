@@ -65,18 +65,66 @@ export const dashboardHostFamilies: HostFamily[] = [
     city: "Rostock",
     country: "Germany",
     nationality: "de",
-    photoUrl:
-      "https://images.unsplash.com/photo-1609220136736-443140cffec6?auto=format&fit=crop&w=600&q=80",
-    bio: "Energetic family of four, very interested in cultural exchange.",
+    photoUrl: "/families/mueller/photo-1.png",
+    bio: "We're a cheerful German family of four (plus our goofy dog 🐶)! We love traveling and discovering new cultures, and we're excited to learn about yours while sharing our traditions and daily life. Julius studies at Humboldt Gymnasium and takes part in many extracurricular activities you can join 😊. We enjoy spending time together, exploring new places, and creating a warm, welcoming home for our guest.",
     members: [
-      "Mother Anna, 39",
-      "Father Lukas, 41",
-      "Son Jonas, 14",
-      "Daughter Mia, 11",
+      "Father Klaus, 46",
+      "Mother Anna, 44",
+      "Son Julius, 17",
+      "Daughter Mia, 4",
     ],
     homeType: "apartment",
     hasPets: true,
     spareRooms: 1,
+    membersDetailed: [
+      {
+        name: "Klaus",
+        role: "father",
+        age: 46,
+        photoUrl: "/families/mueller/father.png",
+      },
+      {
+        name: "Anna",
+        role: "mother",
+        age: 44,
+        photoUrl: "/families/mueller/mother.png",
+      },
+      {
+        name: "Julius",
+        role: "son",
+        age: 17,
+        photoUrl: "/families/mueller/son.png",
+      },
+      {
+        name: "Mia",
+        role: "daughter",
+        age: 4,
+        photoUrl: "/families/mueller/daughter.png",
+      },
+    ],
+    languages: [
+      { code: "de", level: "native" },
+      { code: "en", level: "advanced" },
+      { code: "fr", level: "intermediate" },
+    ],
+    lifestyle: {
+      atHome: "time_with_family",
+      socialLife: "social_outgoing",
+      pets: "has_pet_ok",
+      dailyHabits: "structured",
+      foodDiet: "not_specific",
+    },
+    hobbies: ["cooking", "travelling", "music", "hiking", "reading"],
+    galleryUrls: [
+      "/families/mueller/photo-1.png",
+      "/families/mueller/photo-2.png",
+      "/families/mueller/photo-walk.png",
+    ],
+    housePhotoUrls: [
+      "/families/mueller/house-1.png",
+      "/families/mueller/house-2.png",
+      "/families/mueller/house-3.png",
+    ],
   },
 ];
 

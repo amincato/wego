@@ -21,7 +21,7 @@ export const incomingApplications: ApplicationExtended[] = [
     mobilityDurationMonths: 10,
     reportCardFilename: "matthis_report_card.pdf",
     letterOfMotivation:
-      "I want to discover Italian culture, the food and the language. I plan to study art history while abroad.",
+      "My name is Matthis, and I would really like to study at Friedrich Schiller Gymnasium because I think it would be an amazing experience for me. I would love to improve my German, meet new people, and learn about a different culture and way of life.\n\nI am a friendly and curious person, and I enjoy trying new things and making new friends. I think studying abroad would help me become more independent and confident.\n\nI am very interested in Germany, especially its culture, traditions, and education system.\n\nI believe this opportunity would help me grow as a person and create memories that I will never forget.\n\nThank you for reading my letter.\n\nKind regards,\n\nMatthis",
     appliedAt: "2025-10-22T08:00:00.000Z",
     hostFamiliesInterested: [],
   },
@@ -29,8 +29,8 @@ export const incomingApplications: ApplicationExtended[] = [
     id: "inc_app_sofia",
     studentId: "student_sofia",
     schoolId: "school_my_lic_salvini",
-    status: "under_review",
-    lifecycleState: "new_application",
+    status: "accepted",
+    lifecycleState: "accepted",
     flow: "incoming",
     mobilityDurationMonths: 6,
     reportCardFilename: "sofia_report_card.pdf",
@@ -58,7 +58,7 @@ export const incomingApplications: ApplicationExtended[] = [
     studentId: "student_giorgio",
     schoolId: "school_my_lic_salvini",
     status: "accepted",
-    lifecycleState: "host_family_requests",
+    lifecycleState: "accepted",
     flow: "incoming",
     mobilityDurationMonths: 6,
     reportCardFilename: "giorgio_report_card.pdf",
@@ -84,6 +84,45 @@ export const incomingApplications: ApplicationExtended[] = [
     hostFamiliesInterested: ["family_bianchi"],
     hostFamilyMatchId: "family_bianchi",
   },
+  /* ---- Confirmed arrivals (10) — already locked in for the upcoming term.
+   * Each one carries a different host-family situation: matched, in contact
+   * (interested families exchanging messages), or still waiting. */
+  ...(
+    [
+      { id: "student_lily_jacob", match: "family_bianchi" },
+      {
+        id: "student_marco_conti",
+        requests: ["family_schmidt", "family_weber"],
+      },
+      { id: "student_camille_dubois" },
+      { id: "student_pablo_garcia", match: "family_mueller" },
+      { id: "student_carmen_ruiz", requests: ["family_weber"] },
+      { id: "student_giulia_bianchi" },
+      {
+        id: "student_lucas_martin",
+        requests: ["family_schmidt", "family_mueller"],
+      },
+      { id: "student_sofia_romero", match: "family_weber" },
+      { id: "student_alessandro_greco" },
+      { id: "student_sophie_laurent" },
+    ] as { id: string; match?: string; requests?: string[] }[]
+  ).map((s, i) => ({
+    id: `inc_app_${s.id.replace(/^student_/, "")}`,
+    studentId: s.id,
+    schoolId: "school_my_lic_salvini",
+    status: "accepted" as const,
+    lifecycleState: "confirmed" as const,
+    flow: "incoming" as const,
+    mobilityDurationMonths: ([3, 6, 10] as const)[i % 3],
+    reportCardFilename: `${s.id}_report_card.pdf`,
+    letterOfMotivation:
+      "Confirmed arrival for the next exchange term at Friedrich Schiller Gymnasium.",
+    appliedAt: daysAgo(60 - i * 2, 10),
+    acceptedAt: daysAgo(35 - i, 12),
+    hostFamiliesInterested: s.requests ?? (s.match ? [s.match] : []),
+    hostFamilyRequestIds: s.requests,
+    hostFamilyMatchId: s.match,
+  })),
 ];
 
 /* ---- Outgoing: students of MY school applying abroad ---- */
