@@ -29,10 +29,10 @@ const ACCENTS: Array<"student" | "family" | "school" | "neutral"> = [
 export default function DashboardHomePage() {
   const newStudentApplications = incomingApplications
     .filter((a) => a.lifecycleState === "new_application")
-    .slice(0, 4);
+    .slice(0, 2);
   const newFamilyApplications = familyApplications
     .filter((a) => a.state === "new_request")
-    .slice(0, 4);
+    .slice(0, 2);
 
   const openTasks = todaysTasks.filter((t) => !t.completed).length;
   const unackedAlerts = emergencyNotifications.filter(
