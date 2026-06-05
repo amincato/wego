@@ -2,7 +2,6 @@
 
 import { useMemo, useState } from "react";
 import { ChevronLeft, ChevronRight, Plus } from "lucide-react";
-import { communityEntries } from "@/lib/mock/dashboard-community";
 import { cn } from "@/lib/utils";
 
 type View = "day" | "week" | "month" | "year";
@@ -47,10 +46,10 @@ interface CalEvent {
 }
 
 const TONE_PILL: Record<CalEvent["tone"], string> = {
-  student: "bg-student/15 text-student",
-  family: "bg-family/15 text-family",
-  school: "bg-school/15 text-school",
-  neutral: "bg-chip text-fg-muted",
+  student: "bg-student text-white",
+  family: "bg-family text-white",
+  school: "bg-school text-white",
+  neutral: "bg-fg text-white",
 };
 
 const TONE_DOT: Record<CalEvent["tone"], string> = {
@@ -61,39 +60,20 @@ const TONE_DOT: Record<CalEvent["tone"], string> = {
 };
 
 function buildEvents(): CalEvent[] {
-  const list: CalEvent[] = communityEntries
-    .filter((e) => e.kind === "event" && e.eventDate)
-    .map((e) => ({
-      id: e.id,
-      title: e.title,
-      date: new Date(e.eventDate!),
-      tone: e.title.toLowerCase().includes("host family")
-        ? "family"
-        : "student",
-    }));
-
-  list.push(
-    {
-      id: "cal_meeting",
-      title: "Coordinators meeting",
-      date: new Date("2026-06-09T10:00:00.000Z"),
-      tone: "school",
-    },
+  return [
     {
       id: "cal_site_visit",
-      title: "Site visit · Family Rath",
+      title: "Site visit",
       date: new Date("2026-06-18T11:00:00.000Z"),
       tone: "family",
     },
     {
-      id: "cal_carlo_call",
-      title: "Call with Carlo Liberti",
-      date: new Date("2026-06-23T15:00:00.000Z"),
+      id: "cal_check_applications",
+      title: "Check new applications",
+      date: new Date("2026-06-23T10:00:00.000Z"),
       tone: "student",
     },
-  );
-
-  return list;
+  ];
 }
 
 function sameDay(a: Date, b: Date) {
@@ -328,7 +308,7 @@ function MonthGrid({
             >
               <div className="mb-1 flex justify-end">
                 {isToday ? (
-                  <span className="grid size-8 place-items-center rounded-full bg-danger-fg text-sm font-bold text-white">
+                  <span className="grid size-8 place-items-center rounded-full bg-fg text-sm font-bold text-white">
                     {d.getDate()}
                   </span>
                 ) : (
@@ -408,7 +388,7 @@ function WeekView({
                 {WEEKDAYS[i]}
               </span>
               {isToday ? (
-                <span className="grid size-10 place-items-center rounded-full bg-danger-fg text-base font-bold text-white">
+                <span className="grid size-10 place-items-center rounded-full bg-fg text-base font-bold text-white">
                   {d.getDate()}
                 </span>
               ) : (
@@ -557,7 +537,7 @@ function YearView({
                       className={cn(
                         "relative mx-auto my-0.5 grid size-6 place-items-center rounded-full text-[11px]",
                         isToday
-                          ? "bg-danger-fg font-bold text-white"
+                          ? "bg-fg font-bold text-white"
                           : isCurMonth
                             ? "text-fg"
                             : "text-fg-subtle/60",
