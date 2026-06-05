@@ -12,15 +12,17 @@ import { incomingApplications } from "@/lib/mock/dashboard-applications";
 import { students } from "@/lib/mock/students";
 import type { ApplicationLifecycleState } from "@/lib/types-dashboard";
 
-type StepId = ApplicationLifecycleState | "fee_payment";
+type StepId =
+  | ApplicationLifecycleState
+  | "fee_payment"
+  | "final_confirmation";
 
 const LIFECYCLE_FLOW: { id: StepId; label: string }[] = [
   { id: "new_application", label: "New request" },
-  { id: "under_review", label: "Under review" },
   { id: "accepted", label: "Accepted" },
-  { id: "host_family_requests", label: "Host family requests" },
-  { id: "host_family_match", label: "Host family matched" },
   { id: "confirmed", label: "Confirmed" },
+  { id: "host_family_match", label: "Family matched" },
+  { id: "final_confirmation", label: "Final confirmation" },
   { id: "fee_payment", label: "Fee payment" },
 ];
 
