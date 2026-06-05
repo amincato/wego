@@ -18,7 +18,7 @@ export function FamilyRow({ family, application, href, className }: Props) {
     <Link
       href={href}
       className={cn(
-        "group flex items-center gap-4 rounded-input border border-divider border-l-4 border-l-family bg-surface px-4 py-3.5 transition-colors hover:border-fg/20 hover:border-l-family hover:bg-chip/40",
+        "group flex items-center gap-4 rounded-input border border-divider border-l-4 border-l-family bg-surface px-4 py-5 transition-colors hover:border-fg/20 hover:border-l-family hover:bg-chip/40",
         className,
       )}
     >
