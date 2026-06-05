@@ -278,7 +278,7 @@ function ConfirmedRow({ student }: { student: (typeof confirmedRoster)[number] }
     <Link
       href={`/incoming/applicants/${student.id}`}
       className={cn(
-        "group flex items-center gap-4 rounded-input border border-divider border-l-4 border-l-student bg-bg px-4 py-3.5 transition-colors hover:border-fg/20 hover:border-l-student hover:bg-chip/40",
+        "group flex items-center gap-4 rounded-input border border-divider border-l-4 border-l-student bg-surface px-4 py-3.5 transition-colors hover:border-fg/20 hover:border-l-student hover:bg-chip/40",
       )}
     >
       <span
@@ -333,7 +333,7 @@ function HostedRow({
   return (
     <Link
       href={`/incoming/hosted/${id}`}
-      className="group flex items-center gap-4 rounded-input border border-divider bg-bg px-4 py-3.5 transition-colors hover:border-fg/20 hover:bg-chip/40"
+      className="group flex items-center gap-4 rounded-input border border-divider bg-surface px-4 py-3.5 transition-colors hover:border-fg/20 hover:bg-chip/40"
     >
       <span
         className="size-12 shrink-0 rounded-full bg-chip bg-cover bg-center"
