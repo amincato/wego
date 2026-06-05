@@ -42,12 +42,12 @@ export function ProfileHeader({
       </Link>
 
       <div className="rounded-card-lg bg-surface p-6 ring-1 ring-divider">
-        <div className="flex flex-wrap items-start gap-6">
+        <div className="flex flex-wrap items-stretch gap-6">
           <span
-            className="size-32 shrink-0 rounded-2xl bg-chip bg-cover bg-center"
+            className="size-32 shrink-0 self-start rounded-2xl bg-chip bg-cover bg-center"
             style={{ backgroundImage: `url(${student.photoUrl})` }}
           />
-          <div className="min-w-0 flex-1">
+          <div className="flex min-w-0 flex-1 flex-col">
             <div className="flex flex-wrap items-center gap-2">
               <h1 className="h-title text-fg">
                 {student.firstName} {student.lastName}
@@ -65,7 +65,7 @@ export function ProfileHeader({
               <div className="mt-0.5 text-xs text-fg-subtle">{meta}</div>
             ) : null}
             {actions ? (
-              <div className="mt-3 flex flex-wrap items-center gap-2">
+              <div className="mt-auto flex flex-wrap items-center gap-3 pt-3">
                 {actions}
               </div>
             ) : null}

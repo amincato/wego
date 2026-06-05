@@ -42,12 +42,12 @@ export default async function IncomingApplicantPage({
         backHref="/incoming"
         actions={
           <>
-            <button className="inline-flex items-center gap-1.5 rounded-full bg-success-bg/50 px-4 py-1.5 text-xs font-bold text-success-fg hover:bg-success-bg/70">
-              <Check className="size-3.5" strokeWidth={2.6} />
+            <button className="inline-flex items-center gap-2 rounded-full bg-success-bg/50 px-5 py-2.5 text-sm font-bold text-success-fg hover:bg-success-bg/70">
+              <Check className="size-4" strokeWidth={2.6} />
               Confirm application
             </button>
-            <button className="inline-flex items-center gap-1.5 rounded-full bg-danger-bg/60 px-4 py-1.5 text-xs font-bold text-danger-fg hover:bg-danger-bg/80">
-              <X className="size-3.5" strokeWidth={2.6} />
+            <button className="inline-flex items-center gap-2 rounded-full bg-danger-bg/60 px-5 py-2.5 text-sm font-bold text-danger-fg hover:bg-danger-bg/80">
+              <X className="size-4" strokeWidth={2.6} />
               Reject application
             </button>
           </>
