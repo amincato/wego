@@ -39,7 +39,7 @@ export function ListTabs({
 
   return (
     <div>
-      <div className="flex flex-wrap gap-1 rounded-full bg-chip p-1">
+      <div className="inline-flex flex-wrap gap-1 rounded-full bg-chip p-1">
         {tabs.map((tab) => {
           const isActive = tab.id === active;
           const accent: ListTabAccent = tab.accent ?? "default";
