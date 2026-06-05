@@ -284,7 +284,7 @@ export function ApplicationSummaryTab({
       >
         <div className="flex items-start gap-3 rounded-input bg-bg p-4 ring-1 ring-divider">
           <FileText className="mt-0.5 size-4 shrink-0 text-fg-subtle" />
-          <p className="text-sm leading-relaxed text-fg">
+          <p className="whitespace-pre-line text-sm leading-relaxed text-fg">
             {application.letterOfMotivation}
           </p>
         </div>
