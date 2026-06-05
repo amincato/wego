@@ -42,6 +42,7 @@ export const students: StudentProfile[] = [
     languages: [
       { code: "fr", level: "native" },
       { code: "en", level: "advanced" },
+      { code: "de", level: "beginner" },
     ],
     lifestyle: {
       atHome: "often_out",
@@ -50,10 +51,14 @@ export const students: StudentProfile[] = [
       dailyHabits: "flexible",
       foodDiet: "vegetarian",
     },
-    hobbies: ["football", "photography", "music"],
-    bio: "Passionate about photography and outdoor sports.",
+    hobbies: ["football", "photography", "music", "travelling", "swimming"],
+    bio: "Hi! My name is Matthis and I'm a very active and sporty person ⚽\nI love spending time outdoors, trying new activities, and meeting new people from different countries 🌍\nI'm really excited about this exchange experience because I can't wait to discover a new culture, improve my language skills, and create unforgettable memories ✈️✨\nI'm friendly, open-minded, and always happy to make new friendships 😊",
     photoUrl: "/matthis-bernard.jpg",
-    galleryUrls: [],
+    galleryUrls: [
+      "https://images.unsplash.com/photo-1551632811-561732d1e306?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1574629810360-7efbbe195018?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1530549387789-4c1017266635?auto=format&fit=crop&w=1200&q=80",
+    ],
     mobilityDurationMonths: 10,
   },
   {

@@ -1,6 +1,20 @@
 import Link from "next/link";
-import { FileText, Globe2, Heart, Home, ScrollText, UserRound } from "lucide-react";
+import Image from "next/image";
+import {
+  Camera,
+  FileText,
+  Globe2,
+  Heart,
+  Home,
+  Music2,
+  Plane,
+  ScrollText,
+  UserRound,
+  Waves,
+  type LucideIcon,
+} from "lucide-react";
 import { InfoCard, InfoGrid, InfoRow } from "./info-card";
+import { cn } from "@/lib/utils";
 import { JourneyTimeline } from "./journey-timeline";
 import { PaymentsTable } from "./payments-table";
 import { ChatPanel } from "./chat-panel";
@@ -20,6 +34,33 @@ const NATIONALITY_LABEL: Record<StudentProfile["nationality"], string> = {
   de: "German",
   es: "Spanish",
   gb: "British",
+};
+
+const LANG_FLAG: Record<string, string> = {
+  it: "🇮🇹",
+  fr: "🇫🇷",
+  de: "🇩🇪",
+  es: "🇪🇸",
+  en: "🇬🇧",
+};
+
+const LANG_LEVEL_TONE: Record<string, string> = {
+  native: "bg-success-bg/50 text-success-fg",
+  advanced: "bg-student/15 text-student",
+  intermediate: "bg-chip text-fg",
+  beginner: "bg-chip text-fg-muted",
+};
+
+const HOBBY: Record<string, { emoji: string; label: string }> = {
+  football: { emoji: "⚽", label: "Football" },
+  photography: { emoji: "📷", label: "Photography" },
+  music: { emoji: "🎵", label: "Music" },
+  travelling: { emoji: "✈️", label: "Travelling" },
+  swimming: { emoji: "🌊", label: "Swimming" },
+  ski: { emoji: "⛷️", label: "Ski" },
+  basket: { emoji: "🏀", label: "Basket" },
+  fitness: { emoji: "💪", label: "Fitness" },
+  reading: { emoji: "📚", label: "Reading" },
 };
 
 const LIFESTYLE_LABEL: Record<string, string> = {
@@ -43,81 +84,136 @@ const LIFESTYLE_LABEL: Record<string, string> = {
 
 export function PersonalInfoTab({ student }: { student: StudentProfile }) {
   return (
-    <div className="grid gap-6 lg:grid-cols-2">
-      <InfoCard title="Personal info">
-        <InfoGrid
-          items={[
-            { label: "Full name", value: `${student.firstName} ${student.lastName}` },
-            { label: "Age", value: `${student.age} years old` },
-            {
-              label: "Birthday",
-              value: new Date(student.birthday).toLocaleDateString("en-US", {
-                year: "numeric",
-                month: "long",
-                day: "numeric",
-              }),
-            },
-            { label: "Gender", value: student.gender },
-            { label: "Nationality", value: NATIONALITY_LABEL[student.nationality] },
-            { label: "City of origin", value: student.city },
-          ]}
-        />
-      </InfoCard>
-
-      <InfoCard title="Languages">
-        <ul className="flex flex-col gap-2">
-          {student.languages.map((l) => (
-            <li
-              key={l.code}
-              className="flex items-center justify-between gap-3 rounded-input bg-bg px-3 py-2 ring-1 ring-divider"
-            >
-              <span className="inline-flex items-center gap-2 text-sm font-semibold text-fg">
-                <Globe2 className="size-4 text-fg-subtle" />
-                {l.code.toUpperCase()}
-              </span>
-              <span className="rounded-full bg-chip px-2 py-0.5 text-xs font-bold text-fg-muted capitalize">
-                {l.level}
-              </span>
-            </li>
-          ))}
-        </ul>
-      </InfoCard>
-
-      <InfoCard title="Lifestyle">
-        <ul className="space-y-1">
-          <InfoRow label="At home" value={LIFESTYLE_LABEL[student.lifestyle.atHome]} />
-          <InfoRow
-            label="Social life"
-            value={LIFESTYLE_LABEL[student.lifestyle.socialLife]}
-          />
-          <InfoRow label="Pets" value={LIFESTYLE_LABEL[student.lifestyle.pets]} />
-          <InfoRow
-            label="Daily habits"
-            value={LIFESTYLE_LABEL[student.lifestyle.dailyHabits]}
-          />
-          <InfoRow
-            label="Food / diet"
-            value={LIFESTYLE_LABEL[student.lifestyle.foodDiet]}
-          />
-        </ul>
-      </InfoCard>
-
-      <InfoCard title="Hobbies & bio">
-        <div className="flex flex-wrap gap-2">
-          {student.hobbies.map((h) => (
-            <span
-              key={h}
-              className="inline-flex items-center gap-1 rounded-full bg-chip px-3 py-1 text-xs font-semibold capitalize text-fg"
-            >
-              <Heart className="size-3 text-family" />
-              {h.replace(/_/g, " ")}
-            </span>
-          ))}
-        </div>
-        <p className="mt-4 text-sm leading-relaxed text-fg-muted">
+    <div className="space-y-6">
+      {/* About the student — full width, no card */}
+      <section>
+        <h3 className="h-section mb-2 text-fg">About the student</h3>
+        <p className="whitespace-pre-line text-sm leading-relaxed text-fg">
           {student.bio}
         </p>
-      </InfoCard>
+      </section>
+
+      {/* Personal info + Languages */}
+      <div className="grid gap-6 lg:grid-cols-2">
+        <InfoCard title="Personal info">
+          <InfoGrid
+            items={[
+              {
+                label: "Full name",
+                value: `${student.firstName} ${student.lastName}`,
+              },
+              { label: "Age", value: `${student.age} years old` },
+              {
+                label: "Birthday",
+                value: new Date(student.birthday).toLocaleDateString("en-US", {
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                }),
+              },
+              { label: "Gender", value: student.gender },
+              {
+                label: "Nationality",
+                value: NATIONALITY_LABEL[student.nationality],
+              },
+              { label: "City of origin", value: student.city },
+            ]}
+          />
+        </InfoCard>
+
+        <InfoCard title="Languages">
+          <ul className="flex flex-col gap-2">
+            {student.languages.map((l) => (
+              <li
+                key={l.code}
+                className="flex items-center justify-between gap-3 rounded-input bg-bg px-3 py-2.5 ring-1 ring-divider"
+              >
+                <span className="inline-flex items-center gap-2 text-sm font-semibold text-fg">
+                  <span className="text-base leading-none">
+                    {LANG_FLAG[l.code] ?? "🌐"}
+                  </span>
+                  {l.code.toUpperCase()}
+                </span>
+                <span
+                  className={cn(
+                    "rounded-full px-2.5 py-0.5 text-xs font-bold capitalize",
+                    LANG_LEVEL_TONE[l.level] ?? "bg-chip text-fg-muted",
+                  )}
+                >
+                  {l.level}
+                </span>
+              </li>
+            ))}
+          </ul>
+        </InfoCard>
+
+        {/* Lifestyle + Hobbies */}
+        <InfoCard title="Lifestyle">
+          <ul className="space-y-1">
+            <InfoRow
+              label="At home"
+              value={LIFESTYLE_LABEL[student.lifestyle.atHome]}
+            />
+            <InfoRow
+              label="Social life"
+              value={LIFESTYLE_LABEL[student.lifestyle.socialLife]}
+            />
+            <InfoRow
+              label="Pets"
+              value={LIFESTYLE_LABEL[student.lifestyle.pets]}
+            />
+            <InfoRow
+              label="Daily habits"
+              value={LIFESTYLE_LABEL[student.lifestyle.dailyHabits]}
+            />
+            <InfoRow
+              label="Food / diet"
+              value={LIFESTYLE_LABEL[student.lifestyle.foodDiet]}
+            />
+          </ul>
+        </InfoCard>
+
+        <InfoCard title="Hobbies">
+          <div className="flex flex-wrap gap-2">
+            {student.hobbies.map((h) => {
+              const meta = HOBBY[h];
+              return (
+                <span
+                  key={h}
+                  className="inline-flex items-center gap-1.5 rounded-full bg-chip px-3 py-1.5 text-xs font-semibold capitalize text-fg"
+                >
+                  <span className="text-base leading-none">
+                    {meta?.emoji ?? "•"}
+                  </span>
+                  {meta?.label ?? h.replace(/_/g, " ")}
+                </span>
+              );
+            })}
+          </div>
+        </InfoCard>
+      </div>
+
+      {/* Photos — full width, only when the student has a gallery */}
+      {student.galleryUrls && student.galleryUrls.length > 0 ? (
+        <InfoCard title="Photos">
+          <div className="grid gap-3 md:grid-cols-3">
+            {student.galleryUrls.map((src, i) => (
+              <div
+                key={i}
+                className="relative aspect-[4/3] w-full overflow-hidden rounded-input bg-chip"
+              >
+                <Image
+                  src={src}
+                  alt={`${student.firstName} – photo ${i + 1}`}
+                  fill
+                  sizes="(max-width: 768px) 100vw, 33vw"
+                  className="object-cover"
+                />
+              </div>
+            ))}
+          </div>
+        </InfoCard>
+      ) : null}
     </div>
   );
 }
