@@ -1,12 +1,6 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  // Pin the Turbopack workspace root to this worktree. Without this, Next
-  // walks up to the parent `wego/` lockfile and treats the whole monorepo
-  // as the workspace — much slower file watching.
-  turbopack: {
-    root: __dirname,
-  },
   // Persistent Turbopack cache across `next dev` runs — re-uses compiled
   // modules instead of re-compiling on every start. Default in Next 16.1+,
   // set explicitly here for safety.
