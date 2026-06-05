@@ -281,8 +281,7 @@ export default function IncomingPage() {
                         Check fee payment status
                       </div>
                       <p className="mt-0.5 text-xs text-fg-muted">
-                        See which matched students have paid the school fee — and
-                        send a reminder to the ones still pending.
+                        See which matched students have paid the school fee.
                       </p>
                     </div>
                     <ChevronRight className="size-4 text-student" />
