@@ -47,7 +47,7 @@ export default function DashboardHomePage() {
           aria-hidden
           viewBox="0 0 1200 160"
           preserveAspectRatio="none"
-          className="pointer-events-none absolute inset-0 h-full w-full text-white/50"
+          className="pointer-events-none absolute inset-0 h-full w-full text-white"
         >
           <path
             d="M 280 -20 C 520 110, 720 200, 1300 60"
@@ -58,7 +58,7 @@ export default function DashboardHomePage() {
         </svg>
         <div className="relative flex items-center gap-5">
           <span
-            className="size-20 shrink-0 rounded-full bg-white/20 bg-cover bg-center ring-2 ring-white/50"
+            className="size-20 shrink-0 rounded-full bg-white/20 bg-cover bg-center ring-2 ring-white"
             style={{
               backgroundImage: `url(${currentCoordinator.avatarUrl})`,
             }}
