@@ -97,6 +97,10 @@ export const mySchool: SchoolExtended = {
     ],
     averageClassSize: 22,
   },
-  studentsHostedIds: ["student_matthis", "student_giorgio"],
-  studentsAbroadIds: ["student_carlo"],
+  studentsHostedIds: [
+    "student_carlo",
+    "student_alessandro_greco",
+    "student_sophie_laurent",
+  ],
+  studentsAbroadIds: ["student_giorgia"],
 };
