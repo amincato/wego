@@ -94,31 +94,31 @@ function ApplicationStatusFlow({
 
   return (
     <InfoCard title="Application status">
-      <ol className="flex flex-wrap items-center gap-2 sm:gap-3">
+      <ol className="flex flex-wrap items-center gap-3 sm:gap-4">
         {LIFECYCLE_FLOW.map((step, idx) => {
           const isCurrent = idx === currentIndex;
           return (
-            <li key={step.id} className="flex items-center gap-2 sm:gap-3">
+            <li key={step.id} className="flex items-center gap-3">
               <div
-                className={`grid size-8 place-items-center rounded-full text-xs font-bold ${
+                className={`grid size-10 place-items-center rounded-full text-sm font-bold ${
                   isCurrent
                     ? "bg-student text-white ring-4 ring-student/15"
-                    : "bg-chip text-fg-subtle"
+                    : "bg-bg text-fg-subtle"
                 }`}
               >
                 {idx + 1}
               </div>
               <span
-                className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-[11px] font-bold ${
+                className={`inline-flex items-center rounded-full px-4 py-2 text-sm font-semibold ${
                   isCurrent
                     ? "bg-student/15 text-student"
-                    : "bg-chip text-fg-subtle"
+                    : "bg-bg text-fg-muted"
                 }`}
               >
                 {step.label}
               </span>
               {idx < LIFECYCLE_FLOW.length - 1 ? (
-                <span className="hidden h-px w-8 bg-divider sm:block" />
+                <span className="hidden h-px w-6 bg-divider sm:block" />
               ) : null}
             </li>
           );
