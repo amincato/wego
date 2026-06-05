@@ -58,7 +58,7 @@ export default function DashboardHomePage() {
         </svg>
         <div className="relative flex items-center gap-5">
           <span
-            className="size-20 shrink-0 rounded-full bg-white/20 bg-cover bg-center ring-2 ring-white"
+            className="size-20 shrink-0 rounded-full bg-white/20 bg-cover bg-center ring-4 ring-white"
             style={{
               backgroundImage: `url(${currentCoordinator.avatarUrl})`,
             }}
