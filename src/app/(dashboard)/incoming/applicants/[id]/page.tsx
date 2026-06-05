@@ -91,7 +91,6 @@ function ApplicationStatusFlow({
   current: ApplicationLifecycleState;
 }) {
   const currentIndex = LIFECYCLE_FLOW.findIndex((s) => s.id === current);
-  const currentStep = LIFECYCLE_FLOW[currentIndex];
 
   return (
     <InfoCard title="Application status">
@@ -111,7 +110,9 @@ function ApplicationStatusFlow({
               </div>
               <span
                 className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-[11px] font-bold ${
-                  isCurrent ? "bg-student/15 text-student" : "bg-chip text-fg-subtle"
+                  isCurrent
+                    ? "bg-student/15 text-student"
+                    : "bg-chip text-fg-subtle"
                 }`}
               >
                 {step.label}
@@ -123,25 +124,6 @@ function ApplicationStatusFlow({
           );
         })}
       </ol>
-
-      <div className="mt-6 space-y-3 text-sm text-fg-muted">
-        <p>
-          <span className="font-bold text-fg">Where we are:</span>{" "}
-          The application is currently at the{" "}
-          <span className="font-bold text-student">
-            {currentStep?.label.toLowerCase()}
-          </span>{" "}
-          stage.
-        </p>
-        <div className="flex flex-wrap gap-2">
-          <button className="rounded-full bg-success-bg/40 px-4 py-2 text-xs font-bold text-success-fg hover:bg-success-bg/60">
-            Confirm application
-          </button>
-          <button className="rounded-full bg-danger-bg/60 px-4 py-2 text-xs font-bold text-danger-fg hover:bg-danger-bg">
-            Reject application
-          </button>
-        </div>
-      </div>
     </InfoCard>
   );
 }
