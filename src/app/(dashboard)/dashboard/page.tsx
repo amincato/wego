@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { StatPairCard } from "@/components/dashboard/stat-pair-card";
 import { SectionCard } from "@/components/dashboard/section-card";
 import { TaskList } from "@/components/dashboard/task-list";
@@ -41,29 +42,36 @@ export default function DashboardHomePage() {
   return (
     <>
       {/* HERO */}
-      <section className="relative mb-6 overflow-hidden rounded-card-lg bg-student px-8 py-7">
+      <section className="relative mb-6 overflow-hidden rounded-card-lg bg-student px-6 py-5">
         <svg
           aria-hidden
-          viewBox="0 0 1200 220"
+          viewBox="0 0 1200 160"
           preserveAspectRatio="none"
           className="pointer-events-none absolute inset-0 h-full w-full text-white/50"
         >
           <path
-            d="M 300 -30 C 550 150, 750 260, 1300 80"
+            d="M 280 -20 C 520 110, 720 200, 1300 60"
             stroke="currentColor"
             strokeWidth="2"
             fill="none"
           />
         </svg>
-        <div className="relative flex items-center gap-6">
+        <div className="relative flex items-center gap-5">
           <span
-            className="size-24 shrink-0 rounded-full bg-white/20 bg-cover bg-center ring-4 ring-white/40"
+            className="size-20 shrink-0 rounded-full bg-white/20 bg-cover bg-center ring-2 ring-white/50"
             style={{
               backgroundImage: `url(${currentCoordinator.avatarUrl})`,
             }}
           />
-          <h1 className="h-display text-white">
-            Hello, {currentCoordinator.firstName} ✈️
+          <h1 className="flex items-center gap-3 h-display text-white">
+            Hello, {currentCoordinator.firstName}
+            <Image
+              src="/airplane.png"
+              alt=""
+              width={371}
+              height={321}
+              className="inline-block h-8 w-auto -rotate-[8deg]"
+            />
           </h1>
         </div>
       </section>
