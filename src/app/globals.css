@@ -194,11 +194,11 @@ body {
    the --app-h scoping above to use the real viewport height.
    ========================================================== */
 .dashboard-scope {
-  --bg: #f6f7fb;
+  --bg: #eef1fa;
   --bg-elevated: #ffffff;
   --surface-card: #ffffff;
   --surface-nav: #ffffff;
-  --chip: #f1f3f9;
+  --chip: #eaeefa;
 
   --fg: #0a0a0a;
   --fg-muted: #515566;
