@@ -181,9 +181,9 @@ export function PersonalInfoTab({ student }: { student: StudentProfile }) {
               return (
                 <span
                   key={h}
-                  className="inline-flex items-center gap-1.5 rounded-full bg-chip px-3 py-1.5 text-xs font-semibold capitalize text-fg"
+                  className="inline-flex items-center gap-2 rounded-full bg-bg px-4 py-2.5 text-sm font-semibold capitalize text-fg"
                 >
-                  <span className="text-base leading-none">
+                  <span className="text-lg leading-none">
                     {meta?.emoji ?? "•"}
                   </span>
                   {meta?.label ?? h.replace(/_/g, " ")}
