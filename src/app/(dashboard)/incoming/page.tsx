@@ -342,7 +342,7 @@ function ConfirmedRow({ student }: { student: (typeof confirmedRoster)[number] }
     <Link
       href={`/incoming/applicants/${student.id}`}
       className={cn(
-        "group flex items-center gap-4 rounded-input border border-divider border-l-4 border-l-student bg-surface px-4 py-3.5 transition-colors hover:border-fg/20 hover:border-l-student hover:bg-chip/40",
+        "group flex items-center gap-4 rounded-input border border-divider border-l-4 border-l-student bg-surface px-4 py-5 transition-colors hover:border-fg/20 hover:border-l-student hover:bg-chip/40",
       )}
     >
       <span
@@ -351,7 +351,7 @@ function ConfirmedRow({ student }: { student: (typeof confirmedRoster)[number] }
       />
       <div className="min-w-0 flex-1">
         <div className="flex items-center gap-2">
-          <span className="truncate text-sm font-bold text-fg">
+          <span className="truncate text-base font-bold text-fg">
             {student.firstName} {student.lastName}
           </span>
           <span className="text-base leading-none">
@@ -403,7 +403,7 @@ function HostedRow({
   return (
     <Link
       href={`/incoming/hosted/${id}`}
-      className="group flex items-center gap-4 rounded-input border border-divider bg-surface px-4 py-3.5 transition-colors hover:border-fg/20 hover:bg-chip/40"
+      className="group flex items-center gap-4 rounded-input border border-divider bg-surface px-4 py-5 transition-colors hover:border-fg/20 hover:bg-chip/40"
     >
       <span
         className="size-12 shrink-0 rounded-full bg-chip bg-cover bg-center"
@@ -411,7 +411,7 @@ function HostedRow({
       />
       <div className="min-w-0 flex-1">
         <div className="flex items-center gap-2">
-          <span className="truncate text-sm font-bold text-fg">
+          <span className="truncate text-base font-bold text-fg">
             {firstName} {lastName}
           </span>
           <span className="text-base leading-none">{FLAGS[nationality]}</span>
