@@ -19,6 +19,14 @@ const ACCENT_BAR: Record<"student" | "family" | "school" | "neutral", string> =
     neutral: "bg-fg",
   };
 
+const ACCENT_TEXT: Record<"student" | "family" | "school" | "neutral", string> =
+  {
+    student: "text-student",
+    family: "text-family",
+    school: "text-school",
+    neutral: "text-fg",
+  };
+
 export function ProfileTabs({
   tabs,
   defaultTab,
@@ -45,7 +53,7 @@ export function ProfileTabs({
                   className={cn(
                     "relative whitespace-nowrap px-4 py-3 text-sm transition-colors",
                     isActive
-                      ? "font-bold text-fg"
+                      ? cn("font-bold", ACCENT_TEXT[accent])
                       : "font-semibold text-fg-muted hover:text-fg",
                   )}
                 >

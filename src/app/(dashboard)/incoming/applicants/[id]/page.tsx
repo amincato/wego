@@ -57,7 +57,7 @@ export default async function IncomingApplicantPage({
       />
 
       <ProfileTabs
-        accent="neutral"
+        accent="student"
         tabs={[
           {
             id: "personal",
