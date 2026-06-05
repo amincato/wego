@@ -1,5 +1,11 @@
 import Link from "next/link";
-import { ChevronRight, GraduationCap, Users } from "lucide-react";
+import {
+  ChevronRight,
+  CreditCard,
+  GraduationCap,
+  Home,
+  Users,
+} from "lucide-react";
 import { PageHeader } from "@/components/dashboard/dashboard-shell";
 import { ListTabs } from "@/components/dashboard/list-tabs";
 import { ApplicantRow } from "@/components/dashboard/applicant-row";
@@ -27,18 +33,45 @@ const COUNTRY_NAME: Record<string, string> = {
 /** Hardcoded confirmed-arrival roster (7 students locked in for the
  * upcoming term but not yet on campus). Kept inline so the existing
  * students/applications mocks stay small. */
-const confirmedRoster = [
+type HostFamilyStatus = "matched" | "in_contact" | "waiting";
+
+const confirmedRoster: Array<{
+  id: string;
+  firstName: string;
+  lastName: string;
+  nationality: string;
+  city: string;
+  age: number;
+  months: number;
+  appliedAt: string;
+  photoUrl: string;
+  hostFamilyStatus: HostFamilyStatus;
+}> = [
   {
     id: "conf_lily",
     firstName: "Lily Louise",
     lastName: "Jacob",
-    nationality: "de",
-    city: "Munich",
-    age: 17,
-    months: 10,
-    appliedAt: "2025-09-12",
+    nationality: "fr",
+    city: "Lyon",
+    age: 16,
+    months: 3,
+    appliedAt: "2026-03-16",
     photoUrl:
       "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=600&q=80",
+    hostFamilyStatus: "matched",
+  },
+  {
+    id: "conf_pablo",
+    firstName: "Pablo",
+    lastName: "García",
+    nationality: "es",
+    city: "Madrid",
+    age: 17,
+    months: 3,
+    appliedAt: "2026-03-22",
+    photoUrl:
+      "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=600&q=80",
+    hostFamilyStatus: "matched",
   },
   {
     id: "conf_marco",
@@ -48,9 +81,10 @@ const confirmedRoster = [
     city: "Florence",
     age: 16,
     months: 6,
-    appliedAt: "2025-09-15",
+    appliedAt: "2026-03-12",
     photoUrl:
       "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=600&q=80",
+    hostFamilyStatus: "in_contact",
   },
   {
     id: "conf_camille",
@@ -60,33 +94,10 @@ const confirmedRoster = [
     city: "Lille",
     age: 17,
     months: 3,
-    appliedAt: "2025-09-18",
+    appliedAt: "2026-03-09",
     photoUrl:
       "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=600&q=80",
-  },
-  {
-    id: "conf_pablo",
-    firstName: "Pablo",
-    lastName: "García",
-    nationality: "es",
-    city: "Madrid",
-    age: 16,
-    months: 10,
-    appliedAt: "2025-09-20",
-    photoUrl:
-      "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=600&q=80",
-  },
-  {
-    id: "conf_carmen",
-    firstName: "Carmen",
-    lastName: "Ruiz",
-    nationality: "es",
-    city: "Barcelona",
-    age: 16,
-    months: 6,
-    appliedAt: "2025-09-22",
-    photoUrl:
-      "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=600&q=80",
+    hostFamilyStatus: "in_contact",
   },
   {
     id: "conf_giulia",
@@ -96,9 +107,10 @@ const confirmedRoster = [
     city: "Milan",
     age: 17,
     months: 3,
-    appliedAt: "2025-09-25",
+    appliedAt: "2026-03-25",
     photoUrl:
       "https://images.unsplash.com/photo-1463453091185-61582044d556?auto=format&fit=crop&w=600&q=80",
+    hostFamilyStatus: "waiting",
   },
   {
     id: "conf_lucas",
@@ -108,11 +120,43 @@ const confirmedRoster = [
     city: "Marseille",
     age: 17,
     months: 6,
-    appliedAt: "2025-09-28",
+    appliedAt: "2026-03-28",
     photoUrl:
       "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=600&q=80",
+    hostFamilyStatus: "waiting",
+  },
+  {
+    id: "conf_carmen",
+    firstName: "Carmen",
+    lastName: "Ruiz",
+    nationality: "es",
+    city: "Barcelona",
+    age: 16,
+    months: 6,
+    appliedAt: "2026-03-19",
+    photoUrl:
+      "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=600&q=80",
+    hostFamilyStatus: "waiting",
   },
 ];
+
+const HOST_FAMILY_PILL: Record<
+  HostFamilyStatus,
+  { label: string; tone: string }
+> = {
+  matched: {
+    label: "Host family matched",
+    tone: "bg-success-bg/50 text-success-fg",
+  },
+  in_contact: {
+    label: "In contact with a host family",
+    tone: "bg-family/15 text-family",
+  },
+  waiting: {
+    label: "Waiting a host family",
+    tone: "bg-chip text-fg-muted",
+  },
+};
 
 const HOSTED_CLASS: Record<string, string> = {
   student_carlo: "11. Klasse",
@@ -224,13 +268,34 @@ export default function IncomingPage() {
               count: confirmedRoster.length,
               accent: "student",
               content: (
-                <ul className="flex flex-col gap-2">
-                  {confirmedRoster.map((s) => (
-                    <li key={s.id}>
-                      <ConfirmedRow student={s} />
-                    </li>
-                  ))}
-                </ul>
+                <div className="flex flex-col gap-3">
+                  <Link
+                    href="/incoming/payments"
+                    className="group flex items-center gap-4 rounded-input bg-student/10 px-4 py-4 ring-1 ring-student/20 transition-colors hover:bg-student/15"
+                  >
+                    <span className="grid size-12 place-items-center rounded-xl bg-student text-white">
+                      <CreditCard className="size-5" strokeWidth={2.2} />
+                    </span>
+                    <div className="min-w-0 flex-1">
+                      <div className="text-sm font-bold text-fg">
+                        Check fee payment status
+                      </div>
+                      <p className="mt-0.5 text-xs text-fg-muted">
+                        See which matched students have paid the school fee — and
+                        send a reminder to the ones still pending.
+                      </p>
+                    </div>
+                    <ChevronRight className="size-4 text-student" />
+                  </Link>
+
+                  <ul className="flex flex-col gap-2">
+                    {confirmedRoster.map((s) => (
+                      <li key={s.id}>
+                        <ConfirmedRow student={s} />
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               ),
             },
           ]}
@@ -304,8 +369,14 @@ function ConfirmedRow({ student }: { student: (typeof confirmedRoster)[number] }
         </div>
       </div>
       <div className="flex shrink-0 items-center gap-3">
-        <span className="rounded-full bg-success-bg/40 px-2.5 py-0.5 text-xs font-bold text-success-fg">
-          Confirmed
+        <span
+          className={cn(
+            "inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-xs font-bold",
+            HOST_FAMILY_PILL[student.hostFamilyStatus].tone,
+          )}
+        >
+          <Home className="size-3" />
+          {HOST_FAMILY_PILL[student.hostFamilyStatus].label}
         </span>
         <ChevronRight className="size-4 text-fg-subtle group-hover:text-fg" />
       </div>
