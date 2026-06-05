@@ -170,11 +170,8 @@ export default function CalendarPage() {
   return (
     <div className="flex h-[calc(100dvh-7rem)] flex-col">
       <div className="mb-4 flex flex-wrap items-center gap-4">
-        <h1 className="h-display">
-          <span className="text-fg">{headerLabel}</span>{" "}
-          {subLabel ? (
-            <span className="text-fg-muted">{subLabel}</span>
-          ) : null}
+        <h1 className="h-display text-fg">
+          {headerLabel} {subLabel}
         </h1>
 
         <div className="mx-auto inline-flex items-center rounded-full bg-chip p-1">
