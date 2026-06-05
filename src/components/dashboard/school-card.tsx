@@ -1,17 +1,17 @@
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowUpRight, MapPin, Users } from "lucide-react";
+import { ArrowUpRight, MapPin } from "lucide-react";
+import { cn } from "@/lib/utils";
 import type { School } from "@/lib/types";
 
-const LANGUAGE_LABEL: Record<School["language"], string> = {
-  it: "Italian",
-  fr: "French",
-  de: "German",
-  es: "Spanish",
-  en: "English",
-};
-
 export function SchoolCard({ school }: { school: School }) {
+  // Deduplicated, sorted list of available mobility durations.
+  const durations = Array.from(
+    new Set(school.mobilityOptions.map((m) => m.durationMonths)),
+  ).sort((a, b) => a - b);
+
+  const spotsCritical = school.spotsLeft <= 6;
+
   return (
     <Link
       href={`/partners/${school.id}`}
@@ -36,15 +36,23 @@ export function SchoolCard({ school }: { school: School }) {
           <ArrowUpRight className="size-4 text-fg-subtle group-hover:text-school" />
         </div>
         <p className="line-clamp-2 text-sm text-fg-muted">{school.description}</p>
-        <div className="mt-auto flex flex-wrap gap-2 pt-2">
-          <span className="rounded-full bg-chip px-2.5 py-0.5 text-[11px] font-bold text-fg-muted capitalize">
-            {school.orientation}
-          </span>
-          <span className="rounded-full bg-chip px-2.5 py-0.5 text-[11px] font-bold text-fg-muted">
-            {LANGUAGE_LABEL[school.language]}
-          </span>
-          <span className="ml-auto inline-flex items-center gap-1 text-xs text-fg-muted">
-            <Users className="size-3" />
+        <div className="mt-auto flex flex-wrap items-center gap-2 pt-2">
+          {durations.map((d) => (
+            <span
+              key={d}
+              className="rounded-full bg-chip px-2.5 py-0.5 text-[11px] font-bold text-fg-muted"
+            >
+              {d} months
+            </span>
+          ))}
+          <span
+            className={cn(
+              "ml-auto inline-flex items-center rounded-full px-2.5 py-0.5 text-[11px] font-bold",
+              spotsCritical
+                ? "bg-danger-bg/60 text-danger-fg"
+                : "bg-success-bg/50 text-success-fg",
+            )}
+          >
             {school.spotsLeft} spots left
           </span>
         </div>
