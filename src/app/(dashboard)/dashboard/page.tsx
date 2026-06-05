@@ -41,15 +41,15 @@ export default function DashboardHomePage() {
   return (
     <>
       {/* HERO */}
-      <section className="relative mb-6 overflow-hidden rounded-card-lg bg-gradient-to-r from-student to-[#6f8df5] px-8 py-7">
+      <section className="relative mb-6 overflow-hidden rounded-card-lg bg-student px-8 py-7">
         <svg
           aria-hidden
           viewBox="0 0 1200 220"
           preserveAspectRatio="none"
-          className="pointer-events-none absolute inset-y-0 right-0 h-full w-2/3 text-white/40"
+          className="pointer-events-none absolute inset-0 h-full w-full text-white/50"
         >
           <path
-            d="M 0 200 C 250 120, 450 30, 700 60 S 1100 180, 1200 130"
+            d="M 300 -30 C 550 150, 750 260, 1300 80"
             stroke="currentColor"
             strokeWidth="2"
             fill="none"
