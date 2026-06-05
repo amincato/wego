@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import {
   Camera,
+  Download,
   FileText,
   Globe2,
   Heart,
@@ -251,16 +252,7 @@ export function ApplicationSummaryTab({
         />
       </InfoCard>
 
-      <InfoCard
-        title="Report card"
-        action={
-          application.reportCardFilename ? (
-            <button className="rounded-full bg-chip px-3 py-1 text-xs font-bold text-fg hover:bg-chip/70">
-              Download
-            </button>
-          ) : null
-        }
-      >
+      <InfoCard title="Report card">
         {application.reportCardFilename ? (
           <div className="flex items-center gap-3 rounded-input bg-bg px-3 py-3 ring-1 ring-divider">
             <span className="grid size-10 place-items-center rounded-lg bg-student/15 text-student">
@@ -270,8 +262,17 @@ export function ApplicationSummaryTab({
               <div className="truncate text-sm font-bold text-fg">
                 {application.reportCardFilename}
               </div>
-              <div className="text-xs text-fg-muted">PDF · uploaded by student</div>
+              <div className="text-xs text-fg-muted">
+                PDF · uploaded by student
+              </div>
             </div>
+            <button
+              type="button"
+              aria-label="Download report card"
+              className="grid size-9 shrink-0 place-items-center rounded-full bg-fg text-white hover:bg-fg/90"
+            >
+              <Download className="size-4" strokeWidth={2.4} />
+            </button>
           </div>
         ) : (
           <p className="text-sm text-fg-muted">No report card uploaded.</p>
