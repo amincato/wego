@@ -28,7 +28,7 @@ export function FamilyRow({ family, application, href, className }: Props) {
       />
       <div className="min-w-0 flex-1">
         <div className="flex items-center gap-2">
-          <span className="truncate text-sm font-bold text-fg">
+          <span className="truncate text-base font-bold text-fg">
             {family.familyName}
           </span>
           <span className="text-xs text-fg-subtle">

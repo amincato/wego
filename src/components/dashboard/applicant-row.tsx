@@ -38,7 +38,7 @@ export function ApplicantRow({ application, student, href, className }: Props) {
 
       <div className="min-w-0 flex-1">
         <div className="flex items-center gap-2">
-          <span className="truncate text-sm font-bold text-fg">
+          <span className="truncate text-base font-bold text-fg">
             {student.firstName} {student.lastName}
           </span>
           <span className="text-base leading-none">
