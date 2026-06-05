@@ -15,25 +15,23 @@ const today = (offsetDays = 0, hour = 9, minute = 0) => {
 export const todaysTasks: DashboardTask[] = [
   {
     id: "task_1",
-    title: "Review 3 new incoming applications",
-    description: "Friedrich, Lily and Matthis are waiting for first review.",
+    title: "Site visit by Family Rath",
     priority: "high",
     dueAt: today(0, 11, 0),
     completed: false,
-    relatedTo: { kind: "student", id: "student_matthis" },
+    relatedTo: { kind: "family", id: "family_rath" },
   },
   {
     id: "task_2",
-    title: "Confirm site visit with Family Bianchi",
-    description: "Slot proposed: Wednesday 4:00 PM.",
+    title: "Send mid-term report to Lilly Louise Jacob",
     priority: "medium",
     dueAt: today(0, 14, 30),
     completed: false,
-    relatedTo: { kind: "family", id: "family_bianchi" },
+    relatedTo: { kind: "student", id: "student_lily_jacob" },
   },
   {
     id: "task_3",
-    title: "Send mid-term report to Carlo's family",
+    title: "Send payment information to Carlo Liberti",
     priority: "medium",
     dueAt: today(0, 17, 0),
     completed: false,
@@ -45,38 +43,26 @@ export const emergencyNotifications: EmergencyNotification[] = [
   {
     id: "emrg_1",
     kind: "host_family_issue",
-    title: "Host family change requested by Matthis",
-    body: "Student is asking to be reassigned from family Rossi. Reason: persistent conflicts on house rules.",
-    createdAt: today(0, 8, 12),
+    title: "Host family change request",
+    body: "Linda Rossi hosted by Family Jacobsen",
+    createdAt: today(-1, 9, 0),
     acknowledged: false,
-    studentId: "student_matthis",
+    studentId: "student_linda_rossi",
   },
 ];
 
 export const upcomingReminders: Reminder[] = [
   {
     id: "rem_1",
-    title: "Spring semester applications close",
+    title: "Application deadline",
     dueDate: today(3, 23, 59),
     category: "deadline",
   },
   {
     id: "rem_2",
-    title: "Mid-term coordinators meeting",
-    dueDate: today(5, 10, 0),
+    title: "Midterm coordinators meeting",
+    dueDate: today(4, 10, 0),
     category: "meeting",
-  },
-  {
-    id: "rem_3",
-    title: "Quarterly mobility report due",
-    dueDate: today(8, 18, 0),
-    category: "report",
-  },
-  {
-    id: "rem_4",
-    title: "Tuition installment — outgoing students",
-    dueDate: today(11, 12, 0),
-    category: "payment",
   },
 ];
 
@@ -88,7 +74,7 @@ export const homeStats: HomeStatPair[] = [
   },
   {
     label: "Host families",
-    primary: { value: 8, label: "Confirmed" },
+    primary: { value: 8, label: "Allowed to host" },
     secondary: { value: 2, label: "Pending acceptance" },
   },
 ];

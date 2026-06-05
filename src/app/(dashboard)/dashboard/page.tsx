@@ -1,4 +1,3 @@
-import { PageHeader } from "@/components/dashboard/dashboard-shell";
 import { StatPairCard } from "@/components/dashboard/stat-pair-card";
 import { SectionCard } from "@/components/dashboard/section-card";
 import { TaskList } from "@/components/dashboard/task-list";
@@ -8,7 +7,6 @@ import { ApplicantRow } from "@/components/dashboard/applicant-row";
 import { FamilyRow } from "@/components/dashboard/family-row";
 import { ListTabs } from "@/components/dashboard/list-tabs";
 import { currentCoordinator } from "@/lib/mock/coordinator";
-import { mySchool } from "@/lib/mock/my-school";
 import {
   homeStats,
   emergencyNotifications,
@@ -42,14 +40,36 @@ export default function DashboardHomePage() {
 
   return (
     <>
-      <PageHeader
-        title={`Hello, ${currentCoordinator.firstName}`}
-        subtitle={`${mySchool.name} · ${mySchool.city}, ${mySchool.country}`}
-      />
+      {/* HERO */}
+      <section className="relative mb-6 overflow-hidden rounded-card-lg bg-gradient-to-r from-student to-[#6f8df5] px-8 py-7">
+        <svg
+          aria-hidden
+          viewBox="0 0 1200 220"
+          preserveAspectRatio="none"
+          className="pointer-events-none absolute inset-y-0 right-0 h-full w-2/3 text-white/40"
+        >
+          <path
+            d="M 0 200 C 250 120, 450 30, 700 60 S 1100 180, 1200 130"
+            stroke="currentColor"
+            strokeWidth="2"
+            fill="none"
+          />
+        </svg>
+        <div className="relative flex items-center gap-6">
+          <span
+            className="size-24 shrink-0 rounded-full bg-white/20 bg-cover bg-center ring-4 ring-white/40"
+            style={{
+              backgroundImage: `url(${currentCoordinator.avatarUrl})`,
+            }}
+          />
+          <h1 className="h-display text-white">
+            Hello, {currentCoordinator.firstName} ✈️
+          </h1>
+        </div>
+      </section>
 
       {/* KPI ROW */}
       <section className="mb-6">
-        <h2 className="t-label mb-3">School capacity</h2>
         <div className="grid gap-4 md:grid-cols-2">
           {homeStats.map((s, i) => (
             <StatPairCard
@@ -68,7 +88,6 @@ export default function DashboardHomePage() {
         <SectionCard
           title="Today's tasks"
           count={openTasks}
-          description="What needs your attention today."
           action={{ label: "View all", href: "/messages/tickets" }}
           className="xl:col-span-2"
         >
@@ -78,17 +97,13 @@ export default function DashboardHomePage() {
         <SectionCard
           title="Emergency notifications"
           count={unackedAlerts}
-          description="Issues that need a coordinator response."
-          action={{ label: "Workflows", href: "/messages/emergencies" }}
+          action={{ label: "View all", href: "/messages/emergencies" }}
+          className="ring-danger-fg/30"
         >
           <NotificationList notifications={emergencyNotifications} />
         </SectionCard>
 
-        <SectionCard
-          title="New applications"
-          description="Students and host families waiting for first review."
-          className="xl:col-span-2"
-        >
+        <SectionCard title="New applications" className="xl:col-span-2">
           <ListTabs
             tabs={[
               {
@@ -148,7 +163,6 @@ export default function DashboardHomePage() {
         <SectionCard
           title="Reminders & deadlines"
           count={upcomingReminders.length}
-          description="Upcoming dates worth keeping in mind."
         >
           <ReminderList reminders={upcomingReminders} />
         </SectionCard>

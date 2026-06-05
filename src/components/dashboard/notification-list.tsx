@@ -1,8 +1,8 @@
 import {
+  AlertCircle,
   AlertTriangle,
   FileWarning,
   HeartPulse,
-  Home,
   Triangle,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -17,8 +17,8 @@ const ICON: Record<EmergencyKind, { icon: React.ReactNode; tone: string }> = {
     tone: "bg-danger-bg/60 text-danger-fg",
   },
   host_family_issue: {
-    icon: <Home className="size-4" />,
-    tone: "bg-family/15 text-family",
+    icon: <AlertCircle className="size-4" />,
+    tone: "bg-danger-bg/60 text-danger-fg",
   },
   school_issue: {
     icon: <Triangle className="size-4" />,
@@ -76,7 +76,7 @@ export function NotificationList({
             <div className="min-w-0 flex-1">
               <div className="flex items-baseline gap-2">
                 <span className="text-sm font-bold text-fg">{n.title}</span>
-                <span className="ml-auto shrink-0 text-xs text-fg-subtle">
+                <span className="ml-auto shrink-0 text-[10px] font-bold uppercase tracking-wider text-fg-subtle">
                   {relativeTime(n.createdAt)}
                 </span>
               </div>

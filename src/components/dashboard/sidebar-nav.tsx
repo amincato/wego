@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
@@ -66,16 +67,15 @@ export function SidebarNav() {
   return (
     <aside className="sticky top-0 hidden h-dvh w-[260px] shrink-0 flex-col gap-2 overflow-y-auto border-r border-divider bg-surface px-4 py-6 lg:flex">
       <div className="px-2 pb-6">
-        <Link href="/dashboard" className="flex items-center gap-2">
-          <div className="grid size-9 place-items-center rounded-xl bg-student text-white">
-            <span className="font-bold">w</span>
-          </div>
-          <div className="flex flex-col leading-tight">
-            <span className="font-bold text-fg">wego</span>
-            <span className="text-[11px] uppercase tracking-wider text-fg-subtle">
-              Coordinator console
-            </span>
-          </div>
+        <Link href="/dashboard" className="inline-flex items-center">
+          <Image
+            src="/wego-wordmark.png"
+            alt="wego"
+            width={1988}
+            height={595}
+            priority
+            className="h-7 w-auto translate-y-0.5"
+          />
         </Link>
       </div>
 

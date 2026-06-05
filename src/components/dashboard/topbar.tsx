@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Bell, Heart, LifeBuoy, LogOut, MessageSquare, Search, Settings, UserRound } from "lucide-react";
+import { CalendarDays, Heart, LifeBuoy, LogOut, MessageSquare, Search, Settings, UserRound } from "lucide-react";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { currentCoordinator } from "@/lib/mock/coordinator";
@@ -30,23 +30,22 @@ export function Topbar() {
         </Link>
 
         <Link
+          href="/calendar"
+          className="grid size-10 place-items-center rounded-full bg-surface ring-1 ring-divider hover:bg-chip"
+          aria-label="Calendar"
+        >
+          <CalendarDays className="size-4 text-fg" />
+        </Link>
+
+        <Link
           href="/messages"
           className="relative grid size-10 place-items-center rounded-full bg-surface ring-1 ring-divider hover:bg-chip"
           aria-label="Messages"
         >
           <MessageSquare className="size-4 text-fg" />
-          <span className="absolute -right-0.5 -top-0.5 grid size-4 place-items-center rounded-full bg-family text-[10px] font-bold leading-none text-white">
+          <span className="absolute -right-0.5 -top-0.5 grid size-4 place-items-center rounded-full bg-danger-fg text-[10px] font-bold leading-none text-white">
             3
           </span>
-        </Link>
-
-        <Link
-          href="/messages/emergencies"
-          className="relative grid size-10 place-items-center rounded-full bg-surface ring-1 ring-divider hover:bg-chip"
-          aria-label="Notifications"
-        >
-          <Bell className="size-4 text-fg" />
-          <span className="absolute -right-0.5 -top-0.5 size-2.5 rounded-full bg-danger-fg ring-2 ring-bg" />
         </Link>
 
         <div className="relative">
