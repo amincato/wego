@@ -41,10 +41,10 @@ export function ProfileHeader({
         <ChevronLeft className="size-5" />
       </Link>
 
-      <div className="rounded-card-lg bg-surface p-5 ring-1 ring-divider">
-        <div className="flex flex-wrap items-start gap-5">
+      <div className="rounded-card-lg bg-surface p-6 ring-1 ring-divider">
+        <div className="flex flex-wrap items-start gap-6">
           <span
-            className="size-24 shrink-0 rounded-2xl bg-chip bg-cover bg-center"
+            className="size-32 shrink-0 rounded-2xl bg-chip bg-cover bg-center"
             style={{ backgroundImage: `url(${student.photoUrl})` }}
           />
           <div className="min-w-0 flex-1">

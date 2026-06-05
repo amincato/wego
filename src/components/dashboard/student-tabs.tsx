@@ -200,7 +200,7 @@ export function PersonalInfoTab({ student }: { student: StudentProfile }) {
             {student.galleryUrls.map((src, i) => (
               <div
                 key={i}
-                className="relative aspect-[4/3] w-full overflow-hidden rounded-input bg-chip"
+                className="relative aspect-square w-full overflow-hidden rounded-input bg-chip"
               >
                 <Image
                   src={src}
