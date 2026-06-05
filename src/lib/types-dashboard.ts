@@ -179,6 +179,14 @@ export interface HomeStatPair {
 /* ---- Community (My school) ---- */
 export type CommunityKind = "event" | "post" | "update";
 
+export interface CommunityComment {
+  id: string;
+  authorName: string;
+  authorAvatarUrl: string;
+  body: string;
+  createdAt: string;
+}
+
 export interface CommunityEntry {
   id: string;
   kind: CommunityKind;
@@ -188,8 +196,11 @@ export interface CommunityEntry {
   authorAvatarUrl: string;
   createdAt: string;
   imageUrl?: string;
+  imageUrls?: string[];
   eventDate?: string;
   eventLocation?: string;
+  comments?: CommunityComment[];
+  likeCount?: number;
 }
 
 /* ---- Top bar utilities ---- */

@@ -95,8 +95,8 @@ export function LeafletMap({
 }) {
   const partnerIcons = useMemo(() => {
     return {
-      active: pinIcon({ color: "#14a87a", ring: true }),
-      dimmed: pinIcon({ color: "#14a87a", dim: true }),
+      active: pinIcon({ color: "#111111", ring: true }),
+      dimmed: pinIcon({ color: "#111111", dim: true }),
     };
   }, []);
   const mySchoolIcon = useMemo(
@@ -206,7 +206,7 @@ export function LeafletMap({
 
       <div className="pointer-events-none absolute bottom-3 left-3 z-[400] flex items-center gap-3 rounded-full bg-white/95 px-3 py-1.5 text-xs font-semibold text-fg shadow-md ring-1 ring-divider">
         <span className="inline-flex items-center gap-1.5">
-          <span className="size-2.5 rounded-full bg-school" />
+          <span className="size-2.5 rounded-full bg-fg" />
           Partner schools
         </span>
         <span className="inline-flex items-center gap-1.5">

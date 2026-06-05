@@ -7,43 +7,65 @@ export interface TabDef {
   id: string;
   label: string;
   content: ReactNode;
+  /** Optional action rendered on the right of the tab bar when this tab is active. */
+  action?: ReactNode;
 }
+
+const ACCENT_BAR: Record<"student" | "family" | "school" | "neutral", string> =
+  {
+    student: "bg-student",
+    family: "bg-family",
+    school: "bg-school",
+    neutral: "bg-fg",
+  };
 
 export function ProfileTabs({
   tabs,
   defaultTab,
+  accent = "student",
 }: {
   tabs: TabDef[];
   defaultTab?: string;
+  accent?: "student" | "family" | "school" | "neutral";
 }) {
   const [active, setActive] = useState(defaultTab ?? tabs[0]?.id);
   const current = tabs.find((t) => t.id === active);
 
   return (
     <div className="mt-6">
-      <div className="overflow-x-auto no-scrollbar">
-        <div className="flex gap-1 border-b border-divider">
-          {tabs.map((tab) => {
-            const isActive = tab.id === active;
-            return (
-              <button
-                key={tab.id}
-                onClick={() => setActive(tab.id)}
-                className={cn(
-                  "relative whitespace-nowrap px-4 py-3 text-sm font-semibold transition-colors",
-                  isActive
-                    ? "text-fg"
-                    : "text-fg-muted hover:text-fg",
-                )}
-              >
-                {tab.label}
-                {isActive ? (
-                  <span className="absolute inset-x-2 bottom-0 h-0.5 rounded-full bg-student" />
-                ) : null}
-              </button>
-            );
-          })}
+      <div className="flex items-end justify-between gap-4 border-b border-divider">
+        <div className="overflow-x-auto no-scrollbar">
+          <div className="flex gap-1">
+            {tabs.map((tab) => {
+              const isActive = tab.id === active;
+              return (
+                <button
+                  key={tab.id}
+                  onClick={() => setActive(tab.id)}
+                  className={cn(
+                    "relative whitespace-nowrap px-4 py-3 text-sm transition-colors",
+                    isActive
+                      ? "font-bold text-fg"
+                      : "font-semibold text-fg-muted hover:text-fg",
+                  )}
+                >
+                  {tab.label}
+                  {isActive ? (
+                    <span
+                      className={cn(
+                        "absolute inset-x-2 -bottom-px h-1 rounded-full",
+                        ACCENT_BAR[accent],
+                      )}
+                    />
+                  ) : null}
+                </button>
+              );
+            })}
+          </div>
         </div>
+        {current?.action ? (
+          <div className="shrink-0 pb-2">{current.action}</div>
+        ) : null}
       </div>
       <div className="pt-6">{current?.content}</div>
     </div>

@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Bell, LifeBuoy, LogOut, MessageSquare, Search, Settings, UserRound } from "lucide-react";
+import { Bell, Heart, LifeBuoy, LogOut, MessageSquare, Search, Settings, UserRound } from "lucide-react";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { currentCoordinator } from "@/lib/mock/coordinator";
@@ -21,6 +21,14 @@ export function Topbar() {
       </div>
 
       <div className="flex items-center gap-2">
+        <Link
+          href="/community"
+          className="inline-flex h-10 items-center gap-2 rounded-full bg-surface px-4 text-sm font-bold text-fg ring-1 ring-divider hover:bg-chip"
+        >
+          <Heart className="size-4" />
+          Community
+        </Link>
+
         <Link
           href="/messages"
           className="relative grid size-10 place-items-center rounded-full bg-surface ring-1 ring-divider hover:bg-chip"

@@ -23,26 +23,18 @@ const LeafletMap = dynamic(
 
 const COUNTRIES = ["all", "Germany", "France", "Italy", "Spain"] as const;
 const LANGUAGES = ["all", "de", "fr", "it", "es"] as const;
-const ORIENTATIONS = [
-  "all",
-  "scientific",
-  "classic",
-  "linguistic",
-  "musical",
-  "artistic",
-] as const;
+const DURATIONS = ["all", "3", "6", "10"] as const;
 
 export default function DestinationsPage() {
   const [country, setCountry] = useState<(typeof COUNTRIES)[number]>("all");
   const [language, setLanguage] =
     useState<(typeof LANGUAGES)[number]>("all");
-  const [orientation, setOrientation] =
-    useState<(typeof ORIENTATIONS)[number]>("all");
+  const [duration, setDuration] =
+    useState<(typeof DURATIONS)[number]>("all");
 
   const filtered = schools.filter((s) => {
     if (country !== "all" && s.country !== country) return false;
     if (language !== "all" && s.language !== language) return false;
-    if (orientation !== "all" && s.orientation !== orientation) return false;
     return true;
   });
 
@@ -76,8 +68,8 @@ export default function DestinationsPage() {
             setCountry={setCountry}
             language={language}
             setLanguage={setLanguage}
-            orientation={orientation}
-            setOrientation={setOrientation}
+            duration={duration}
+            setDuration={setDuration}
           />
 
         </div>
@@ -91,15 +83,15 @@ function FiltersBar({
   setCountry,
   language,
   setLanguage,
-  orientation,
-  setOrientation,
+  duration,
+  setDuration,
 }: {
   country: (typeof COUNTRIES)[number];
   setCountry: (v: (typeof COUNTRIES)[number]) => void;
   language: (typeof LANGUAGES)[number];
   setLanguage: (v: (typeof LANGUAGES)[number]) => void;
-  orientation: (typeof ORIENTATIONS)[number];
-  setOrientation: (v: (typeof ORIENTATIONS)[number]) => void;
+  duration: (typeof DURATIONS)[number];
+  setDuration: (v: (typeof DURATIONS)[number]) => void;
 }) {
   return (
     <div className="rounded-card-lg bg-surface p-5 ring-1 ring-divider">
@@ -126,14 +118,14 @@ function FiltersBar({
           </Chip>
         ))}
       </FilterGroup>
-      <FilterGroup label="Orientation">
-        {ORIENTATIONS.map((o) => (
+      <FilterGroup label="Mobility duration">
+        {DURATIONS.map((d) => (
           <Chip
-            key={o}
-            active={o === orientation}
-            onClick={() => setOrientation(o)}
+            key={d}
+            active={d === duration}
+            onClick={() => setDuration(d)}
           >
-            {o === "all" ? "Any" : o}
+            {d === "all" ? "Any" : `${d} months`}
           </Chip>
         ))}
       </FilterGroup>
@@ -173,7 +165,7 @@ function Chip({
       className={cn(
         "rounded-full px-3 py-1 text-xs font-bold capitalize transition-colors",
         active
-          ? "bg-school text-white"
+          ? "bg-fg text-white"
           : "bg-chip text-fg-muted hover:bg-chip/70",
       )}
     >

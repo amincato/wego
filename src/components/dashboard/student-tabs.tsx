@@ -156,7 +156,7 @@ export function ApplicationSummaryTab({
       </InfoCard>
 
       <InfoCard
-        title="Report card (Pagella)"
+        title="Report card"
         action={
           application.reportCardFilename ? (
             <button className="rounded-full bg-chip px-3 py-1 text-xs font-bold text-fg hover:bg-chip/70">
