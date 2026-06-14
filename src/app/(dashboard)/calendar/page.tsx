@@ -20,15 +20,6 @@ import {
   type ScheduledProposal,
 } from "@/components/dashboard/schedule-visit-modal";
 
-const PROPOSALS_STORAGE_KEY = "wego_visit_proposals";
-
-interface StoredProposal {
-  id: string;
-  title: string;
-  date: string; // ISO
-  tone: CalEvent["tone"];
-}
-
 type View = "day" | "week" | "month" | "year";
 
 const VIEWS: { id: View; label: string }[] = [
@@ -178,29 +169,6 @@ function CalendarPageInner() {
     if (isSchedulingMode && view !== "month") setView("month");
   }, [isSchedulingMode, view]);
 
-  // Hydrate previously-sent visit proposals from sessionStorage so the
-  // calendar keeps them across schedule round-trips.
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    const raw = sessionStorage.getItem(PROPOSALS_STORAGE_KEY);
-    if (!raw) return;
-    try {
-      const parsed = JSON.parse(raw) as StoredProposal[];
-      setExtraEvents(
-        parsed.map((p) => ({
-          id: p.id,
-          title: p.title,
-          date: new Date(p.date),
-          // Any stored proposal is unconfirmed by definition — always render
-          // grey, regardless of what tone was persisted earlier.
-          tone: "pending",
-        })),
-      );
-    } catch {
-      /* ignore */
-    }
-  }, []);
-
   const events = useMemo(
     () => [...buildEvents(), ...extraEvents],
     [extraEvents],
@@ -245,28 +213,13 @@ function CalendarPageInner() {
       tone: "pending",
     };
 
-    if (typeof window !== "undefined") {
-      const raw = sessionStorage.getItem(PROPOSALS_STORAGE_KEY);
-      const existing = raw ? (JSON.parse(raw) as StoredProposal[]) : [];
-      sessionStorage.setItem(
-        PROPOSALS_STORAGE_KEY,
-        JSON.stringify([
-          ...existing,
-          {
-            id: newEvent.id,
-            title: newEvent.title,
-            date: eventDate.toISOString(),
-            tone: newEvent.tone,
-          },
-        ]),
-      );
-    }
-
+    // Hold the new event in component state only — no persistence. It
+    // disappears as soon as the user navigates away from /calendar.
     setExtraEvents((prev) => [...prev, newEvent]);
     setProposedDate(null);
     setOpenTimeModal(false);
-    // Leave schedule mode by dropping ?schedule from the URL; user
-    // stays on /calendar and sees the new event right away.
+    // Drop ?schedule from the URL; user stays on /calendar and sees
+    // the new event for the rest of this visit to the page.
     router.replace("/calendar");
   };
 
