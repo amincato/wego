@@ -31,7 +31,7 @@ export function ChatPanel({
       {
         id: "m2",
         fromMe: true,
-        text: "Welcome! Let me know if you need anything during the process.",
+        text: "Thanks for submitting your application! I'll review it and get back to you as soon as possible.",
         time: "10:30",
       },
     ],
