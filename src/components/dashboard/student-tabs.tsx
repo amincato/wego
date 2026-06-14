@@ -231,9 +231,9 @@ export function ApplicationSummaryTab({
   const studentIdFilename = `${base}_student_id.pdf`;
 
   return (
-    <div className="grid gap-6 lg:grid-cols-2 lg:items-start">
-      {/* Left column: summary + letter of motivation */}
-      <div className="space-y-6">
+    <div className="grid gap-6 lg:grid-cols-2 lg:items-stretch">
+      {/* Left column: summary + letter of motivation (stretches to match right column) */}
+      <div className="flex flex-col gap-6">
         <InfoCard title="Application summary">
           <InfoGrid
             items={[
@@ -260,8 +260,11 @@ export function ApplicationSummaryTab({
           />
         </InfoCard>
 
-        <InfoCard title="Letter of motivation">
-          <div className="flex items-start gap-3 rounded-input bg-bg p-4 ring-1 ring-divider">
+        <InfoCard
+          title="Letter of motivation"
+          className="flex flex-1 flex-col"
+        >
+          <div className="flex flex-1 items-start gap-3 rounded-input bg-bg p-4 ring-1 ring-divider">
             <FileText className="mt-0.5 size-4 shrink-0 text-fg-subtle" />
             <p className="whitespace-pre-line text-sm leading-relaxed text-fg">
               {application.letterOfMotivation}
@@ -271,7 +274,7 @@ export function ApplicationSummaryTab({
       </div>
 
       {/* Right column: downloadable documents */}
-      <div className="space-y-6">
+      <div className="flex flex-col gap-6">
         <InfoCard title="Report card">
           {application.reportCardFilename ? (
             <DocumentDownloadRow
