@@ -1,8 +1,8 @@
 "use client";
 
 import * as Dialog from "@radix-ui/react-dialog";
-import { useEffect, useState } from "react";
-import { CalendarDays, Send, X } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { CalendarDays, Check, Send, X } from "lucide-react";
 
 const WEEKDAYS_LONG = [
   "Monday",
@@ -70,6 +70,8 @@ export function ScheduleVisitModal({
   const [toTime, setToTime] = useState<string>("12:00");
   const [message, setMessage] = useState<string>("");
   const [messageEdited, setMessageEdited] = useState(false);
+  const [sent, setSent] = useState(false);
+  const sendTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     if (open && date) {
@@ -77,8 +79,16 @@ export function ScheduleVisitModal({
       setToTime("12:00");
       setMessage(defaultMessage(familyName, date, "11:00", "12:00"));
       setMessageEdited(false);
+      setSent(false);
     }
   }, [open, date, familyName]);
+
+  // Clear any pending finalization timer if the modal is closed mid-success.
+  useEffect(() => {
+    return () => {
+      if (sendTimeoutRef.current) clearTimeout(sendTimeoutRef.current);
+    };
+  }, []);
 
   useEffect(() => {
     if (!messageEdited && date) {
@@ -89,6 +99,14 @@ export function ScheduleVisitModal({
   const rangeValid = toMinutes(toTime) > toMinutes(fromTime);
   const canSend = !!date && rangeValid && message.trim().length > 0;
 
+  const handleSend = () => {
+    if (!canSend) return;
+    setSent(true);
+    sendTimeoutRef.current = setTimeout(() => {
+      onSend();
+    }, 1800);
+  };
+
   return (
     <Dialog.Root open={open} onOpenChange={onOpenChange}>
       <Dialog.Portal>
@@ -97,6 +115,10 @@ export function ScheduleVisitModal({
           style={{ backgroundColor: "#ffffff", color: "#0a0a0a" }}
           className="fixed left-1/2 top-1/2 z-50 flex max-h-[92dvh] w-[calc(100%-48px)] max-w-[560px] -translate-x-1/2 -translate-y-1/2 flex-col overflow-hidden rounded-[20px] shadow-2xl ring-1 ring-black/10 data-[state=open]:animate-in data-[state=closed]:animate-out"
         >
+          {sent ? (
+            <SentSuccess familyName={familyName} />
+          ) : (
+            <>
           {/* Header */}
           <div className="flex items-start justify-between gap-4 border-b border-black/10 px-7 py-4">
             <div className="min-w-0">
@@ -203,7 +225,7 @@ export function ScheduleVisitModal({
             <button
               type="button"
               onClick={() => {
-                if (canSend) onSend();
+                if (canSend) handleSend();
               }}
               disabled={!canSend}
               className="inline-flex items-center gap-2 rounded-full bg-black px-5 py-2.5 text-sm font-bold text-white hover:bg-black/90 disabled:cursor-not-allowed disabled:bg-black/40"
@@ -212,8 +234,36 @@ export function ScheduleVisitModal({
               Send proposal
             </button>
           </div>
+            </>
+          )}
         </Dialog.Content>
       </Dialog.Portal>
     </Dialog.Root>
+  );
+}
+
+function SentSuccess({ familyName }: { familyName: string }) {
+  return (
+    <div className="flex flex-col items-center justify-center gap-4 px-8 py-14 text-center">
+      <Dialog.Title className="sr-only">Proposal sent</Dialog.Title>
+      <Dialog.Description className="sr-only">
+        Your proposal has been delivered to {familyName}.
+      </Dialog.Description>
+      <span
+        className="grid size-16 place-items-center rounded-full bg-emerald-100"
+        aria-hidden
+      >
+        <Check
+          className="size-8 text-emerald-600"
+          strokeWidth={3}
+        />
+      </span>
+      <div className="text-xl font-bold text-black">Proposal sent</div>
+      <p className="max-w-[360px] text-sm text-neutral-600">
+        Your time proposal has been delivered to{" "}
+        <span className="font-semibold text-black">{familyName}</span>. You'll
+        get a notification as soon as they reply.
+      </p>
+    </div>
   );
 }
