@@ -11,7 +11,8 @@ export type AudienceRole =
   | "outgoing_student"
   | "abroad_student"
   | "hosting_family"
-  | "future_family";
+  | "future_family"
+  | "partner_school";
 type Audience = "all" | AudienceRole;
 
 export interface BroadcastRecipient {
@@ -29,6 +30,7 @@ const AUDIENCE_LABEL: Record<Audience, string> = {
   abroad_student: "Students abroad",
   hosting_family: "Hosting families",
   future_family: "Future host families",
+  partner_school: "Partner schools",
 };
 
 const AUDIENCE_ACTIVE: Record<Audience, string> = {
@@ -39,6 +41,7 @@ const AUDIENCE_ACTIVE: Record<Audience, string> = {
   abroad_student: "bg-student text-white",
   hosting_family: "bg-family text-white",
   future_family: "bg-family text-white",
+  partner_school: "bg-school text-white",
 };
 
 const AUDIENCE_DOT: Record<AudienceRole, string> = {
@@ -48,6 +51,7 @@ const AUDIENCE_DOT: Record<AudienceRole, string> = {
   abroad_student: "ring-student",
   hosting_family: "ring-family",
   future_family: "ring-family",
+  partner_school: "ring-school",
 };
 
 const AUDIENCES: Audience[] = [
@@ -58,6 +62,7 @@ const AUDIENCES: Audience[] = [
   "abroad_student",
   "hosting_family",
   "future_family",
+  "partner_school",
 ];
 
 export function BroadcastModal({
@@ -98,6 +103,7 @@ export function BroadcastModal({
       abroad_student: [],
       hosting_family: [],
       future_family: [],
+      partner_school: [],
     };
     for (const r of recipients) map[r.role].push(r.id);
     return map;

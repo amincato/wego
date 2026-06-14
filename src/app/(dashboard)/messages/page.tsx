@@ -87,7 +87,8 @@ export default function MessagesPage() {
         | "outgoing_student"
         | "abroad_student"
         | "hosting_family"
-        | "future_family";
+        | "future_family"
+        | "partner_school";
     }>
   >(
     () => [
@@ -214,6 +215,19 @@ export default function MessagesPage() {
         avatarUrl:
           "https://images.unsplash.com/photo-1602407294553-6ac9170de9eb?auto=format&fit=crop&w=200&q=80",
         role: "future_family",
+      },
+      // Partner schools
+      {
+        id: "r_school_thiers",
+        name: "Lycée Thiers",
+        avatarUrl: "/schools/lycee-thiers.png",
+        role: "partner_school",
+      },
+      {
+        id: "r_school_goethe",
+        name: "Goethe Gymnasium",
+        avatarUrl: "/schools/goethe-gymnasium.png",
+        role: "partner_school",
       },
     ],
     [],
