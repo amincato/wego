@@ -108,7 +108,7 @@ export default function MessagesPage() {
         ))}
       </div>
 
-      <div className="grid h-[calc(100dvh-18rem)] min-h-[520px] gap-4 lg:grid-cols-[340px_1fr]">
+      <div className="grid h-[calc(100dvh-15rem)] min-h-[540px] gap-4 lg:grid-cols-[340px_1fr]">
         {/* Inbox list */}
         <aside className="flex min-h-0 flex-col rounded-card-lg bg-surface ring-1 ring-divider">
           <div className="border-b border-divider p-3">
