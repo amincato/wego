@@ -85,13 +85,13 @@ export const dashboardHostFamilies: HostFamily[] = [
         age: 41,
         photoUrl: "/families/mueller/father.png",
         role: "Father",
-        klasseLabel: "11. Klasse",
       },
       {
         name: "Jonas",
         age: 14,
         photoUrl: "/families/mueller/son.png",
         role: "Son",
+        klasseLabel: "8. Klasse",
       },
       {
         name: "Mia",
