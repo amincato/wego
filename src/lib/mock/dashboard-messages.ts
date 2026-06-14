@@ -15,7 +15,7 @@ export interface InboxConversation {
   id: string;
   withName: string;
   withAvatarUrl: string;
-  withRole: "student" | "family" | "school";
+  withRole: "student" | "family" | "buddy";
   lastMessage: string;
   lastAt: string;
   unread: number;
@@ -23,65 +23,104 @@ export interface InboxConversation {
 }
 
 export const inboxConversations: InboxConversation[] = [
+  /* ---- Students ---- */
   {
-    id: "conv_matthis",
-    withName: "Matthis Bernard",
-    withAvatarUrl:
-      "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=200&q=80",
+    id: "conv_carlo",
+    withName: "Carlo Liberti",
+    withAvatarUrl: "/carlo-liberti.png",
     withRole: "student",
-    lastMessage: "Thanks for the welcome packet!",
-    lastAt: minsAgo(8),
+    lastMessage: "Just submitted my mid-term report card — let me know!",
+    lastAt: minsAgo(12),
     unread: 2,
     pinned: true,
   },
   {
-    id: "conv_bianchi",
-    withName: "Family Bianchi",
+    id: "conv_alessandro",
+    withName: "Alessandro Greco",
     withAvatarUrl:
-      "https://images.unsplash.com/photo-1609220136736-443140cffec6?auto=format&fit=crop&w=200&q=80",
+      "https://images.unsplash.com/photo-1564564321837-a57b7070ac4f?auto=format&fit=crop&w=200&q=80",
+    withRole: "student",
+    lastMessage: "Could I get the schedule for next week's orientation?",
+    lastAt: hoursAgo(2),
+    unread: 1,
+  },
+  {
+    id: "conv_sophie",
+    withName: "Sophie Laurent",
+    withAvatarUrl:
+      "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&w=200&q=80",
+    withRole: "student",
+    lastMessage: "Thanks for the welcome packet, see you Monday!",
+    lastAt: hoursAgo(6),
+    unread: 0,
+  },
+  {
+    id: "conv_carmen",
+    withName: "Carmen Ruiz",
+    withAvatarUrl:
+      "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=200&q=80",
+    withRole: "student",
+    lastMessage: "Quick question about the bus pass paperwork.",
+    lastAt: daysAgo(1),
+    unread: 0,
+  },
+  /* ---- Host families ---- */
+  {
+    id: "conv_family_rath",
+    withName: "Family Rath",
+    withAvatarUrl: "/families/rath/avatar.png",
     withRole: "family",
-    lastMessage: "Could we reschedule the site visit?",
+    lastMessage: "Carlo settled in nicely — we'll send photos tonight!",
     lastAt: minsAgo(45),
     unread: 1,
   },
   {
-    id: "conv_fsg",
-    withName: "Friedrich Schiller Gymnasium",
+    id: "conv_family_taununsanlage",
+    withName: "Family Taununsanlage",
     withAvatarUrl:
-      "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=200&q=80",
-    withRole: "school",
-    lastMessage: "Carlo's mid-term grades have been uploaded.",
-    lastAt: hoursAgo(3),
-    unread: 0,
-  },
-  {
-    id: "conv_sofia",
-    withName: "Sofia Garcia",
-    withAvatarUrl:
-      "https://images.unsplash.com/photo-1531123897727-8f129e1688ce?auto=format&fit=crop&w=200&q=80",
-    withRole: "student",
-    lastMessage: "Quick question about the report card upload",
-    lastAt: hoursAgo(8),
-    unread: 0,
-  },
-  {
-    id: "conv_rossi",
-    withName: "Family Rossi",
-    withAvatarUrl:
-      "https://images.unsplash.com/photo-1511895426328-dc8714191300?auto=format&fit=crop&w=200&q=80",
+      "https://images.unsplash.com/photo-1609220136736-443140cffec6?auto=format&fit=crop&w=200&q=80",
     withRole: "family",
-    lastMessage: "We have some house rules we'd like to share.",
-    lastAt: daysAgo(1),
+    lastMessage: "Could we reschedule the site visit to next Wednesday?",
+    lastAt: hoursAgo(4),
     unread: 0,
   },
   {
-    id: "conv_thiers",
-    withName: "Lycée Thiers",
+    id: "conv_family_lenz",
+    withName: "Family Lenz",
     withAvatarUrl:
-      "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=200&q=80",
-    withRole: "school",
-    lastMessage: "Welcome to our partner network!",
-    lastAt: daysAgo(3),
+      "https://images.unsplash.com/photo-1581952976147-5a2d15560349?auto=format&fit=crop&w=200&q=80",
+    withRole: "family",
+    lastMessage: "Alessandro's room is ready, looking forward to it!",
+    lastAt: hoursAgo(9),
+    unread: 0,
+  },
+  {
+    id: "conv_family_stiefel",
+    withName: "Family Stiefel",
+    withAvatarUrl:
+      "https://images.unsplash.com/photo-1602407294553-6ac9170de9eb?auto=format&fit=crop&w=200&q=80",
+    withRole: "family",
+    lastMessage: "We have a couple of house rules we'd like to share.",
+    lastAt: daysAgo(2),
+    unread: 0,
+  },
+  /* ---- Buddies ---- */
+  {
+    id: "conv_alex_willheim",
+    withName: "Alex Willheim",
+    withAvatarUrl: "/community/buddy-alex-willheim.png",
+    withRole: "buddy",
+    lastMessage: "I can take Carlo around the city centre this weekend.",
+    lastAt: hoursAgo(1),
+    unread: 1,
+  },
+  {
+    id: "conv_amelie_rotwurf",
+    withName: "Amélie Rotwürf",
+    withAvatarUrl: "/community/buddy-amelie-rotwurf.png",
+    withRole: "buddy",
+    lastMessage: "Sent Sophie the school WhatsApp group invite, thanks!",
+    lastAt: daysAgo(1),
     unread: 0,
   },
 ];

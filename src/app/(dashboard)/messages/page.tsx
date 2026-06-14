@@ -11,9 +11,20 @@ import type { InboxConversation } from "@/lib/mock/dashboard-messages";
 
 const ROLE_LABEL: Record<InboxConversation["withRole"], string> = {
   student: "Student",
-  family: "Family",
-  school: "Partner school",
+  family: "Host family",
+  buddy: "Buddy",
 };
+
+type RoleFilter = "all" | InboxConversation["withRole"];
+
+const FILTER_LABEL: Record<RoleFilter, string> = {
+  all: "All",
+  student: "Students",
+  family: "Host families",
+  buddy: "Buddies",
+};
+
+const FILTERS: RoleFilter[] = ["all", "student", "family", "buddy"];
 
 function fmt(iso: string) {
   const diff = Date.now() - new Date(iso).getTime();
@@ -32,12 +43,16 @@ function fmt(iso: string) {
 export default function MessagesPage() {
   const [activeId, setActiveId] = useState(inboxConversations[0]?.id);
   const [query, setQuery] = useState("");
+  const [filter, setFilter] = useState<RoleFilter>("all");
 
-  const filtered = inboxConversations.filter(
-    (c) =>
+  const filtered = inboxConversations.filter((c) => {
+    if (filter !== "all" && c.withRole !== filter) return false;
+    if (!query) return true;
+    return (
       c.withName.toLowerCase().includes(query.toLowerCase()) ||
-      c.lastMessage.toLowerCase().includes(query.toLowerCase()),
-  );
+      c.lastMessage.toLowerCase().includes(query.toLowerCase())
+    );
+  });
 
   const active = inboxConversations.find((c) => c.id === activeId);
 
@@ -65,6 +80,25 @@ export default function MessagesPage() {
           </div>
         }
       />
+
+      {/* Role filter chips */}
+      <div className="mb-4 flex flex-wrap gap-2">
+        {FILTERS.map((r) => (
+          <button
+            key={r}
+            type="button"
+            onClick={() => setFilter(r)}
+            className={cn(
+              "inline-flex items-center rounded-full px-4 py-1.5 text-xs font-bold transition-colors",
+              filter === r
+                ? "bg-fg text-white shadow-sm"
+                : "bg-chip text-fg-muted hover:text-fg",
+            )}
+          >
+            {FILTER_LABEL[r]}
+          </button>
+        ))}
+      </div>
 
       <div className="grid h-[640px] gap-4 lg:grid-cols-[340px_1fr]">
         {/* Inbox list */}
