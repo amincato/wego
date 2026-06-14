@@ -16,10 +16,10 @@ const AUDIENCE_LABEL: Record<Audience, string> = {
 };
 
 const AUDIENCE_ACTIVE: Record<Audience, string> = {
-  all: "bg-fg text-white",
+  all: "bg-black text-white",
   student: "bg-student text-white",
   family: "bg-family text-white",
-  buddy: "bg-fg text-white",
+  buddy: "bg-black text-white",
   school: "bg-school text-white",
 };
 
@@ -88,7 +88,7 @@ export function BroadcastModal({
             backgroundColor: "#ffffff",
             color: "#0a0a0a",
           }}
-          className="fixed left-1/2 top-1/2 z-50 w-[calc(100%-48px)] max-w-[560px] -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-[20px] shadow-2xl ring-1 ring-black/10 data-[state=open]:animate-in data-[state=closed]:animate-out"
+          className="fixed left-1/2 top-1/2 z-50 w-[calc(100%-48px)] max-w-[820px] -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-[20px] shadow-2xl ring-1 ring-black/10 data-[state=open]:animate-in data-[state=closed]:animate-out"
         >
           {/* Header */}
           <div className="flex items-start justify-between gap-4 border-b border-black/10 px-6 py-5">
@@ -97,8 +97,7 @@ export function BroadcastModal({
                 Send broadcast message
               </Dialog.Title>
               <Dialog.Description className="mt-1 text-sm text-neutral-600">
-                Reach one or more groups in your school community at
-                once.
+                Reach one or more groups of people at once.
               </Dialog.Description>
             </div>
             <Dialog.Close
@@ -151,13 +150,10 @@ export function BroadcastModal({
               <textarea
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
-                rows={5}
+                rows={7}
                 placeholder="Write your broadcast message…"
                 className="w-full resize-none rounded-[14px] bg-neutral-50 p-3 text-sm text-black placeholder:text-neutral-400 outline-none ring-1 ring-black/10 focus:ring-2 focus:ring-student"
               />
-              <div className="mt-1 text-right text-[11px] text-neutral-400">
-                {message.length} / 500
-              </div>
             </section>
           </div>
 
