@@ -102,6 +102,9 @@ export interface HostFamily {
   lifestyle?: FamilyLifestyle;
   /** Optional photo gallery shown in the Profile tab (square thumbnails). */
   galleryUrls?: string[];
+  /** Optional gallery of the home itself — kitchen, living room, guest
+   * bedroom etc. Same square layout as `galleryUrls`. */
+  homePhotoUrls?: string[];
   homeType: "apartment" | "house";
   hasPets: boolean;
   spareRooms: number;

@@ -216,6 +216,28 @@ export function FamilyPersonalInfoTab({ family }: { family: HostFamily }) {
           </div>
         </InfoCard>
       ) : null}
+
+      {/* Home photos — full width, only when present */}
+      {family.homePhotoUrls && family.homePhotoUrls.length > 0 ? (
+        <InfoCard title="Home photos">
+          <div className="grid gap-3 md:grid-cols-3">
+            {family.homePhotoUrls.map((src, i) => (
+              <div
+                key={i}
+                className="relative aspect-square w-full overflow-hidden rounded-input bg-chip"
+              >
+                <Image
+                  src={src}
+                  alt={`${family.familyName} – home photo ${i + 1}`}
+                  fill
+                  sizes="(max-width: 768px) 100vw, 33vw"
+                  className="object-cover"
+                />
+              </div>
+            ))}
+          </div>
+        </InfoCard>
+      ) : null}
     </div>
   );
 }
