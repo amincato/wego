@@ -22,9 +22,9 @@ const LANG_FLAG: Record<string, string> = {
 };
 
 const LANG_LEVEL_TONE: Record<string, string> = {
-  native: "bg-success-bg/50 text-success-fg",
-  advanced: "bg-student/15 text-student",
-  intermediate: "bg-chip text-fg",
+  native: "bg-chip text-fg-muted",
+  advanced: "bg-chip text-fg-muted",
+  intermediate: "bg-chip text-fg-muted",
   beginner: "bg-chip text-fg-muted",
 };
 
@@ -58,9 +58,9 @@ export function FamilyPersonalInfoTab({ family }: { family: HostFamily }) {
         </p>
       </section>
 
-      {/* Personal info + Languages (left) · Members (right) */}
-      <div className="grid gap-6 lg:grid-cols-2 lg:items-start">
-        <div className="space-y-6">
+      {/* Personal info + Languages (left) · Members + Hobbies (right) */}
+      <div className="grid gap-6 lg:grid-cols-2 lg:items-stretch">
+        <div className="flex flex-col gap-6">
           <InfoCard title="Personal info">
             <InfoGrid
               items={[
@@ -75,7 +75,7 @@ export function FamilyPersonalInfoTab({ family }: { family: HostFamily }) {
             />
           </InfoCard>
 
-          <InfoCard title="Languages">
+          <InfoCard title="Languages" className="flex-1">
             {family.languages && family.languages.length > 0 ? (
               <ul className="flex flex-col gap-2">
                 {family.languages.map((l) => (
@@ -106,7 +106,7 @@ export function FamilyPersonalInfoTab({ family }: { family: HostFamily }) {
           </InfoCard>
         </div>
 
-        <div className="space-y-6">
+        <div className="flex flex-col gap-6">
           <InfoCard title="Members">
             {family.memberProfiles ? (
               <ul className="flex flex-col gap-2">
