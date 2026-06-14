@@ -7,9 +7,11 @@ import {
   Globe2,
   Heart,
   Home,
+  IdCard,
   Music2,
   Plane,
   ScrollText,
+  Users,
   UserRound,
   Waves,
   type LucideIcon,
@@ -224,72 +226,111 @@ export function ApplicationSummaryTab({
 }: {
   application: ApplicationExtended;
 }) {
+  const base =
+    application.reportCardFilename?.replace(/_report_card\.pdf$/i, "") ??
+    "student";
+  const studentIdFilename = `${base}_student_id.pdf`;
+  const parentsIdFilename = `${base}_parents_id.pdf`;
+
   return (
-    <div className="grid gap-6 lg:grid-cols-2">
-      <InfoCard title="Application summary">
-        <InfoGrid
-          items={[
-            {
-              label: "Mobility duration",
-              value: `${application.mobilityDurationMonths} months`,
-            },
-            {
-              label: "Submitted",
-              value: new Date(application.appliedAt).toLocaleDateString(
-                "en-US",
-                { month: "long", day: "numeric", year: "numeric" },
-              ),
-            },
-            {
-              label: "Current state",
-              value: application.lifecycleState.replace(/_/g, " "),
-            },
-            {
-              label: "Direction",
-              value: application.flow,
-            },
-          ]}
-        />
-      </InfoCard>
+    <div className="grid gap-6 lg:grid-cols-2 lg:items-start">
+      {/* Left column: summary + letter of motivation */}
+      <div className="space-y-6">
+        <InfoCard title="Application summary">
+          <InfoGrid
+            items={[
+              {
+                label: "Mobility duration",
+                value: `${application.mobilityDurationMonths} months`,
+              },
+              {
+                label: "Submitted",
+                value: new Date(application.appliedAt).toLocaleDateString(
+                  "en-US",
+                  { month: "long", day: "numeric", year: "numeric" },
+                ),
+              },
+              {
+                label: "Current state",
+                value: application.lifecycleState.replace(/_/g, " "),
+              },
+              {
+                label: "Direction",
+                value: application.flow,
+              },
+            ]}
+          />
+        </InfoCard>
 
-      <InfoCard title="Report card">
-        {application.reportCardFilename ? (
-          <div className="flex items-center gap-3 rounded-input bg-bg px-3 py-3 ring-1 ring-divider">
-            <span className="grid size-10 place-items-center rounded-lg bg-student/15 text-student">
-              <ScrollText className="size-5" />
-            </span>
-            <div className="min-w-0 flex-1">
-              <div className="truncate text-sm font-bold text-fg">
-                {application.reportCardFilename}
-              </div>
-              <div className="text-xs text-fg-muted">
-                PDF · uploaded by student
-              </div>
-            </div>
-            <button
-              type="button"
-              aria-label="Download report card"
-              className="grid size-9 shrink-0 place-items-center rounded-full bg-fg text-white hover:bg-fg/90"
-            >
-              <Download className="size-4" strokeWidth={2.4} />
-            </button>
+        <InfoCard title="Letter of motivation">
+          <div className="flex items-start gap-3 rounded-input bg-bg p-4 ring-1 ring-divider">
+            <FileText className="mt-0.5 size-4 shrink-0 text-fg-subtle" />
+            <p className="whitespace-pre-line text-sm leading-relaxed text-fg">
+              {application.letterOfMotivation}
+            </p>
           </div>
-        ) : (
-          <p className="text-sm text-fg-muted">No report card uploaded.</p>
-        )}
-      </InfoCard>
+        </InfoCard>
+      </div>
 
-      <InfoCard
-        title="Letter of motivation"
-        className="lg:col-span-2"
+      {/* Right column: downloadable documents */}
+      <div className="space-y-6">
+        <InfoCard title="Report card">
+          {application.reportCardFilename ? (
+            <DocumentDownloadRow
+              filename={application.reportCardFilename}
+              meta="PDF · uploaded by student"
+              icon={ScrollText}
+            />
+          ) : (
+            <p className="text-sm text-fg-muted">No report card uploaded.</p>
+          )}
+        </InfoCard>
+
+        <InfoCard title="Student's ID">
+          <DocumentDownloadRow
+            filename={studentIdFilename}
+            meta="PDF · uploaded by student"
+            icon={IdCard}
+          />
+        </InfoCard>
+
+        <InfoCard title="Parents' ID">
+          <DocumentDownloadRow
+            filename={parentsIdFilename}
+            meta="PDF · uploaded by student"
+            icon={Users}
+          />
+        </InfoCard>
+      </div>
+    </div>
+  );
+}
+
+function DocumentDownloadRow({
+  filename,
+  meta,
+  icon: Icon,
+}: {
+  filename: string;
+  meta: string;
+  icon: LucideIcon;
+}) {
+  return (
+    <div className="flex items-center gap-3 rounded-input bg-bg px-3 py-3 ring-1 ring-divider">
+      <span className="grid size-10 place-items-center rounded-lg bg-student/15 text-student">
+        <Icon className="size-5" />
+      </span>
+      <div className="min-w-0 flex-1">
+        <div className="truncate text-sm font-bold text-fg">{filename}</div>
+        <div className="text-xs text-fg-muted">{meta}</div>
+      </div>
+      <button
+        type="button"
+        aria-label={`Download ${filename}`}
+        className="grid size-9 shrink-0 place-items-center rounded-full bg-fg text-white hover:bg-fg/90"
       >
-        <div className="flex items-start gap-3 rounded-input bg-bg p-4 ring-1 ring-divider">
-          <FileText className="mt-0.5 size-4 shrink-0 text-fg-subtle" />
-          <p className="whitespace-pre-line text-sm leading-relaxed text-fg">
-            {application.letterOfMotivation}
-          </p>
-        </div>
-      </InfoCard>
+        <Download className="size-4" strokeWidth={2.4} />
+      </button>
     </div>
   );
 }
