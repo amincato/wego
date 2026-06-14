@@ -160,7 +160,7 @@ export function ScheduleVisitModal({
 
           {/* Body — no internal scroll, everything fits */}
           <div className="flex-1 px-7 py-5">
-            <div className="grid gap-5 md:grid-cols-[1fr_220px]">
+            <div className="grid gap-5 md:grid-cols-[1fr_180px]">
               {/* Calendar */}
               <section className="flex flex-col">
                 <div className="mb-2 flex items-center justify-between">
@@ -191,7 +191,7 @@ export function ScheduleVisitModal({
                   </div>
                 </div>
 
-                <div className="flex flex-1 flex-col overflow-hidden rounded-[14px] ring-1 ring-black/10">
+                <div className="flex h-[320px] flex-col overflow-hidden rounded-[14px] ring-1 ring-black/10">
                   {/* Weekday header */}
                   <div className="grid shrink-0 grid-cols-7 border-b border-black/10 bg-neutral-50">
                     {WEEKDAYS.map((wd) => (
@@ -256,20 +256,20 @@ export function ScheduleVisitModal({
                 </div>
               </section>
 
-              {/* Time slots — 2-col grid, every slot visible */}
-              <section className="flex min-h-0 flex-col">
+              {/* Time slots — single column, scrolls internally */}
+              <section className="flex flex-col">
                 <div className="mb-2 text-xs font-bold uppercase tracking-wider text-neutral-500">
                   Time
                 </div>
-                <div className="rounded-[14px] bg-neutral-50 p-2 ring-1 ring-black/10">
-                  <ul className="grid grid-cols-2 gap-1">
+                <div className="h-[320px] overflow-y-auto rounded-[14px] bg-neutral-50 p-2 ring-1 ring-black/10">
+                  <ul className="flex flex-col gap-1">
                     {TIME_SLOTS.map((t) => (
                       <li key={t}>
                         <button
                           type="button"
                           onClick={() => setSelectedTime(t)}
                           className={cn(
-                            "w-full rounded-full px-2 py-1.5 text-xs font-semibold transition-colors",
+                            "w-full rounded-full px-3 py-2 text-sm font-semibold transition-colors",
                             selectedTime === t
                               ? "bg-student text-white"
                               : "bg-white text-black hover:bg-student/10",
