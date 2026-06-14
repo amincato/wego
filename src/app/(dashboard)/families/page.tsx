@@ -149,8 +149,7 @@ const currentHosting: HostingFamily[] = [
     country: "Germany",
     members: 3,
     months: 6,
-    photoUrl:
-      "https://images.unsplash.com/photo-1609220136736-443140cffec6?auto=format&fit=crop&w=600&q=80",
+    photoUrl: "/families/taununsanlage.jpg",
   },
   {
     id: "host_lenz",
