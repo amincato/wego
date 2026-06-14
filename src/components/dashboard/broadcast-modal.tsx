@@ -105,7 +105,15 @@ export function BroadcastModal({
       return;
     }
 
-    setAllMode(false);
+    // Going from All mode to a role chip — drop the All-mode
+    // selection and start the role-by-role selection from scratch
+    // with just that role's people.
+    if (allMode) {
+      setAllMode(false);
+      setSelectedIds(new Set(idsByRole[a]));
+      return;
+    }
+
     setSelectedIds((prev) => {
       const next = new Set(prev);
       const roleIds = idsByRole[a];
