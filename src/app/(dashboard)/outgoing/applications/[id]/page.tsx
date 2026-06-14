@@ -57,7 +57,7 @@ export default async function OutgoingApplicationPage({
           },
           {
             id: "application",
-            label: "Application summary",
+            label: "Application details",
             content: <ApplicationSummaryTab application={app} />,
           },
           {

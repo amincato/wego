@@ -66,7 +66,7 @@ export default async function IncomingApplicantPage({
           },
           {
             id: "application",
-            label: "Application summary",
+            label: "Application details",
             content: <ApplicationSummaryTab application={app} />,
           },
           {

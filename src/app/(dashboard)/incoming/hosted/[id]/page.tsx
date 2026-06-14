@@ -45,7 +45,7 @@ export default async function HostedStudentPage({
           },
           {
             id: "application",
-            label: "Application summary",
+            label: "Application details",
             content: app ? (
               <ApplicationSummaryTab application={app} />
             ) : (

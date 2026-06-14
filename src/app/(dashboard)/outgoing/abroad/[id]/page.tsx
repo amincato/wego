@@ -51,7 +51,7 @@ export default async function StudentAbroadPage({
           },
           {
             id: "application",
-            label: "Application summary",
+            label: "Application details",
             content: app ? (
               <ApplicationSummaryTab application={app} />
             ) : (
