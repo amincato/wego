@@ -94,6 +94,8 @@ export interface HostFamily {
   /** Optional richer profile for each family member — when present, takes
    * precedence over the string-based `members` field for rendering. */
   memberProfiles?: FamilyMemberProfile[];
+  /** Languages spoken at home, in display order. */
+  languages?: LanguageSkill[];
   homeType: "apartment" | "house";
   hasPets: boolean;
   spareRooms: number;

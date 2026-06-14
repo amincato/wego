@@ -100,6 +100,11 @@ export const dashboardHostFamilies: HostFamily[] = [
         role: "Daughter",
       },
     ],
+    languages: [
+      { code: "de", level: "native" },
+      { code: "en", level: "advanced" },
+      { code: "fr", level: "intermediate" },
+    ],
     homeType: "apartment",
     hasPets: true,
     spareRooms: 1,
