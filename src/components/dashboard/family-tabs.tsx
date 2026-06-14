@@ -22,39 +22,46 @@ const FAMILY_FLOW: FamilyApplicationState[] = [
 
 export function FamilyPersonalInfoTab({ family }: { family: HostFamily }) {
   return (
-    <div className="grid gap-6 lg:grid-cols-2">
-      <InfoCard title="Personal info">
-        <InfoGrid
-          items={[
-            { label: "Family name", value: family.familyName },
-            { label: "City", value: `${family.city}, ${family.country}` },
-            { label: "Home type", value: family.homeType },
-            { label: "Spare rooms", value: `${family.spareRooms}` },
-            { label: "Pets", value: family.hasPets ? "Yes" : "No" },
-            { label: "Members", value: `${family.members.length}` },
-          ]}
-        />
-      </InfoCard>
+    <div className="space-y-6">
+      {/* About the family — full width, no card */}
+      <section>
+        <h3 className="h-section mb-2 text-fg">About the family</h3>
+        <p className="whitespace-pre-line text-sm leading-relaxed text-fg">
+          {family.bio}
+        </p>
+      </section>
 
-      <InfoCard title="Members">
-        <ul className="flex flex-col gap-2">
-          {family.members.map((m) => (
-            <li
-              key={m}
-              className="flex items-center gap-3 rounded-input bg-bg px-3 py-2 ring-1 ring-divider"
-            >
-              <span className="grid size-8 place-items-center rounded-full bg-family/15 text-family">
-                <UserRound className="size-4" />
-              </span>
-              <span className="text-sm font-semibold text-fg">{m}</span>
-            </li>
-          ))}
-        </ul>
-      </InfoCard>
+      {/* Personal info + Members */}
+      <div className="grid gap-6 lg:grid-cols-2">
+        <InfoCard title="Personal info">
+          <InfoGrid
+            items={[
+              { label: "Family name", value: family.familyName },
+              { label: "City", value: `${family.city}, ${family.country}` },
+              { label: "Home type", value: family.homeType },
+              { label: "Spare rooms", value: `${family.spareRooms}` },
+              { label: "Pets", value: family.hasPets ? "Yes" : "No" },
+              { label: "Members", value: `${family.members.length}` },
+            ]}
+          />
+        </InfoCard>
 
-      <InfoCard title="About the family" className="lg:col-span-2">
-        <p className="text-sm leading-relaxed text-fg">{family.bio}</p>
-      </InfoCard>
+        <InfoCard title="Members">
+          <ul className="flex flex-col gap-2">
+            {family.members.map((m) => (
+              <li
+                key={m}
+                className="flex items-center gap-3 rounded-input bg-bg px-3 py-2 ring-1 ring-divider"
+              >
+                <span className="grid size-8 place-items-center rounded-full bg-family/15 text-family">
+                  <UserRound className="size-4" />
+                </span>
+                <span className="text-sm font-semibold text-fg">{m}</span>
+              </li>
+            ))}
+          </ul>
+        </InfoCard>
+      </div>
     </div>
   );
 }

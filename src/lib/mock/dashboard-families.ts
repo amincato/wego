@@ -65,9 +65,8 @@ export const dashboardHostFamilies: HostFamily[] = [
     city: "Rostock",
     country: "Germany",
     nationality: "de",
-    photoUrl:
-      "https://images.unsplash.com/photo-1609220136736-443140cffec6?auto=format&fit=crop&w=600&q=80",
-    bio: "Energetic family of four, very interested in cultural exchange.",
+    photoUrl: "/families/mueller-photo.png",
+    bio: "We're a cheerful German family of four (plus our playful cat 🐱)! We love hiking, board-game nights and learning about other cultures, and we can't wait to discover yours while sharing our own traditions and everyday life. Our son Jonas studies at Friedrich Schiller Gymnasium and is part of the football team and the school choir 🎶 — you're warmly invited to join him in anything that sparks your interest. We love spending weekends exploring the Baltic coast, cooking together, and turning our home into a warm, welcoming place for our guest 🤍.",
     members: [
       "Mother Anna, 39",
       "Father Lukas, 41",
