@@ -313,11 +313,9 @@ export function FamilyApplicationStatusTab({
             <li key={step.id} className="flex items-center gap-3">
               <div
                 className={`grid size-10 place-items-center rounded-full text-sm font-bold ${
-                  isCurrent
+                  isReached
                     ? "bg-family text-white ring-4 ring-family/15"
-                    : isPast
-                      ? "bg-family/15 text-family"
-                      : "bg-bg text-fg-subtle"
+                    : "bg-bg text-fg-subtle"
                 }`}
               >
                 {idx + 1}
