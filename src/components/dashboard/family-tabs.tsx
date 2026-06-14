@@ -47,8 +47,8 @@ export function FamilyPersonalInfoTab({ family }: { family: HostFamily }) {
         </p>
       </section>
 
-      {/* Personal info + Languages (left) · Members (right) */}
-      <div className="grid gap-6 lg:grid-cols-2 lg:items-start">
+      {/* Personal info + Languages (left) · Members (right, stretches to match) */}
+      <div className="grid gap-6 lg:grid-cols-2 lg:items-stretch">
         <div className="space-y-6">
           <InfoCard title="Personal info">
             <InfoGrid
