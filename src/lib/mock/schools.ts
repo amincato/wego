@@ -13,7 +13,7 @@ export const schools: School[] = [
     country: "France",
     description:
       "Lycée Thiers is one of the oldest and most prestigious high schools in southern France, with a strong tradition in literature, arts and sciences.",
-    imageUrl: "/schools/friedrich-schiller.png",
+    imageUrl: "/schools/lycee-thiers.png",
     galleryItems: [
       {
         id: "g_thiers_1",
