@@ -13,6 +13,7 @@ const ROLE_LABEL: Record<InboxConversation["withRole"], string> = {
   student: "Student",
   family: "Host family",
   buddy: "Buddy",
+  school: "Partner school",
 };
 
 type RoleFilter = "all" | InboxConversation["withRole"];
@@ -22,9 +23,16 @@ const FILTER_LABEL: Record<RoleFilter, string> = {
   student: "Students",
   family: "Host families",
   buddy: "Buddies",
+  school: "Partner schools",
 };
 
-const FILTERS: RoleFilter[] = ["all", "student", "family", "buddy"];
+const FILTERS: RoleFilter[] = [
+  "all",
+  "student",
+  "family",
+  "buddy",
+  "school",
+];
 
 function fmt(iso: string) {
   const diff = Date.now() - new Date(iso).getTime();
@@ -100,7 +108,7 @@ export default function MessagesPage() {
         ))}
       </div>
 
-      <div className="grid h-[calc(100dvh-18rem)] min-h-[520px] gap-4 lg:grid-cols-[340px_1fr]">
+      <div className="grid h-[calc(100dvh-13rem)] min-h-[560px] gap-4 lg:grid-cols-[340px_1fr]">
         {/* Inbox list */}
         <aside className="flex min-h-0 flex-col rounded-card-lg bg-surface ring-1 ring-divider">
           <div className="border-b border-divider p-3">

@@ -15,7 +15,7 @@ export interface InboxConversation {
   id: string;
   withName: string;
   withAvatarUrl: string;
-  withRole: "student" | "family" | "buddy";
+  withRole: "student" | "family" | "buddy" | "school";
   lastMessage: string;
   lastAt: string;
   unread: number;
@@ -117,6 +117,25 @@ export const inboxConversations: InboxConversation[] = [
     withRole: "buddy",
     lastMessage: "Sent Sophie the school WhatsApp group invite, thanks!",
     lastAt: daysAgo(1),
+    unread: 0,
+  },
+  /* ---- Partner schools ---- */
+  {
+    id: "conv_thiers",
+    withName: "Lycée Thiers",
+    withAvatarUrl: "/schools/lycee-thiers.png",
+    withRole: "school",
+    lastMessage: "Carlo's mid-term grades have just been uploaded.",
+    lastAt: hoursAgo(3),
+    unread: 0,
+  },
+  {
+    id: "conv_goethe",
+    withName: "Goethe Gymnasium",
+    withAvatarUrl: "/schools/goethe-gymnasium.png",
+    withRole: "school",
+    lastMessage: "Welcome to our partner network — looking forward!",
+    lastAt: daysAgo(3),
     unread: 0,
   },
 ];
