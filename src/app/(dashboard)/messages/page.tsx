@@ -87,9 +87,10 @@ export default function MessagesPage() {
     [],
   );
 
-  const openEmergencies = emergencyWorkflows.filter(
-    (w) => w.status !== "closed",
-  ).length;
+  // Hard-coded to 1 for the demo — keeps the notification dot single-digit
+  // and matches what the user wants the topbar to communicate.
+  void emergencyWorkflows;
+  const openEmergencies = 1;
 
   const filtered = inboxConversations.filter((c) => {
     if (filter !== "all" && c.withRole !== filter) return false;
