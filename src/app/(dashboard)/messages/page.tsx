@@ -129,7 +129,7 @@ export default function MessagesPage() {
             type="button"
             onClick={() => setFilter(r)}
             className={cn(
-              "inline-flex items-center rounded-full px-5 py-2 text-sm font-bold transition-colors",
+              "inline-flex items-center rounded-full px-4 py-2 text-xs font-bold transition-colors",
               filter === r
                 ? cn(FILTER_ACTIVE[r], "shadow-sm")
                 : "bg-chip text-fg-muted hover:text-fg",
