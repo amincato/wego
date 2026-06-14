@@ -56,8 +56,7 @@ const confirmedRoster: Array<{
     age: 16,
     months: 3,
     appliedAt: "2026-03-16",
-    photoUrl:
-      "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=600&q=80",
+    photoUrl: "/students/confirmed/p8.png",
     hostFamilyStatus: "matched",
   },
   {
@@ -69,8 +68,7 @@ const confirmedRoster: Array<{
     age: 17,
     months: 3,
     appliedAt: "2026-03-22",
-    photoUrl:
-      "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=600&q=80",
+    photoUrl: "/students/confirmed/p2.png",
     hostFamilyStatus: "matched",
   },
   {
@@ -82,8 +80,7 @@ const confirmedRoster: Array<{
     age: 16,
     months: 6,
     appliedAt: "2026-03-12",
-    photoUrl:
-      "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=600&q=80",
+    photoUrl: "/students/confirmed/p5.png",
     hostFamilyStatus: "in_contact",
   },
   {
@@ -95,8 +92,7 @@ const confirmedRoster: Array<{
     age: 17,
     months: 3,
     appliedAt: "2026-03-09",
-    photoUrl:
-      "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=600&q=80",
+    photoUrl: "/students/confirmed/p10.png",
     hostFamilyStatus: "in_contact",
   },
   {
@@ -108,8 +104,7 @@ const confirmedRoster: Array<{
     age: 17,
     months: 3,
     appliedAt: "2026-03-25",
-    photoUrl:
-      "https://images.unsplash.com/photo-1463453091185-61582044d556?auto=format&fit=crop&w=600&q=80",
+    photoUrl: "/students/confirmed/p9.png",
     hostFamilyStatus: "waiting",
   },
   {
@@ -121,21 +116,7 @@ const confirmedRoster: Array<{
     age: 17,
     months: 6,
     appliedAt: "2026-03-28",
-    photoUrl:
-      "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=600&q=80",
-    hostFamilyStatus: "waiting",
-  },
-  {
-    id: "conf_carmen",
-    firstName: "Carmen",
-    lastName: "Ruiz",
-    nationality: "es",
-    city: "Barcelona",
-    age: 16,
-    months: 6,
-    appliedAt: "2026-03-19",
-    photoUrl:
-      "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=600&q=80",
+    photoUrl: "/students/confirmed/p3.png",
     hostFamilyStatus: "waiting",
   },
 ];
