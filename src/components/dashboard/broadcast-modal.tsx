@@ -5,7 +5,13 @@ import { useEffect, useMemo, useState } from "react";
 import { Send, Users, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-export type AudienceRole = "student" | "family" | "buddy" | "school";
+export type AudienceRole =
+  | "hosted_student"
+  | "incoming_student"
+  | "outgoing_student"
+  | "abroad_student"
+  | "hosting_family"
+  | "future_family";
 type Audience = "all" | AudienceRole;
 
 export interface BroadcastRecipient {
@@ -17,33 +23,41 @@ export interface BroadcastRecipient {
 
 const AUDIENCE_LABEL: Record<Audience, string> = {
   all: "All",
-  student: "Students",
-  family: "Host families",
-  buddy: "Buddies",
-  school: "Partner schools",
+  hosted_student: "Hosted students",
+  incoming_student: "Incoming students",
+  outgoing_student: "Outgoing students",
+  abroad_student: "Students abroad",
+  hosting_family: "Hosting families",
+  future_family: "Future host families",
 };
 
 const AUDIENCE_ACTIVE: Record<Audience, string> = {
   all: "bg-black text-white",
-  student: "bg-student text-white",
-  family: "bg-family text-white",
-  buddy: "bg-black text-white",
-  school: "bg-school text-white",
+  hosted_student: "bg-student text-white",
+  incoming_student: "bg-student text-white",
+  outgoing_student: "bg-student text-white",
+  abroad_student: "bg-student text-white",
+  hosting_family: "bg-family text-white",
+  future_family: "bg-family text-white",
 };
 
 const AUDIENCE_DOT: Record<AudienceRole, string> = {
-  student: "ring-student",
-  family: "ring-family",
-  buddy: "ring-black",
-  school: "ring-school",
+  hosted_student: "ring-student",
+  incoming_student: "ring-student",
+  outgoing_student: "ring-student",
+  abroad_student: "ring-student",
+  hosting_family: "ring-family",
+  future_family: "ring-family",
 };
 
 const AUDIENCES: Audience[] = [
   "all",
-  "student",
-  "family",
-  "buddy",
-  "school",
+  "hosted_student",
+  "incoming_student",
+  "outgoing_student",
+  "abroad_student",
+  "hosting_family",
+  "future_family",
 ];
 
 export function BroadcastModal({
@@ -78,10 +92,12 @@ export function BroadcastModal({
 
   const idsByRole = useMemo(() => {
     const map: Record<AudienceRole, string[]> = {
-      student: [],
-      family: [],
-      buddy: [],
-      school: [],
+      hosted_student: [],
+      incoming_student: [],
+      outgoing_student: [],
+      abroad_student: [],
+      hosting_family: [],
+      future_family: [],
     };
     for (const r of recipients) map[r.role].push(r.id);
     return map;
@@ -198,7 +214,7 @@ export function BroadcastModal({
                       type="button"
                       onClick={() => toggleAudience(a)}
                       className={cn(
-                        "inline-flex items-center rounded-full px-4 py-2 text-sm font-bold transition-colors",
+                        "inline-flex items-center rounded-full px-4 py-2 text-xs font-bold transition-colors",
                         isActive
                           ? cn(AUDIENCE_ACTIVE[a], "shadow-sm")
                           : "bg-neutral-100 text-neutral-700 hover:bg-neutral-200 hover:text-black",

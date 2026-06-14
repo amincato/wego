@@ -73,17 +73,149 @@ export default function MessagesPage() {
   const [filter, setFilter] = useState<RoleFilter>("all");
   const [broadcastOpen, setBroadcastOpen] = useState(false);
 
-  /* Full recipient list for the broadcast modal, sourced from the
-   * inbox so every contact who could plausibly receive a message is
-   * available. */
-  const broadcastRecipients = useMemo(
-    () =>
-      inboxConversations.map((c) => ({
-        id: c.id,
-        name: c.withName,
-        avatarUrl: c.withAvatarUrl,
-        role: c.withRole,
-      })),
+  /* Full recipient list for the broadcast modal, grouped by the
+   * 6 audience buckets the coordinator broadcasts to. Avatars reuse
+   * the same local assets we already ship for the rest of the demo. */
+  const broadcastRecipients = useMemo<
+    Array<{
+      id: string;
+      name: string;
+      avatarUrl: string;
+      role:
+        | "hosted_student"
+        | "incoming_student"
+        | "outgoing_student"
+        | "abroad_student"
+        | "hosting_family"
+        | "future_family";
+    }>
+  >(
+    () => [
+      // Hosted students (currently at FSG)
+      {
+        id: "r_carlo",
+        name: "Carlo Liberti",
+        avatarUrl: "/carlo-liberti.png",
+        role: "hosted_student",
+      },
+      {
+        id: "r_alessandro",
+        name: "Alessandro Greco",
+        avatarUrl:
+          "https://images.unsplash.com/photo-1564564321837-a57b7070ac4f?auto=format&fit=crop&w=200&q=80",
+        role: "hosted_student",
+      },
+      {
+        id: "r_sophie",
+        name: "Sophie Laurent",
+        avatarUrl: "/students/confirmed/p6.png",
+        role: "hosted_student",
+      },
+      {
+        id: "r_carmen",
+        name: "Carmen Ruiz",
+        avatarUrl: "/students/confirmed/p7.png",
+        role: "hosted_student",
+      },
+      // Incoming students (confirmed for next term)
+      {
+        id: "r_lily",
+        name: "Lily Louise Jacob",
+        avatarUrl: "/students/confirmed/p8.png",
+        role: "incoming_student",
+      },
+      {
+        id: "r_pablo",
+        name: "Pablo García",
+        avatarUrl: "/students/confirmed/p2.png",
+        role: "incoming_student",
+      },
+      {
+        id: "r_marco",
+        name: "Marco Conti",
+        avatarUrl: "/students/confirmed/p5.png",
+        role: "incoming_student",
+      },
+      {
+        id: "r_camille",
+        name: "Camille Dubois",
+        avatarUrl: "/students/confirmed/p10.png",
+        role: "incoming_student",
+      },
+      {
+        id: "r_giulia",
+        name: "Giulia Bianchi",
+        avatarUrl: "/students/confirmed/p9.png",
+        role: "incoming_student",
+      },
+      {
+        id: "r_lucas",
+        name: "Lucas Martin",
+        avatarUrl: "/students/confirmed/p3.png",
+        role: "incoming_student",
+      },
+      // Outgoing students (FSG students leaving abroad next term)
+      {
+        id: "r_jonas",
+        name: "Jonas Weber",
+        avatarUrl: "/lukas-weber.png",
+        role: "outgoing_student",
+      },
+      {
+        id: "r_lena",
+        name: "Lena Krüger",
+        avatarUrl: "/giorgio-monti.png",
+        role: "outgoing_student",
+      },
+      // Students currently abroad
+      {
+        id: "r_giorgia",
+        name: "Giorgia Bernardi",
+        avatarUrl: "/matthis-bernard.jpg",
+        role: "abroad_student",
+      },
+      // Hosting families (currently matched with a student)
+      {
+        id: "r_family_rath",
+        name: "Family Rath",
+        avatarUrl: "/families/rath/avatar.png",
+        role: "hosting_family",
+      },
+      {
+        id: "r_family_taununsanlage",
+        name: "Family Taununsanlage",
+        avatarUrl:
+          "https://images.unsplash.com/photo-1609220136736-443140cffec6?auto=format&fit=crop&w=200&q=80",
+        role: "hosting_family",
+      },
+      {
+        id: "r_family_lenz",
+        name: "Family Lenz",
+        avatarUrl: "/families/lenz.jpg",
+        role: "hosting_family",
+      },
+      {
+        id: "r_family_stiefel",
+        name: "Family Stiefel",
+        avatarUrl: "/families/stiefel.jpg",
+        role: "hosting_family",
+      },
+      // Future host families (allowed to host, awaiting a match)
+      {
+        id: "r_family_schmidt",
+        name: "Family Schmidt",
+        avatarUrl:
+          "https://images.unsplash.com/photo-1581952976147-5a2d15560349?auto=format&fit=crop&w=200&q=80",
+        role: "future_family",
+      },
+      {
+        id: "r_family_klum",
+        name: "Family Klum",
+        avatarUrl:
+          "https://images.unsplash.com/photo-1602407294553-6ac9170de9eb?auto=format&fit=crop&w=200&q=80",
+        role: "future_family",
+      },
+    ],
     [],
   );
 
