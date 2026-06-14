@@ -40,7 +40,7 @@ export default function DashboardHomePage() {
   ).length;
 
   return (
-    <>
+    <div className="flex min-h-[calc(100dvh-7rem)] flex-col">
       {/* HERO */}
       <section className="relative mb-6 overflow-hidden rounded-card-lg bg-student px-6 py-5">
         <svg
@@ -93,12 +93,12 @@ export default function DashboardHomePage() {
       </section>
 
       {/* MAIN GRID */}
-      <div className="grid gap-6 xl:grid-cols-3">
+      <div className="grid min-h-0 flex-1 auto-rows-fr gap-6 xl:grid-cols-3">
         <SectionCard
           title="Today's tasks"
           count={openTasks}
           action={{ label: "View all", href: "/messages/tickets" }}
-          className="xl:col-span-2"
+          className="h-full xl:col-span-2"
         >
           <TaskList tasks={todaysTasks} />
         </SectionCard>
@@ -107,12 +107,12 @@ export default function DashboardHomePage() {
           title="Emergency notifications"
           count={unackedAlerts}
           action={{ label: "View all", href: "/messages/emergencies" }}
-          className="ring-danger-fg/30"
+          className="h-full ring-danger-fg/30"
         >
           <NotificationList notifications={emergencyNotifications} />
         </SectionCard>
 
-        <SectionCard title="New applications" className="xl:col-span-2">
+        <SectionCard title="New applications" className="h-full xl:col-span-2">
           <ListTabs
             tabs={[
               {
@@ -172,10 +172,11 @@ export default function DashboardHomePage() {
         <SectionCard
           title="Reminders & deadlines"
           count={upcomingReminders.length}
+          className="h-full"
         >
           <ReminderList reminders={upcomingReminders} />
         </SectionCard>
       </div>
-    </>
+    </div>
   );
 }
