@@ -67,7 +67,7 @@ interface CalEvent {
   id: string;
   title: string;
   date: Date;
-  tone: "student" | "family" | "school" | "neutral";
+  tone: "student" | "family" | "school" | "neutral" | "pending";
 }
 
 const TONE_PILL: Record<CalEvent["tone"], string> = {
@@ -75,6 +75,7 @@ const TONE_PILL: Record<CalEvent["tone"], string> = {
   family: "bg-family text-white",
   school: "bg-school text-white",
   neutral: "bg-fg text-white",
+  pending: "bg-neutral-300 text-neutral-700",
 };
 
 const TONE_DOT: Record<CalEvent["tone"], string> = {
@@ -82,6 +83,7 @@ const TONE_DOT: Record<CalEvent["tone"], string> = {
   family: "bg-family",
   school: "bg-school",
   neutral: "bg-fg-muted",
+  pending: "bg-neutral-400",
 };
 
 function buildEvents(): CalEvent[] {
@@ -238,7 +240,7 @@ function CalendarPageInner() {
       id: `proposal_${Date.now()}`,
       title: `${family.familyName} site visit proposal`,
       date: eventDate,
-      tone: "family",
+      tone: "pending",
     };
 
     if (typeof window !== "undefined") {
