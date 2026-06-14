@@ -70,16 +70,17 @@ export default function MessagesPage() {
   const [filter, setFilter] = useState<RoleFilter>("all");
   const [broadcastOpen, setBroadcastOpen] = useState(false);
 
-  /* Recipient counts per role for the broadcast modal. These are
-   * pragmatic numbers based on the current community/incoming mock
-   * data (the modal preview reads more honest this way). */
-  const audienceCounts = useMemo(
-    () => ({
-      student: 4,
-      family: 4,
-      buddy: 2,
-      school: 6,
-    }),
+  /* Full recipient list for the broadcast modal, sourced from the
+   * inbox so every contact who could plausibly receive a message is
+   * available. */
+  const broadcastRecipients = useMemo(
+    () =>
+      inboxConversations.map((c) => ({
+        id: c.id,
+        name: c.withName,
+        avatarUrl: c.withAvatarUrl,
+        role: c.withRole,
+      })),
     [],
   );
 
@@ -236,7 +237,7 @@ export default function MessagesPage() {
       <BroadcastModal
         open={broadcastOpen}
         onOpenChange={setBroadcastOpen}
-        audienceCounts={audienceCounts}
+        recipients={broadcastRecipients}
       />
     </>
   );

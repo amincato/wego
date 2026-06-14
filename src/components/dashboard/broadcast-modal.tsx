@@ -1,11 +1,19 @@
 "use client";
 
 import * as Dialog from "@radix-ui/react-dialog";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Send, Users, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-type Audience = "all" | "student" | "family" | "buddy" | "school";
+export type AudienceRole = "student" | "family" | "buddy" | "school";
+type Audience = "all" | AudienceRole;
+
+export interface BroadcastRecipient {
+  id: string;
+  name: string;
+  avatarUrl: string;
+  role: AudienceRole;
+}
 
 const AUDIENCE_LABEL: Record<Audience, string> = {
   all: "All",
@@ -23,6 +31,13 @@ const AUDIENCE_ACTIVE: Record<Audience, string> = {
   school: "bg-school text-white",
 };
 
+const AUDIENCE_DOT: Record<AudienceRole, string> = {
+  student: "ring-student",
+  family: "ring-family",
+  buddy: "ring-black",
+  school: "ring-school",
+};
+
 const AUDIENCES: Audience[] = [
   "all",
   "student",
@@ -34,47 +49,80 @@ const AUDIENCES: Audience[] = [
 export function BroadcastModal({
   open,
   onOpenChange,
-  audienceCounts,
+  recipients,
 }: {
   open: boolean;
   onOpenChange: (v: boolean) => void;
-  /** Number of recipients for each audience. Used for the
-   * "Will reach X people" preview. */
-  audienceCounts: Record<Exclude<Audience, "all">, number>;
+  /** Full list of possible recipients across all roles. */
+  recipients: BroadcastRecipient[];
 }) {
-  const [selected, setSelected] = useState<Set<Audience>>(new Set(["all"]));
+  const [selectedIds, setSelectedIds] = useState<Set<string>>(
+    () => new Set(recipients.map((r) => r.id)),
+  );
   const [message, setMessage] = useState("");
 
-  const toggle = (a: Audience) => {
-    setSelected((prev) => {
+  // Re-seed selection every time the modal opens so the form starts
+  // fresh (defaulting to "send to everyone").
+  useEffect(() => {
+    if (open) {
+      setSelectedIds(new Set(recipients.map((r) => r.id)));
+      setMessage("");
+    }
+  }, [open, recipients]);
+
+  const idsByRole = useMemo(() => {
+    const map: Record<AudienceRole, string[]> = {
+      student: [],
+      family: [],
+      buddy: [],
+      school: [],
+    };
+    for (const r of recipients) map[r.role].push(r.id);
+    return map;
+  }, [recipients]);
+
+  const isAllSelected = selectedIds.size === recipients.length;
+  const isRoleSelected = (role: AudienceRole) =>
+    idsByRole[role].length > 0 &&
+    idsByRole[role].every((id) => selectedIds.has(id));
+
+  const toggleAudience = (a: Audience) => {
+    setSelectedIds((prev) => {
       const next = new Set(prev);
       if (a === "all") {
-        return new Set(["all"]);
+        if (isAllSelected) next.clear();
+        else recipients.forEach((r) => next.add(r.id));
+        return next;
       }
-      next.delete("all");
-      if (next.has(a)) next.delete(a);
-      else next.add(a);
-      if (next.size === 0) next.add("all");
+      const roleIds = idsByRole[a];
+      if (isRoleSelected(a)) {
+        roleIds.forEach((id) => next.delete(id));
+      } else {
+        roleIds.forEach((id) => next.add(id));
+      }
       return next;
     });
   };
 
-  const total = useMemo(() => {
-    if (selected.has("all")) {
-      return Object.values(audienceCounts).reduce((s, n) => s + n, 0);
-    }
-    return Array.from(selected).reduce(
-      (s, a) => s + (audienceCounts[a as Exclude<Audience, "all">] ?? 0),
-      0,
-    );
-  }, [selected, audienceCounts]);
+  const removeRecipient = (id: string) => {
+    setSelectedIds((prev) => {
+      const next = new Set(prev);
+      next.delete(id);
+      return next;
+    });
+  };
 
-  const canSend = message.trim().length > 0;
+  const selectedRecipients = useMemo(
+    () => recipients.filter((r) => selectedIds.has(r.id)),
+    [recipients, selectedIds],
+  );
+
+  const canSend =
+    message.trim().length > 0 && selectedRecipients.length > 0;
 
   const handleSend = () => {
     if (!canSend) return;
-    // Mock: just close the modal and reset.
-    setSelected(new Set(["all"]));
+    setSelectedIds(new Set(recipients.map((r) => r.id)));
     setMessage("");
     onOpenChange(false);
   };
@@ -88,12 +136,12 @@ export function BroadcastModal({
             backgroundColor: "#ffffff",
             color: "#0a0a0a",
           }}
-          className="fixed left-1/2 top-1/2 z-50 w-[calc(100%-48px)] max-w-[820px] -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-[20px] shadow-2xl ring-1 ring-black/10 data-[state=open]:animate-in data-[state=closed]:animate-out"
+          className="fixed left-1/2 top-1/2 z-50 flex max-h-[90dvh] w-[calc(100%-48px)] max-w-[860px] -translate-x-1/2 -translate-y-1/2 flex-col overflow-hidden rounded-[20px] shadow-2xl ring-1 ring-black/10 data-[state=open]:animate-in data-[state=closed]:animate-out"
         >
           {/* Header */}
-          <div className="flex items-start justify-between gap-4 border-b border-black/10 px-6 py-5">
+          <div className="flex items-start justify-between gap-4 border-b border-black/10 px-7 py-5">
             <div>
-              <Dialog.Title className="text-lg font-bold text-black">
+              <Dialog.Title className="text-xl font-bold text-black">
                 Send broadcast message
               </Dialog.Title>
               <Dialog.Description className="mt-1 text-sm text-neutral-600">
@@ -102,31 +150,33 @@ export function BroadcastModal({
             </div>
             <Dialog.Close
               aria-label="Close"
-              className="grid size-8 shrink-0 place-items-center rounded-full text-neutral-600 hover:bg-neutral-100 hover:text-black"
+              className="grid size-9 shrink-0 place-items-center rounded-full text-neutral-600 hover:bg-neutral-100 hover:text-black"
             >
               <X className="size-4" />
             </Dialog.Close>
           </div>
 
           {/* Body */}
-          <div className="space-y-5 px-6 py-5">
+          <div className="flex-1 space-y-6 overflow-y-auto px-7 py-6">
+            {/* Audience picker */}
             <section>
-              <div className="mb-2 text-xs font-bold uppercase tracking-wider text-neutral-500">
+              <div className="mb-3 text-xs font-bold uppercase tracking-wider text-neutral-500">
                 Audience
               </div>
               <div className="flex flex-wrap gap-2">
                 {AUDIENCES.map((a) => {
-                  const isActive = selected.has(a);
+                  const isActive =
+                    a === "all" ? isAllSelected : isRoleSelected(a);
                   return (
                     <button
                       key={a}
                       type="button"
-                      onClick={() => toggle(a)}
+                      onClick={() => toggleAudience(a)}
                       className={cn(
-                        "inline-flex items-center rounded-full px-4 py-1.5 text-xs font-bold transition-colors",
+                        "inline-flex items-center rounded-full px-4 py-2 text-sm font-bold transition-colors",
                         isActive
                           ? cn(AUDIENCE_ACTIVE[a], "shadow-sm")
-                          : "bg-neutral-100 text-neutral-600 hover:text-black",
+                          : "bg-neutral-100 text-neutral-700 hover:bg-neutral-200 hover:text-black",
                       )}
                     >
                       {AUDIENCE_LABEL[a]}
@@ -134,17 +184,62 @@ export function BroadcastModal({
                   );
                 })}
               </div>
-              <p className="mt-2 inline-flex items-center gap-1.5 text-xs text-neutral-600">
-                <Users className="size-3.5" />
-                Will reach <span className="font-bold text-black">
-                  {total}
-                </span>{" "}
-                {total === 1 ? "person" : "people"}.
-              </p>
             </section>
 
+            {/* Selected recipients */}
             <section>
-              <div className="mb-2 text-xs font-bold uppercase tracking-wider text-neutral-500">
+              <div className="mb-3 flex items-baseline justify-between gap-3">
+                <div className="text-xs font-bold uppercase tracking-wider text-neutral-500">
+                  Recipients
+                </div>
+                <span className="inline-flex items-center gap-1.5 text-sm text-neutral-600">
+                  <Users className="size-4" />
+                  <span className="font-bold text-black">
+                    {selectedRecipients.length}
+                  </span>
+                  {selectedRecipients.length === 1 ? "person" : "people"}
+                </span>
+              </div>
+
+              {selectedRecipients.length === 0 ? (
+                <p className="rounded-[14px] bg-neutral-50 px-4 py-6 text-center text-sm text-neutral-500 ring-1 ring-black/5">
+                  Select at least one group above to start building the
+                  recipient list.
+                </p>
+              ) : (
+                <ul className="flex flex-wrap gap-2.5">
+                  {selectedRecipients.map((r) => (
+                    <li
+                      key={r.id}
+                      className="inline-flex items-center gap-2 rounded-full bg-neutral-50 py-1 pl-1 pr-3 ring-1 ring-black/10"
+                    >
+                      <span
+                        className={cn(
+                          "block size-9 shrink-0 rounded-full bg-neutral-200 bg-cover bg-center ring-2",
+                          AUDIENCE_DOT[r.role],
+                        )}
+                        style={{ backgroundImage: `url(${r.avatarUrl})` }}
+                      />
+                      <span className="text-sm font-semibold text-black">
+                        {r.name}
+                      </span>
+                      <button
+                        type="button"
+                        onClick={() => removeRecipient(r.id)}
+                        aria-label={`Remove ${r.name} from broadcast`}
+                        className="grid size-6 shrink-0 place-items-center rounded-full text-neutral-500 hover:bg-neutral-200 hover:text-black"
+                      >
+                        <X className="size-3.5" strokeWidth={2.4} />
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </section>
+
+            {/* Message */}
+            <section>
+              <div className="mb-3 text-xs font-bold uppercase tracking-wider text-neutral-500">
                 Message
               </div>
               <textarea
@@ -152,13 +247,13 @@ export function BroadcastModal({
                 onChange={(e) => setMessage(e.target.value)}
                 rows={7}
                 placeholder="Write your broadcast message…"
-                className="w-full resize-none rounded-[14px] bg-neutral-50 p-3 text-sm text-black placeholder:text-neutral-400 outline-none ring-1 ring-black/10 focus:ring-2 focus:ring-student"
+                className="w-full resize-none rounded-[14px] bg-neutral-50 p-4 text-sm text-black placeholder:text-neutral-400 outline-none ring-1 ring-black/10 focus:ring-2 focus:ring-student"
               />
             </section>
           </div>
 
           {/* Footer */}
-          <div className="flex items-center justify-end gap-3 border-t border-black/10 bg-neutral-50 px-6 py-4">
+          <div className="flex items-center justify-end gap-3 border-t border-black/10 bg-neutral-50 px-7 py-4">
             <button
               type="button"
               onClick={() => onOpenChange(false)}
@@ -170,7 +265,7 @@ export function BroadcastModal({
               type="button"
               onClick={handleSend}
               disabled={!canSend}
-              className="inline-flex items-center gap-2 rounded-full bg-black px-5 py-2 text-sm font-bold text-white hover:bg-black/90 disabled:cursor-not-allowed disabled:bg-black/40"
+              className="inline-flex items-center gap-2 rounded-full bg-black px-5 py-2.5 text-sm font-bold text-white hover:bg-black/90 disabled:cursor-not-allowed disabled:bg-black/40"
             >
               <Send className="size-4" strokeWidth={2.4} />
               Send broadcast
