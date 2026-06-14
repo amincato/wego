@@ -99,7 +99,6 @@ export default function MessagesPage() {
     <>
       <PageHeader
         title="Messages"
-        subtitle="Inbox, support tickets and emergency workflows."
         action={
           <div className="flex items-center gap-2">
             <button
