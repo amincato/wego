@@ -11,7 +11,6 @@ import {
   Music2,
   Plane,
   ScrollText,
-  Users,
   UserRound,
   Waves,
   type LucideIcon,
@@ -230,7 +229,6 @@ export function ApplicationSummaryTab({
     application.reportCardFilename?.replace(/_report_card\.pdf$/i, "") ??
     "student";
   const studentIdFilename = `${base}_student_id.pdf`;
-  const parentsIdFilename = `${base}_parents_id.pdf`;
 
   return (
     <div className="grid gap-6 lg:grid-cols-2 lg:items-start">
@@ -295,11 +293,18 @@ export function ApplicationSummaryTab({
         </InfoCard>
 
         <InfoCard title="Parents' ID">
-          <DocumentDownloadRow
-            filename={parentsIdFilename}
-            meta="PDF · uploaded by student"
-            icon={Users}
-          />
+          <div className="space-y-2">
+            <DocumentDownloadRow
+              filename="philippe_bernard_id.pdf"
+              meta="Father · PDF"
+              icon={UserRound}
+            />
+            <DocumentDownloadRow
+              filename="camille_dubois_id.pdf"
+              meta="Mother · PDF"
+              icon={UserRound}
+            />
+          </div>
         </InfoCard>
       </div>
     </div>
