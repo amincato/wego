@@ -101,6 +101,7 @@ export const mySchool: SchoolExtended = {
     "student_carlo",
     "student_alessandro_greco",
     "student_sophie_laurent",
+    "student_carmen_ruiz",
   ],
   studentsAbroadIds: ["student_giorgia"],
 };
