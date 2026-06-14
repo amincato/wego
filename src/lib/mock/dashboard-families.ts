@@ -170,7 +170,7 @@ export const familyApplications: FamilyApplication[] = [
   {
     id: "famapp_mueller",
     familyId: "family_mueller",
-    state: "new_request",
+    state: "site_visit_scheduled",
     submittedAt: "2025-09-15T09:00:00.000Z",
   },
 ];

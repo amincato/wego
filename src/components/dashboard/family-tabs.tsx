@@ -307,20 +307,24 @@ export function FamilyApplicationStatusTab({
       <ol className="flex flex-wrap items-center gap-3 sm:gap-4">
         {FAMILY_FLOW.map((step, idx) => {
           const isCurrent = idx === currentIndex;
+          const isPast = idx < currentIndex;
+          const isReached = isPast || isCurrent;
           return (
             <li key={step.id} className="flex items-center gap-3">
               <div
                 className={`grid size-10 place-items-center rounded-full text-sm font-bold ${
                   isCurrent
                     ? "bg-family text-white ring-4 ring-family/15"
-                    : "bg-bg text-fg-subtle"
+                    : isPast
+                      ? "bg-family/15 text-family"
+                      : "bg-bg text-fg-subtle"
                 }`}
               >
                 {idx + 1}
               </div>
               <span
                 className={`inline-flex items-center rounded-full px-4 py-2 text-sm font-semibold ${
-                  isCurrent
+                  isReached
                     ? "bg-family/15 text-family"
                     : "bg-bg text-fg-muted"
                 }`}
