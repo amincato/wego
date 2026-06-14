@@ -46,7 +46,7 @@ export default async function StudentAbroadPage({
         tabs={[
           {
             id: "personal",
-            label: "Personal info",
+            label: "Profile",
             content: <PersonalInfoTab student={student} />,
           },
           {

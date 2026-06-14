@@ -61,7 +61,7 @@ export default async function IncomingApplicantPage({
         tabs={[
           {
             id: "personal",
-            label: "Personal info",
+            label: "Profile",
             content: <PersonalInfoTab student={student} />,
           },
           {

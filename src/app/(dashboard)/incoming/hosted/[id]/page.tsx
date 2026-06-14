@@ -40,7 +40,7 @@ export default async function HostedStudentPage({
         tabs={[
           {
             id: "personal",
-            label: "Personal info",
+            label: "Profile",
             content: <PersonalInfoTab student={student} />,
           },
           {

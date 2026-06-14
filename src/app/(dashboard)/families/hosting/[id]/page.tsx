@@ -45,7 +45,7 @@ export default async function FamilyHostingPage({
         tabs={[
           {
             id: "personal",
-            label: "Personal info",
+            label: "Profile",
             content: <FamilyPersonalInfoTab family={family} />,
           },
           {

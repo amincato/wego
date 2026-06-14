@@ -39,7 +39,7 @@ export default async function FamilyApplicationPage({
         tabs={[
           {
             id: "personal",
-            label: "Personal info",
+            label: "Profile",
             content: <FamilyPersonalInfoTab family={family} />,
           },
           {

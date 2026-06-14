@@ -52,7 +52,7 @@ export default async function OutgoingApplicationPage({
         tabs={[
           {
             id: "personal",
-            label: "Personal info",
+            label: "Profile",
             content: <PersonalInfoTab student={student} />,
           },
           {
