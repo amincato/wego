@@ -15,7 +15,19 @@ import {
   dashboardHostFamilies,
   familyApplications,
 } from "@/lib/mock/dashboard-families";
-import { ScheduleVisitModal } from "@/components/dashboard/schedule-visit-modal";
+import {
+  ScheduleVisitModal,
+  type ScheduledProposal,
+} from "@/components/dashboard/schedule-visit-modal";
+
+const PROPOSALS_STORAGE_KEY = "wego_visit_proposals";
+
+interface StoredProposal {
+  id: string;
+  title: string;
+  date: string; // ISO
+  tone: CalEvent["tone"];
+}
 
 type View = "day" | "week" | "month" | "year";
 
@@ -158,12 +170,37 @@ function CalendarPageInner() {
 
   const [proposedDate, setProposedDate] = useState<Date | null>(null);
   const [openTimeModal, setOpenTimeModal] = useState(false);
+  const [extraEvents, setExtraEvents] = useState<CalEvent[]>([]);
 
   useEffect(() => {
     if (isSchedulingMode && view !== "month") setView("month");
   }, [isSchedulingMode, view]);
 
-  const events = useMemo(buildEvents, []);
+  // Hydrate previously-sent visit proposals from sessionStorage so the
+  // calendar keeps them across schedule round-trips.
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const raw = sessionStorage.getItem(PROPOSALS_STORAGE_KEY);
+    if (!raw) return;
+    try {
+      const parsed = JSON.parse(raw) as StoredProposal[];
+      setExtraEvents(
+        parsed.map((p) => ({
+          id: p.id,
+          title: p.title,
+          date: new Date(p.date),
+          tone: p.tone,
+        })),
+      );
+    } catch {
+      /* ignore */
+    }
+  }, []);
+
+  const events = useMemo(
+    () => [...buildEvents(), ...extraEvents],
+    [extraEvents],
+  );
   const eventsByDay = useMemo(() => {
     const map = new Map<string, CalEvent[]>();
     for (const e of events) {
@@ -188,11 +225,45 @@ function CalendarPageInner() {
     setOpenTimeModal(true);
   };
 
-  const handleSendProposal = () => {
-    setOpenTimeModal(false);
-    if (scheduleAppId) {
-      router.push(`/families/applications/${scheduleAppId}`);
+  const handleSendProposal = (proposal: ScheduledProposal) => {
+    if (!family) return;
+
+    // Combine the picked day with the `from` time so the event lands at
+    // the right hour in week/day views.
+    const [h, m] = proposal.fromTime.split(":").map(Number);
+    const eventDate = new Date(proposal.date);
+    eventDate.setHours(h ?? 0, m ?? 0, 0, 0);
+
+    const newEvent: CalEvent = {
+      id: `proposal_${Date.now()}`,
+      title: `${family.familyName} site visit proposal`,
+      date: eventDate,
+      tone: "family",
+    };
+
+    if (typeof window !== "undefined") {
+      const raw = sessionStorage.getItem(PROPOSALS_STORAGE_KEY);
+      const existing = raw ? (JSON.parse(raw) as StoredProposal[]) : [];
+      sessionStorage.setItem(
+        PROPOSALS_STORAGE_KEY,
+        JSON.stringify([
+          ...existing,
+          {
+            id: newEvent.id,
+            title: newEvent.title,
+            date: eventDate.toISOString(),
+            tone: newEvent.tone,
+          },
+        ]),
+      );
     }
+
+    setExtraEvents((prev) => [...prev, newEvent]);
+    setProposedDate(null);
+    setOpenTimeModal(false);
+    // Leave schedule mode by dropping ?schedule from the URL; user
+    // stays on /calendar and sees the new event right away.
+    router.replace("/calendar");
   };
 
   const headerLabel = useMemo(() => {

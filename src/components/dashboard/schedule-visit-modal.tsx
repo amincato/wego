@@ -1,7 +1,7 @@
 "use client";
 
 import * as Dialog from "@radix-ui/react-dialog";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { CalendarDays, Check, Send, X } from "lucide-react";
 
 const WEEKDAYS_LONG = [
@@ -47,11 +47,17 @@ function defaultMessage(
   return `Hi ${familyName} team,\n\nWe'd love to schedule the site visit for ${fmtLongDate(date)} between ${from} and ${to}. Please let us know if this slot works, or feel free to suggest an alternative.\n\nBest,\nHans Schmidt`;
 }
 
+export interface ScheduledProposal {
+  date: Date;
+  fromTime: string;
+  toTime: string;
+}
+
 /**
  * Time + message picker used once the coordinator has chosen a day on the
  * big /calendar page. The day is fixed (passed via `date`); the modal just
  * collects the time window (from → to) and the proposal message, then
- * bubbles up `onSend`.
+ * bubbles up `onSend` with the chosen slot.
  */
 export function ScheduleVisitModal({
   open,
@@ -64,14 +70,13 @@ export function ScheduleVisitModal({
   onOpenChange: (v: boolean) => void;
   familyName: string;
   date: Date | null;
-  onSend: () => void;
+  onSend: (proposal: ScheduledProposal) => void;
 }) {
   const [fromTime, setFromTime] = useState<string>("11:00");
   const [toTime, setToTime] = useState<string>("12:00");
   const [message, setMessage] = useState<string>("");
   const [messageEdited, setMessageEdited] = useState(false);
   const [sent, setSent] = useState(false);
-  const sendTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     if (open && date) {
@@ -82,13 +87,6 @@ export function ScheduleVisitModal({
       setSent(false);
     }
   }, [open, date, familyName]);
-
-  // Clear any pending finalization timer if the modal is closed mid-success.
-  useEffect(() => {
-    return () => {
-      if (sendTimeoutRef.current) clearTimeout(sendTimeoutRef.current);
-    };
-  }, []);
 
   useEffect(() => {
     if (!messageEdited && date) {
@@ -102,9 +100,10 @@ export function ScheduleVisitModal({
   const handleSend = () => {
     if (!canSend) return;
     setSent(true);
-    sendTimeoutRef.current = setTimeout(() => {
-      onSend();
-    }, 1800);
+  };
+
+  const handleSuccessClose = () => {
+    if (date) onSend({ date, fromTime, toTime });
   };
 
   return (
@@ -116,7 +115,10 @@ export function ScheduleVisitModal({
           className="fixed left-1/2 top-1/2 z-50 flex max-h-[92dvh] w-[calc(100%-48px)] max-w-[560px] -translate-x-1/2 -translate-y-1/2 flex-col overflow-hidden rounded-[20px] shadow-2xl ring-1 ring-black/10 data-[state=open]:animate-in data-[state=closed]:animate-out"
         >
           {sent ? (
-            <SentSuccess familyName={familyName} />
+            <SentSuccess
+              familyName={familyName}
+              onClose={handleSuccessClose}
+            />
           ) : (
             <>
           {/* Header */}
@@ -242,21 +244,32 @@ export function ScheduleVisitModal({
   );
 }
 
-function SentSuccess({ familyName }: { familyName: string }) {
+function SentSuccess({
+  familyName,
+  onClose,
+}: {
+  familyName: string;
+  onClose: () => void;
+}) {
   return (
-    <div className="flex flex-col items-center justify-center gap-4 px-8 py-14 text-center">
+    <div className="relative flex flex-col items-center justify-center gap-4 px-8 py-14 text-center">
       <Dialog.Title className="sr-only">Proposal sent</Dialog.Title>
       <Dialog.Description className="sr-only">
         Your proposal has been delivered to {familyName}.
       </Dialog.Description>
+      <button
+        type="button"
+        onClick={onClose}
+        aria-label="Close"
+        className="absolute right-5 top-5 grid size-9 place-items-center rounded-full text-neutral-600 hover:bg-neutral-100 hover:text-black"
+      >
+        <X className="size-4" />
+      </button>
       <span
         className="grid size-16 place-items-center rounded-full bg-emerald-100"
         aria-hidden
       >
-        <Check
-          className="size-8 text-emerald-600"
-          strokeWidth={3}
-        />
+        <Check className="size-8 text-emerald-600" strokeWidth={3} />
       </span>
       <div className="text-xl font-bold text-black">Proposal sent</div>
       <p className="max-w-[360px] text-sm text-neutral-600">
