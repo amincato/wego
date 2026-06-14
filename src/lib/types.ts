@@ -98,9 +98,19 @@ export interface HostFamily {
   languages?: LanguageSkill[];
   /** Optional hobbies the family enjoys together (keys of the family HOBBY map). */
   hobbies?: string[];
+  /** Optional free-text lifestyle summary, rendered as a label/value list. */
+  lifestyle?: FamilyLifestyle;
   homeType: "apartment" | "house";
   hasPets: boolean;
   spareRooms: number;
+}
+
+export interface FamilyLifestyle {
+  atHome: string;
+  socialLife: string;
+  pets: string;
+  dailyHabits: string;
+  foodDiet: string;
 }
 
 export interface FamilyMemberProfile {

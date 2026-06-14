@@ -172,6 +172,22 @@ export function FamilyPersonalInfoTab({ family }: { family: HostFamily }) {
           ) : null}
         </div>
       </div>
+
+      {/* Lifestyle — full-width row below the grid */}
+      {family.lifestyle ? (
+        <InfoCard title="Lifestyle">
+          <ul className="space-y-1">
+            <InfoRow label="At home" value={family.lifestyle.atHome} />
+            <InfoRow label="Social life" value={family.lifestyle.socialLife} />
+            <InfoRow label="Pets" value={family.lifestyle.pets} />
+            <InfoRow
+              label="Daily habits"
+              value={family.lifestyle.dailyHabits}
+            />
+            <InfoRow label="Food / Diet" value={family.lifestyle.foodDiet} />
+          </ul>
+        </InfoCard>
+      ) : null}
     </div>
   );
 }

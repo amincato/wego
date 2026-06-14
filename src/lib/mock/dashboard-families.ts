@@ -107,6 +107,13 @@ export const dashboardHostFamilies: HostFamily[] = [
       { code: "it", level: "beginner" },
     ],
     hobbies: ["cooking", "travelling", "music", "hiking", "reading"],
+    lifestyle: {
+      atHome: "We spend a lot of time together",
+      socialLife: "Social & outgoing",
+      pets: "1 dog",
+      dailyHabits: "Flexible routine",
+      foodDiet: "No diet",
+    },
     homeType: "apartment",
     hasPets: true,
     spareRooms: 1,
