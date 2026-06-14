@@ -2,7 +2,7 @@
 
 import * as Dialog from "@radix-ui/react-dialog";
 import { useEffect, useState } from "react";
-import { Send, X } from "lucide-react";
+import { CalendarDays, Send, X } from "lucide-react";
 
 const WEEKDAYS_LONG = [
   "Monday",
@@ -99,24 +99,23 @@ export function ScheduleVisitModal({
         >
           {/* Header */}
           <div className="flex items-start justify-between gap-4 border-b border-black/10 px-7 py-4">
-            <div>
-              <Dialog.Title className="text-lg font-bold text-black">
+            <div className="min-w-0">
+              <Dialog.Title className="text-[11px] font-bold uppercase tracking-wider text-neutral-500">
                 Propose a time
               </Dialog.Title>
-              <Dialog.Description className="mt-0.5 text-sm text-neutral-600">
-                Site visit for{" "}
+              <div className="mt-1 flex items-center gap-2">
+                <CalendarDays
+                  className="size-6 shrink-0 text-black"
+                  strokeWidth={2.2}
+                />
+                <Dialog.Description className="truncate text-2xl font-bold leading-tight text-black">
+                  {date ? fmtLongDate(date) : "Pick a day"}
+                </Dialog.Description>
+              </div>
+              <div className="mt-1 text-sm text-neutral-600">
+                Site visit with{" "}
                 <span className="font-semibold text-black">{familyName}</span>
-                {date ? (
-                  <>
-                    {" "}
-                    on{" "}
-                    <span className="font-semibold text-black">
-                      {fmtLongDate(date)}
-                    </span>
-                  </>
-                ) : null}
-                .
-              </Dialog.Description>
+              </div>
             </div>
             <Dialog.Close
               aria-label="Close"
