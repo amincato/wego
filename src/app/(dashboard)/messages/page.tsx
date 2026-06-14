@@ -117,18 +117,20 @@ export default function MessagesPage() {
               <Megaphone className="size-4" strokeWidth={2.2} />
               Broadcast message
             </button>
-            <Link
-              href="/messages/emergencies"
-              className="relative inline-flex items-center gap-2 rounded-full bg-danger-bg/60 px-4 py-2 text-sm font-bold text-danger-fg hover:bg-danger-bg"
-            >
-              <AlertCircle className="size-4" strokeWidth={2.4} />
-              Emergencies
+            <div className="relative">
+              <Link
+                href="/messages/emergencies"
+                className="inline-flex items-center gap-2 rounded-full bg-danger-bg/60 px-4 py-2 text-sm font-bold text-danger-fg hover:bg-danger-bg"
+              >
+                <AlertCircle className="size-4" strokeWidth={2.4} />
+                Emergencies
+              </Link>
               {openEmergencies > 0 ? (
-                <span className="absolute -right-1 -top-1 grid size-5 place-items-center rounded-full bg-danger-fg text-[10px] font-bold leading-none text-white ring-2 ring-bg">
+                <span className="pointer-events-none absolute -right-1.5 -top-1.5 grid size-5 place-items-center rounded-full bg-danger-fg text-[10px] font-bold leading-none text-white ring-2 ring-bg">
                   {openEmergencies}
                 </span>
               ) : null}
-            </Link>
+            </div>
           </div>
         }
       />
