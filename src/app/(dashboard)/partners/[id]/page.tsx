@@ -37,7 +37,7 @@ export default async function PartnerSchoolPage({
 
       {/* Hero image with city pill overlay */}
       <div className="relative mb-5 overflow-hidden rounded-card-lg ring-1 ring-divider">
-        <div className="relative aspect-[16/6] w-full bg-chip">
+        <div className="relative aspect-[16/4.5] w-full bg-chip">
           <Image
             src={school.imageUrl}
             alt={school.name}
