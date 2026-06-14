@@ -99,6 +99,7 @@ export default function MessagesPage() {
     <>
       <PageHeader
         title="Messages"
+        subtitle="Your ongoing conversations."
         action={
           <div className="flex items-center gap-2">
             <button
