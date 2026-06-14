@@ -40,12 +40,12 @@ const FAMILY_HOBBY: Record<string, { emoji: string; label: string }> = {
   sports: { emoji: "⚽", label: "Sports" },
 };
 
-const FAMILY_FLOW: FamilyApplicationState[] = [
-  "new_request",
-  "site_visit_scheduled",
-  "site_visit_completed",
-  "allowed_to_host",
-  "matched_with_student",
+const FAMILY_FLOW: { id: FamilyApplicationState; label: string }[] = [
+  { id: "new_request", label: "New request" },
+  { id: "site_visit_scheduled", label: "Site visit scheduled" },
+  { id: "allowed_to_host", label: "Allowed to host" },
+  { id: "matched_with_student", label: "Student matched" },
+  { id: "final_confirmation", label: "Final confirmation" },
 ];
 
 export function FamilyPersonalInfoTab({ family }: { family: HostFamily }) {
@@ -298,46 +298,42 @@ export function FamilyApplicationStatusTab({
 }: {
   application: FamilyApplication;
 }) {
-  const idx = FAMILY_FLOW.indexOf(application.state);
+  const currentIndex = FAMILY_FLOW.findIndex(
+    (s) => s.id === application.state,
+  );
+
   return (
     <InfoCard title="Application status">
-      <ol className="flex flex-wrap items-center gap-2 sm:gap-3">
-        {FAMILY_FLOW.map((step, i) => {
-          const isPast = i < idx;
-          const isCurrent = i === idx;
+      <ol className="flex flex-wrap items-center gap-3 sm:gap-4">
+        {FAMILY_FLOW.map((step, idx) => {
+          const isCurrent = idx === currentIndex;
           return (
-            <li key={step} className="flex items-center gap-2 sm:gap-3">
+            <li key={step.id} className="flex items-center gap-3">
               <div
-                className={`grid size-8 place-items-center rounded-full text-xs font-bold ${
+                className={`grid size-10 place-items-center rounded-full text-sm font-bold ${
                   isCurrent
                     ? "bg-family text-white ring-4 ring-family/15"
-                    : isPast
-                      ? "bg-success-bg/40 text-success-fg"
-                      : "bg-chip text-fg-subtle"
+                    : "bg-bg text-fg-subtle"
                 }`}
               >
-                {i + 1}
+                {idx + 1}
               </div>
-              <FamilyStatusPill state={step} />
-              {i < FAMILY_FLOW.length - 1 ? (
-                <span className="hidden h-px w-8 bg-divider sm:block" />
+              <span
+                className={`inline-flex items-center rounded-full px-4 py-2 text-sm font-semibold ${
+                  isCurrent
+                    ? "bg-family/15 text-family"
+                    : "bg-bg text-fg-muted"
+                }`}
+              >
+                {step.label}
+              </span>
+              {idx < FAMILY_FLOW.length - 1 ? (
+                <span className="hidden h-px w-6 bg-divider sm:block" />
               ) : null}
             </li>
           );
         })}
       </ol>
-
-      <div className="mt-6 flex flex-wrap gap-2">
-        <button className="rounded-full bg-success-bg/40 px-4 py-2 text-xs font-bold text-success-fg hover:bg-success-bg/60">
-          Move to next step
-        </button>
-        <button className="rounded-full bg-surface px-4 py-2 text-xs font-bold text-fg ring-1 ring-divider hover:bg-chip">
-          Schedule site visit
-        </button>
-        <button className="rounded-full bg-danger-bg/60 px-4 py-2 text-xs font-bold text-danger-fg hover:bg-danger-bg">
-          Reject application
-        </button>
-      </div>
     </InfoCard>
   );
 }

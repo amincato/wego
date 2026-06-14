@@ -67,6 +67,7 @@ export type FamilyApplicationState =
   | "site_visit_completed"
   | "allowed_to_host"
   | "matched_with_student"
+  | "final_confirmation"
   | "rejected";
 
 export interface ApplicationExtended extends Application {
