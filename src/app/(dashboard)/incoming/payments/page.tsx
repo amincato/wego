@@ -1,5 +1,10 @@
 import Link from "next/link";
-import { CheckCircle2, ChevronLeft, Clock } from "lucide-react";
+import {
+  CheckCircle2,
+  ChevronLeft,
+  ChevronRight,
+  Clock,
+} from "lucide-react";
 import { PageHeader } from "@/components/dashboard/dashboard-shell";
 import { cn } from "@/lib/utils";
 
@@ -122,14 +127,17 @@ export default function FeePaymentsPage() {
       <ul className="mt-6 flex flex-col gap-2">
         {payments.map((p) => (
           <li key={p.id}>
-            <div className="flex items-center gap-4 rounded-input border border-divider bg-surface px-4 py-3.5">
+            <Link
+              href={`/incoming/applicants/${p.id}`}
+              className="group flex items-center gap-4 rounded-input border border-divider border-l-4 border-l-student bg-surface px-4 py-5 transition-colors hover:border-fg/20 hover:border-l-student hover:bg-chip/40"
+            >
               <span
                 className="size-12 shrink-0 rounded-full bg-chip bg-cover bg-center"
                 style={{ backgroundImage: `url(${p.photoUrl})` }}
               />
               <div className="min-w-0 flex-1">
                 <div className="flex items-center gap-2">
-                  <span className="truncate text-sm font-bold text-fg">
+                  <span className="truncate text-base font-bold text-fg">
                     {p.firstName} {p.lastName}
                   </span>
                   <span className="text-base leading-none">
@@ -142,16 +150,19 @@ export default function FeePaymentsPage() {
                   <span>{p.months} months</span>
                 </div>
               </div>
-              <span
-                className={cn(
-                  "inline-flex shrink-0 items-center gap-1.5 rounded-full px-3 py-1 text-xs font-bold",
-                  STATUS_PILL[p.status].tone,
-                )}
-              >
-                {STATUS_PILL[p.status].icon}
-                {STATUS_PILL[p.status].label}
-              </span>
-            </div>
+              <div className="flex shrink-0 items-center gap-3">
+                <span
+                  className={cn(
+                    "inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-bold",
+                    STATUS_PILL[p.status].tone,
+                  )}
+                >
+                  {STATUS_PILL[p.status].icon}
+                  {STATUS_PILL[p.status].label}
+                </span>
+                <ChevronRight className="size-4 text-fg-subtle group-hover:text-fg" />
+              </div>
+            </Link>
           </li>
         ))}
       </ul>
