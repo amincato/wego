@@ -3,7 +3,6 @@
 import * as Dialog from "@radix-ui/react-dialog";
 import { useEffect, useState } from "react";
 import { Send, X } from "lucide-react";
-import { cn } from "@/lib/utils";
 
 const WEEKDAYS_LONG = [
   "Monday",
@@ -29,28 +28,30 @@ const MONTH_NAMES = [
   "December",
 ];
 
-/** 09:00 → 17:00 every 30 minutes. */
-const TIME_SLOTS = (() => {
-  const slots: string[] = [];
-  for (let h = 9; h <= 17; h++) {
-    slots.push(`${String(h).padStart(2, "0")}:00`);
-    if (h < 17) slots.push(`${String(h).padStart(2, "0")}:30`);
-  }
-  return slots;
-})();
-
 function fmtLongDate(d: Date) {
   return `${WEEKDAYS_LONG[(d.getDay() + 6) % 7]}, ${MONTH_NAMES[d.getMonth()]} ${d.getDate()}`;
 }
 
-function defaultMessage(familyName: string, date: Date, time: string) {
-  return `Hi ${familyName} team,\n\nWe'd love to schedule the site visit for ${fmtLongDate(date)} at ${time}. Please let us know if this slot works, or feel free to suggest an alternative.\n\nBest,\nHans Schmidt`;
+/** "11:00" / "13:30" → minutes since midnight */
+function toMinutes(t: string) {
+  const [h, m] = t.split(":").map(Number);
+  return (h ?? 0) * 60 + (m ?? 0);
+}
+
+function defaultMessage(
+  familyName: string,
+  date: Date,
+  from: string,
+  to: string,
+) {
+  return `Hi ${familyName} team,\n\nWe'd love to schedule the site visit for ${fmtLongDate(date)} between ${from} and ${to}. Please let us know if this slot works, or feel free to suggest an alternative.\n\nBest,\nHans Schmidt`;
 }
 
 /**
  * Time + message picker used once the coordinator has chosen a day on the
  * big /calendar page. The day is fixed (passed via `date`); the modal just
- * collects the time slot and the proposal message and bubbles up `onSend`.
+ * collects the time window (from → to) and the proposal message, then
+ * bubbles up `onSend`.
  */
 export function ScheduleVisitModal({
   open,
@@ -65,25 +66,28 @@ export function ScheduleVisitModal({
   date: Date | null;
   onSend: () => void;
 }) {
-  const [selectedTime, setSelectedTime] = useState<string>("11:00");
+  const [fromTime, setFromTime] = useState<string>("11:00");
+  const [toTime, setToTime] = useState<string>("12:00");
   const [message, setMessage] = useState<string>("");
   const [messageEdited, setMessageEdited] = useState(false);
 
   useEffect(() => {
     if (open && date) {
-      setSelectedTime("11:00");
-      setMessage(defaultMessage(familyName, date, "11:00"));
+      setFromTime("11:00");
+      setToTime("12:00");
+      setMessage(defaultMessage(familyName, date, "11:00", "12:00"));
       setMessageEdited(false);
     }
   }, [open, date, familyName]);
 
   useEffect(() => {
     if (!messageEdited && date) {
-      setMessage(defaultMessage(familyName, date, selectedTime));
+      setMessage(defaultMessage(familyName, date, fromTime, toTime));
     }
-  }, [date, selectedTime, familyName, messageEdited]);
+  }, [date, fromTime, toTime, familyName, messageEdited]);
 
-  const canSend = !!date && message.trim().length > 0;
+  const rangeValid = toMinutes(toTime) > toMinutes(fromTime);
+  const canSend = !!date && rangeValid && message.trim().length > 0;
 
   return (
     <Dialog.Root open={open} onOpenChange={onOpenChange}>
@@ -124,36 +128,50 @@ export function ScheduleVisitModal({
 
           {/* Body */}
           <div className="flex-1 overflow-y-auto px-7 py-5">
-            {/* Time slots — 3-column grid */}
+            {/* Time range */}
             <section>
               <div className="mb-2 flex items-center justify-between">
                 <div className="text-xs font-bold uppercase tracking-wider text-neutral-500">
                   Time
                 </div>
                 <span className="text-xs font-semibold text-black">
-                  {selectedTime}
+                  {fromTime} – {toTime}
                 </span>
               </div>
-              <div className="rounded-[14px] bg-neutral-50 p-2 ring-1 ring-black/10">
-                <ul className="grid grid-cols-3 gap-1.5">
-                  {TIME_SLOTS.map((t) => (
-                    <li key={t}>
-                      <button
-                        type="button"
-                        onClick={() => setSelectedTime(t)}
-                        className={cn(
-                          "w-full rounded-full px-2 py-1.5 text-sm font-semibold transition-colors",
-                          selectedTime === t
-                            ? "bg-student text-white"
-                            : "bg-white text-black hover:bg-student/10",
-                        )}
-                      >
-                        {t}
-                      </button>
-                    </li>
-                  ))}
-                </ul>
+              <div className="flex items-stretch gap-3">
+                <label className="flex flex-1 flex-col gap-1 rounded-[14px] bg-neutral-50 px-3 py-2 ring-1 ring-black/10 focus-within:ring-2 focus-within:ring-student">
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-neutral-500">
+                    From
+                  </span>
+                  <input
+                    type="time"
+                    step={900}
+                    value={fromTime}
+                    onChange={(e) => setFromTime(e.target.value)}
+                    className="bg-transparent text-base font-semibold text-black outline-none"
+                  />
+                </label>
+                <div className="grid place-items-center text-sm font-bold text-neutral-400">
+                  →
+                </div>
+                <label className="flex flex-1 flex-col gap-1 rounded-[14px] bg-neutral-50 px-3 py-2 ring-1 ring-black/10 focus-within:ring-2 focus-within:ring-student">
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-neutral-500">
+                    To
+                  </span>
+                  <input
+                    type="time"
+                    step={900}
+                    value={toTime}
+                    onChange={(e) => setToTime(e.target.value)}
+                    className="bg-transparent text-base font-semibold text-black outline-none"
+                  />
+                </label>
               </div>
+              {!rangeValid ? (
+                <p className="mt-2 text-xs font-semibold text-rose-600">
+                  End time must be after start time.
+                </p>
+              ) : null}
             </section>
 
             {/* Message */}
