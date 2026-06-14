@@ -75,7 +75,7 @@ const TONE_PILL: Record<CalEvent["tone"], string> = {
   family: "bg-family text-white",
   school: "bg-school text-white",
   neutral: "bg-fg text-white",
-  pending: "bg-neutral-300 text-neutral-700",
+  pending: "bg-[#d4d4d8] text-[#3f3f46]",
 };
 
 const TONE_DOT: Record<CalEvent["tone"], string> = {
@@ -83,7 +83,7 @@ const TONE_DOT: Record<CalEvent["tone"], string> = {
   family: "bg-family",
   school: "bg-school",
   neutral: "bg-fg-muted",
-  pending: "bg-neutral-400",
+  pending: "bg-[#a1a1aa]",
 };
 
 function buildEvents(): CalEvent[] {
