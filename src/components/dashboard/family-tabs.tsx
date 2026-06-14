@@ -255,7 +255,7 @@ export function FamilyApplicationSummaryTab({
   application: FamilyApplication;
 }) {
   return (
-    <div className="grid gap-6 lg:grid-cols-2 lg:items-stretch">
+    <div className="grid gap-6 lg:grid-cols-2 lg:items-start">
       {/* Left column: summary */}
       <InfoCard title="Application summary">
         <InfoGrid
