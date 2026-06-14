@@ -2,11 +2,14 @@
 
 import Link from "next/link";
 import { useMemo, useState } from "react";
-import { Megaphone, Pin, Search, Triangle } from "lucide-react";
+import { AlertCircle, Megaphone, Pin, Search } from "lucide-react";
 import { PageHeader } from "@/components/dashboard/dashboard-shell";
 import { ChatPanel } from "@/components/dashboard/chat-panel";
 import { BroadcastModal } from "@/components/dashboard/broadcast-modal";
-import { inboxConversations } from "@/lib/mock/dashboard-messages";
+import {
+  emergencyWorkflows,
+  inboxConversations,
+} from "@/lib/mock/dashboard-messages";
 import { cn } from "@/lib/utils";
 import type { InboxConversation } from "@/lib/mock/dashboard-messages";
 
@@ -84,6 +87,10 @@ export default function MessagesPage() {
     [],
   );
 
+  const openEmergencies = emergencyWorkflows.filter(
+    (w) => w.status !== "closed",
+  ).length;
+
   const filtered = inboxConversations.filter((c) => {
     if (filter !== "all" && c.withRole !== filter) return false;
     if (!query) return true;
@@ -112,10 +119,15 @@ export default function MessagesPage() {
             </button>
             <Link
               href="/messages/emergencies"
-              className="inline-flex items-center gap-2 rounded-full bg-danger-bg/60 px-3 py-2 text-sm font-bold text-danger-fg hover:bg-danger-bg"
+              className="relative inline-flex items-center gap-2 rounded-full bg-danger-bg/60 px-4 py-2 text-sm font-bold text-danger-fg hover:bg-danger-bg"
             >
-              <Triangle className="size-4" />
+              <AlertCircle className="size-4" strokeWidth={2.4} />
               Emergencies
+              {openEmergencies > 0 ? (
+                <span className="absolute -right-1 -top-1 grid size-5 place-items-center rounded-full bg-danger-fg text-[10px] font-bold leading-none text-white ring-2 ring-bg">
+                  {openEmergencies}
+                </span>
+              ) : null}
             </Link>
           </div>
         }
