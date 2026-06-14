@@ -1,20 +1,5 @@
-import { CalendarClock, FileText, Receipt, Users } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { CalendarDays } from "lucide-react";
 import type { Reminder } from "@/lib/types-dashboard";
-
-const ICON: Record<Reminder["category"], React.ReactNode> = {
-  deadline: <CalendarClock className="size-4" />,
-  meeting: <Users className="size-4" />,
-  report: <FileText className="size-4" />,
-  payment: <Receipt className="size-4" />,
-};
-
-const TONE: Record<Reminder["category"], string> = {
-  deadline: "bg-student/15 text-student",
-  meeting: "bg-school/15 text-school",
-  report: "bg-chip text-fg",
-  payment: "bg-family/15 text-family",
-};
 
 function formatDue(iso: string) {
   const d = new Date(iso);
@@ -39,13 +24,8 @@ export function ReminderList({ reminders }: { reminders: Reminder[] }) {
           key={r.id}
           className="flex items-center gap-3 rounded-input border border-divider bg-bg px-3 py-2.5"
         >
-          <span
-            className={cn(
-              "grid size-8 shrink-0 place-items-center rounded-lg",
-              TONE[r.category],
-            )}
-          >
-            {ICON[r.category]}
+          <span className="grid size-8 shrink-0 place-items-center rounded-lg bg-chip text-fg-muted">
+            <CalendarDays className="size-4" />
           </span>
           <div className="min-w-0 flex-1">
             <div className="text-sm font-semibold text-fg">{r.title}</div>
