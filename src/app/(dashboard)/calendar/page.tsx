@@ -239,7 +239,7 @@ function CalendarPageInner() {
   return (
     <div className="flex h-[calc(100dvh-7rem)] flex-col">
       {isSchedulingMode && family ? (
-        <div className="mb-4 flex flex-wrap items-center justify-between gap-3 rounded-card-lg bg-fg p-4 text-white">
+        <div className="mb-4 flex flex-wrap items-center justify-between gap-3 rounded-card-lg bg-family p-4 text-white">
           <div className="flex items-center gap-3">
             <div className="grid size-10 place-items-center rounded-full bg-white/15">
               <CalendarDays className="size-5" />
