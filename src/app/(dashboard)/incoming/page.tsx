@@ -274,13 +274,13 @@ export default function IncomingPage() {
                 <div className="flex flex-col gap-3">
                   <Link
                     href="/incoming/payments"
-                    className="group flex items-center gap-4 rounded-input bg-student/10 px-4 py-4 ring-1 ring-student/20 transition-colors hover:bg-student/15"
+                    className="group flex items-center gap-4 rounded-input bg-student/25 px-4 py-4 ring-1 ring-student/30 transition-colors hover:bg-student/30"
                   >
                     <span className="grid size-12 place-items-center rounded-xl bg-student text-white">
                       <CreditCard className="size-5" strokeWidth={2.2} />
                     </span>
                     <div className="min-w-0 flex-1">
-                      <div className="text-sm font-bold text-fg">
+                      <div className="text-sm font-bold text-student">
                         Check fee payment status
                       </div>
                       <p className="mt-0.5 text-xs text-fg-muted">
