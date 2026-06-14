@@ -105,6 +105,7 @@ export const dashboardHostFamilies: HostFamily[] = [
       { code: "en", level: "advanced" },
       { code: "fr", level: "intermediate" },
     ],
+    hobbies: ["cooking", "travelling", "music", "hiking", "reading"],
     homeType: "apartment",
     hasPets: true,
     spareRooms: 1,

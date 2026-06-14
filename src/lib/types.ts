@@ -96,6 +96,8 @@ export interface HostFamily {
   memberProfiles?: FamilyMemberProfile[];
   /** Languages spoken at home, in display order. */
   languages?: LanguageSkill[];
+  /** Optional hobbies the family enjoys together (keys of the family HOBBY map). */
+  hobbies?: string[];
   homeType: "apartment" | "house";
   hasPets: boolean;
   spareRooms: number;

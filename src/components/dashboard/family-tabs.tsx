@@ -28,6 +28,17 @@ const LANG_LEVEL_TONE: Record<string, string> = {
   beginner: "bg-chip text-fg-muted",
 };
 
+const FAMILY_HOBBY: Record<string, { emoji: string; label: string }> = {
+  cooking: { emoji: "🍳", label: "Cooking" },
+  travelling: { emoji: "✈️", label: "Travelling" },
+  music: { emoji: "🎵", label: "Music" },
+  hiking: { emoji: "🥾", label: "Hiking" },
+  reading: { emoji: "📚", label: "Reading" },
+  board_games: { emoji: "🎲", label: "Board games" },
+  gardening: { emoji: "🌱", label: "Gardening" },
+  sports: { emoji: "⚽", label: "Sports" },
+};
+
 const FAMILY_FLOW: FamilyApplicationState[] = [
   "new_request",
   "site_visit_scheduled",
@@ -95,48 +106,71 @@ export function FamilyPersonalInfoTab({ family }: { family: HostFamily }) {
           </InfoCard>
         </div>
 
-        <InfoCard title="Members">
-          {family.memberProfiles ? (
-            <ul className="flex flex-col gap-2">
-              {family.memberProfiles.map((m) => (
-                <li
-                  key={`${m.name}-${m.age}`}
-                  className="flex items-center gap-3 rounded-input bg-bg px-3 py-2 ring-1 ring-divider"
-                >
-                  <span
-                    role="img"
-                    aria-label={`${m.role} ${m.name}`}
-                    className="size-9 shrink-0 rounded-full bg-chip bg-cover bg-center"
-                    style={{ backgroundImage: `url(${m.photoUrl})` }}
-                  />
-                  <span className="text-sm font-semibold text-fg">
-                    {m.name}, {m.age}
-                  </span>
-                  {m.klasseLabel ? (
-                    <span className="inline-flex items-center gap-1 rounded-full bg-school/15 px-2.5 py-0.5 text-[11px] font-bold text-school">
-                      <GraduationCap className="size-3" strokeWidth={2.4} />
-                      {m.klasseLabel}
+        <div className="space-y-6">
+          <InfoCard title="Members">
+            {family.memberProfiles ? (
+              <ul className="flex flex-col gap-2">
+                {family.memberProfiles.map((m) => (
+                  <li
+                    key={`${m.name}-${m.age}`}
+                    className="flex items-center gap-3 rounded-input bg-bg px-3 py-2 ring-1 ring-divider"
+                  >
+                    <span
+                      role="img"
+                      aria-label={`${m.role} ${m.name}`}
+                      className="size-9 shrink-0 rounded-full bg-chip bg-cover bg-center"
+                      style={{ backgroundImage: `url(${m.photoUrl})` }}
+                    />
+                    <span className="text-sm font-semibold text-fg">
+                      {m.name}, {m.age}
                     </span>
-                  ) : null}
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <ul className="flex flex-col gap-2">
-              {family.members.map((m) => (
-                <li
-                  key={m}
-                  className="flex items-center gap-3 rounded-input bg-bg px-3 py-2 ring-1 ring-divider"
-                >
-                  <span className="grid size-8 place-items-center rounded-full bg-family/15 text-family">
-                    <UserRound className="size-4" />
-                  </span>
-                  <span className="text-sm font-semibold text-fg">{m}</span>
-                </li>
-              ))}
-            </ul>
-          )}
-        </InfoCard>
+                    {m.klasseLabel ? (
+                      <span className="inline-flex items-center gap-1 rounded-full bg-school/15 px-2.5 py-0.5 text-[11px] font-bold text-school">
+                        <GraduationCap className="size-3" strokeWidth={2.4} />
+                        {m.klasseLabel}
+                      </span>
+                    ) : null}
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <ul className="flex flex-col gap-2">
+                {family.members.map((m) => (
+                  <li
+                    key={m}
+                    className="flex items-center gap-3 rounded-input bg-bg px-3 py-2 ring-1 ring-divider"
+                  >
+                    <span className="grid size-8 place-items-center rounded-full bg-family/15 text-family">
+                      <UserRound className="size-4" />
+                    </span>
+                    <span className="text-sm font-semibold text-fg">{m}</span>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </InfoCard>
+
+          {family.hobbies && family.hobbies.length > 0 ? (
+            <InfoCard title="Hobbies">
+              <div className="flex flex-wrap gap-2">
+                {family.hobbies.map((h) => {
+                  const meta = FAMILY_HOBBY[h];
+                  return (
+                    <span
+                      key={h}
+                      className="inline-flex items-center gap-2 rounded-full bg-bg px-4 py-2.5 text-sm font-semibold text-fg"
+                    >
+                      <span className="text-lg leading-none">
+                        {meta?.emoji ?? "•"}
+                      </span>
+                      {meta?.label ?? h.replace(/_/g, " ")}
+                    </span>
+                  );
+                })}
+              </div>
+            </InfoCard>
+          ) : null}
+        </div>
       </div>
     </div>
   );
