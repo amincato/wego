@@ -1,10 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
-import { LifeBuoy, Pin, Search, Triangle } from "lucide-react";
+import { useMemo, useState } from "react";
+import { Megaphone, Pin, Search, Triangle } from "lucide-react";
 import { PageHeader } from "@/components/dashboard/dashboard-shell";
 import { ChatPanel } from "@/components/dashboard/chat-panel";
+import { BroadcastModal } from "@/components/dashboard/broadcast-modal";
 import { inboxConversations } from "@/lib/mock/dashboard-messages";
 import { cn } from "@/lib/utils";
 import type { InboxConversation } from "@/lib/mock/dashboard-messages";
@@ -67,6 +68,20 @@ export default function MessagesPage() {
   const [activeId, setActiveId] = useState(inboxConversations[0]?.id);
   const [query, setQuery] = useState("");
   const [filter, setFilter] = useState<RoleFilter>("all");
+  const [broadcastOpen, setBroadcastOpen] = useState(false);
+
+  /* Recipient counts per role for the broadcast modal. These are
+   * pragmatic numbers based on the current community/incoming mock
+   * data (the modal preview reads more honest this way). */
+  const audienceCounts = useMemo(
+    () => ({
+      student: 4,
+      family: 4,
+      buddy: 2,
+      school: 6,
+    }),
+    [],
+  );
 
   const filtered = inboxConversations.filter((c) => {
     if (filter !== "all" && c.withRole !== filter) return false;
@@ -86,13 +101,14 @@ export default function MessagesPage() {
         subtitle="Inbox, support tickets and emergency workflows."
         action={
           <div className="flex items-center gap-2">
-            <Link
-              href="/messages/tickets"
-              className="inline-flex items-center gap-2 rounded-full bg-surface px-3 py-2 text-sm font-bold text-fg ring-1 ring-divider hover:bg-chip"
+            <button
+              type="button"
+              onClick={() => setBroadcastOpen(true)}
+              className="inline-flex items-center gap-2 rounded-full bg-fg px-4 py-2 text-sm font-bold text-white hover:bg-fg/90"
             >
-              <LifeBuoy className="size-4" />
-              Tickets
-            </Link>
+              <Megaphone className="size-4" strokeWidth={2.2} />
+              Broadcast message
+            </button>
             <Link
               href="/messages/emergencies"
               className="inline-flex items-center gap-2 rounded-full bg-danger-bg/60 px-3 py-2 text-sm font-bold text-danger-fg hover:bg-danger-bg"
@@ -216,6 +232,12 @@ export default function MessagesPage() {
           )}
         </div>
       </div>
+
+      <BroadcastModal
+        open={broadcastOpen}
+        onOpenChange={setBroadcastOpen}
+        audienceCounts={audienceCounts}
+      />
     </>
   );
 }
