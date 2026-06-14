@@ -68,7 +68,7 @@ function fmtLongDate(d: Date) {
 }
 
 function defaultMessage(familyName: string, date: Date, time: string) {
-  return `Hi ${familyName} team,\n\nWe'd love to schedule the site visit for ${fmtLongDate(date)} at ${time}. Please let us know if this slot works for you, otherwise feel free to suggest an alternative time.\n\nLooking forward to meeting you!\n\nBest,\nHans Schmidt — Friedrich Schiller Gymnasium`;
+  return `Hi ${familyName} team,\n\nWe'd love to schedule the site visit for ${fmtLongDate(date)} at ${time}. Please let us know if this slot works, or feel free to suggest an alternative.\n\nBest,\nHans Schmidt`;
 }
 
 export function ScheduleVisitModal({
@@ -137,15 +137,15 @@ export function ScheduleVisitModal({
         <Dialog.Overlay className="fixed inset-0 z-50 bg-black/60 backdrop-blur-md data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0" />
         <Dialog.Content
           style={{ backgroundColor: "#ffffff", color: "#0a0a0a" }}
-          className="fixed left-1/2 top-1/2 z-50 flex h-[min(720px,90dvh)] w-[calc(100%-48px)] max-w-[860px] -translate-x-1/2 -translate-y-1/2 flex-col overflow-hidden rounded-[20px] shadow-2xl ring-1 ring-black/10 data-[state=open]:animate-in data-[state=closed]:animate-out"
+          className="fixed left-1/2 top-1/2 z-50 flex max-h-[92dvh] w-[calc(100%-48px)] max-w-[900px] -translate-x-1/2 -translate-y-1/2 flex-col overflow-hidden rounded-[20px] shadow-2xl ring-1 ring-black/10 data-[state=open]:animate-in data-[state=closed]:animate-out"
         >
           {/* Header */}
-          <div className="flex items-start justify-between gap-4 border-b border-black/10 px-7 py-5">
+          <div className="flex items-start justify-between gap-4 border-b border-black/10 px-7 py-4">
             <div>
-              <Dialog.Title className="text-xl font-bold text-black">
+              <Dialog.Title className="text-lg font-bold text-black">
                 Schedule site visit
               </Dialog.Title>
-              <Dialog.Description className="mt-1 text-sm text-neutral-600">
+              <Dialog.Description className="mt-0.5 text-sm text-neutral-600">
                 Propose a date and time for visiting{" "}
                 <span className="font-semibold text-black">{familyName}</span>.
               </Dialog.Description>
@@ -158,12 +158,12 @@ export function ScheduleVisitModal({
             </Dialog.Close>
           </div>
 
-          {/* Body */}
-          <div className="flex-1 overflow-y-auto px-7 py-6">
-            <div className="grid gap-6 md:grid-cols-[1fr_180px]">
+          {/* Body — no internal scroll, everything fits */}
+          <div className="flex-1 px-7 py-5">
+            <div className="grid gap-5 md:grid-cols-[1fr_220px]">
               {/* Calendar */}
               <section>
-                <div className="mb-3 flex items-center justify-between">
+                <div className="mb-2 flex items-center justify-between">
                   <div className="text-xs font-bold uppercase tracking-wider text-neutral-500">
                     Date
                   </div>
@@ -197,7 +197,7 @@ export function ScheduleVisitModal({
                     {WEEKDAYS.map((wd) => (
                       <div
                         key={wd}
-                        className="px-2 py-2 text-center text-[10px] font-bold uppercase tracking-wider text-neutral-500"
+                        className="px-2 py-1.5 text-center text-[10px] font-bold uppercase tracking-wider text-neutral-500"
                       >
                         {wd}
                       </div>
@@ -219,7 +219,7 @@ export function ScheduleVisitModal({
                           disabled={isPast}
                           onClick={() => setSelectedDate(new Date(d))}
                           className={cn(
-                            "relative grid h-12 place-items-center transition-colors",
+                            "relative grid h-9 place-items-center transition-colors",
                             rightBorder && "border-r border-black/5",
                             bottomBorder && "border-b border-black/5",
                             isPast
@@ -244,7 +244,7 @@ export function ScheduleVisitModal({
                             {d.getDate()}
                           </span>
                           {isToday && !isSelected ? (
-                            <span className="absolute bottom-1.5 size-1 rounded-full bg-student" />
+                            <span className="absolute bottom-1 size-1 rounded-full bg-student" />
                           ) : null}
                         </button>
                       );
@@ -253,20 +253,20 @@ export function ScheduleVisitModal({
                 </div>
               </section>
 
-              {/* Time slots */}
+              {/* Time slots — 2-col grid, every slot visible */}
               <section className="flex min-h-0 flex-col">
-                <div className="mb-3 text-xs font-bold uppercase tracking-wider text-neutral-500">
+                <div className="mb-2 text-xs font-bold uppercase tracking-wider text-neutral-500">
                   Time
                 </div>
-                <div className="max-h-[300px] overflow-y-auto rounded-[14px] bg-neutral-50 p-2 ring-1 ring-black/10">
-                  <ul className="flex flex-col gap-1">
+                <div className="rounded-[14px] bg-neutral-50 p-2 ring-1 ring-black/10">
+                  <ul className="grid grid-cols-2 gap-1">
                     {TIME_SLOTS.map((t) => (
                       <li key={t}>
                         <button
                           type="button"
                           onClick={() => setSelectedTime(t)}
                           className={cn(
-                            "w-full rounded-full px-3 py-2 text-sm font-semibold transition-colors",
+                            "w-full rounded-full px-2 py-1.5 text-xs font-semibold transition-colors",
                             selectedTime === t
                               ? "bg-student text-white"
                               : "bg-white text-black hover:bg-student/10",
@@ -282,7 +282,7 @@ export function ScheduleVisitModal({
             </div>
 
             {/* Message */}
-            <section className="mt-6">
+            <section className="mt-4">
               <div className="mb-2 flex items-center justify-between">
                 <div className="text-xs font-bold uppercase tracking-wider text-neutral-500">
                   Message
@@ -300,15 +300,15 @@ export function ScheduleVisitModal({
                   setMessage(e.target.value);
                   setMessageEdited(true);
                 }}
-                rows={7}
+                rows={5}
                 placeholder="Write your proposal message…"
-                className="w-full resize-none rounded-[14px] bg-neutral-50 p-4 text-sm text-black placeholder:text-neutral-400 outline-none ring-1 ring-black/10 focus:ring-2 focus:ring-student"
+                className="w-full resize-none rounded-[14px] bg-neutral-50 p-3 text-sm leading-relaxed text-black placeholder:text-neutral-400 outline-none ring-1 ring-black/10 focus:ring-2 focus:ring-student"
               />
             </section>
           </div>
 
           {/* Footer */}
-          <div className="flex items-center justify-end gap-3 border-t border-black/10 bg-neutral-50 px-7 py-4">
+          <div className="flex items-center justify-end gap-3 border-t border-black/10 bg-neutral-50 px-7 py-3">
             <button
               type="button"
               onClick={() => onOpenChange(false)}
