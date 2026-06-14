@@ -16,6 +16,13 @@ const ROLE_LABEL: Record<InboxConversation["withRole"], string> = {
   school: "Partner school",
 };
 
+const ROLE_TONE: Record<InboxConversation["withRole"], string> = {
+  student: "bg-student/15 text-student",
+  family: "bg-family/15 text-family",
+  buddy: "bg-fg/10 text-fg",
+  school: "bg-school/15 text-school",
+};
+
 type RoleFilter = "all" | InboxConversation["withRole"];
 
 const FILTER_LABEL: Record<RoleFilter, string> = {
@@ -24,6 +31,14 @@ const FILTER_LABEL: Record<RoleFilter, string> = {
   family: "Host families",
   buddy: "Buddies",
   school: "Partner schools",
+};
+
+const FILTER_ACTIVE: Record<RoleFilter, string> = {
+  all: "bg-fg text-white",
+  student: "bg-student text-white",
+  family: "bg-family text-white",
+  buddy: "bg-fg text-white",
+  school: "bg-school text-white",
 };
 
 const FILTERS: RoleFilter[] = [
@@ -99,7 +114,7 @@ export default function MessagesPage() {
             className={cn(
               "inline-flex items-center rounded-full px-4 py-1.5 text-xs font-bold transition-colors",
               filter === r
-                ? "bg-fg text-white shadow-sm"
+                ? cn(FILTER_ACTIVE[r], "shadow-sm")
                 : "bg-chip text-fg-muted hover:text-fg",
             )}
           >
@@ -149,7 +164,12 @@ export default function MessagesPage() {
                       </span>
                     </div>
                     <div className="mt-0.5 flex items-center gap-2">
-                      <span className="rounded-full bg-chip px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wider text-fg-muted">
+                      <span
+                        className={cn(
+                          "rounded-full px-2 py-0.5 text-[10px] font-bold",
+                          ROLE_TONE[c.withRole],
+                        )}
+                      >
                         {ROLE_LABEL[c.withRole]}
                       </span>
                     </div>
