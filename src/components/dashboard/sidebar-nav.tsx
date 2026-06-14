@@ -39,7 +39,7 @@ const NAV: NavItem[] = [
     href: "/outgoing",
     label: "Outgoing students",
     icon: <PlaneTakeoff className="size-5" strokeWidth={2} />,
-    accent: "text-student",
+    accent: "text-school",
   },
   {
     href: "/families",
