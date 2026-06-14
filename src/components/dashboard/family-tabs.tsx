@@ -38,10 +38,8 @@ export function FamilyPersonalInfoTab({ family }: { family: HostFamily }) {
             items={[
               { label: "Family name", value: family.familyName },
               { label: "City", value: `${family.city}, ${family.country}` },
-              { label: "Home type", value: family.homeType },
-              { label: "Spare rooms", value: `${family.spareRooms}` },
               { label: "Pets", value: family.hasPets ? "Yes" : "No" },
-              { label: "Members", value: `${family.members.length}` },
+              { label: "Family members", value: `${family.members.length}` },
             ]}
           />
         </InfoCard>
