@@ -11,7 +11,7 @@ const STUDENT_STATE: Record<
   new_application: { label: "New request", tone: "bg-student/15 text-student" },
   under_review: { label: "Under review", tone: "bg-chip text-fg" },
   accepted: {
-    label: "Waiting student confirmation",
+    label: "Waiting confirmation",
     tone: "bg-chip text-fg-muted",
   },
   confirmed: { label: "Confirmed", tone: "bg-success-bg/60 text-success-fg" },
