@@ -32,8 +32,7 @@ const payments: PayRow[] = [
     nationality: "fr",
     city: "Lyon",
     months: 3,
-    photoUrl:
-      "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=600&q=80",
+    photoUrl: "/students/confirmed/p8.png",
     status: "paid",
   },
   {
@@ -43,8 +42,7 @@ const payments: PayRow[] = [
     nationality: "es",
     city: "Madrid",
     months: 3,
-    photoUrl:
-      "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=600&q=80",
+    photoUrl: "/students/confirmed/p2.png",
     status: "pending",
   },
   {
@@ -54,8 +52,7 @@ const payments: PayRow[] = [
     nationality: "it",
     city: "Florence",
     months: 6,
-    photoUrl:
-      "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=600&q=80",
+    photoUrl: "/students/confirmed/p5.png",
     status: "pending",
   },
   {
@@ -65,41 +62,28 @@ const payments: PayRow[] = [
     nationality: "fr",
     city: "Lille",
     months: 3,
-    photoUrl:
-      "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=600&q=80",
+    photoUrl: "/students/confirmed/p10.png",
     status: "paid",
   },
   {
-    id: "pay_carlo",
-    firstName: "Carlo",
-    lastName: "Liberti",
+    id: "pay_giulia",
+    firstName: "Giulia",
+    lastName: "Bianchi",
     nationality: "it",
     city: "Milan",
-    months: 6,
-    photoUrl: "/carlo-liberti.png",
+    months: 3,
+    photoUrl: "/students/confirmed/p9.png",
     status: "paid",
   },
   {
-    id: "pay_alessandro",
-    firstName: "Alessandro",
-    lastName: "Greco",
-    nationality: "it",
-    city: "Naples",
-    months: 10,
-    photoUrl:
-      "https://images.unsplash.com/photo-1564564321837-a57b7070ac4f?auto=format&fit=crop&w=600&q=80",
-    status: "paid",
-  },
-  {
-    id: "pay_sophie",
-    firstName: "Sophie",
-    lastName: "Laurent",
+    id: "pay_lucas",
+    firstName: "Lucas",
+    lastName: "Martin",
     nationality: "fr",
-    city: "Nantes",
+    city: "Marseille",
     months: 6,
-    photoUrl:
-      "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&w=600&q=80",
-    status: "paid",
+    photoUrl: "/students/confirmed/p3.png",
+    status: "pending",
   },
 ];
 
