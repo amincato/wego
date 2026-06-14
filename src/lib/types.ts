@@ -105,6 +105,9 @@ export interface FamilyMemberProfile {
   photoUrl: string;
   /** Used only as the alt text and a11y label, not displayed in the UI. */
   role: "Mother" | "Father" | "Son" | "Daughter" | "Other";
+  /** Optional school class tag shown as a chip next to the name (e.g. for
+   * a parent who teaches at the partner school, or a school-age child). */
+  klasseLabel?: string;
 }
 
 /* ---- School ---- */

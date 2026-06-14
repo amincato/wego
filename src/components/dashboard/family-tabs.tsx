@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Home, UserRound } from "lucide-react";
+import { GraduationCap, Home, UserRound } from "lucide-react";
 import { InfoCard, InfoGrid, InfoRow } from "./info-card";
 import { ChatPanel } from "./chat-panel";
 import { FamilyStatusPill } from "./status-pill";
@@ -61,6 +61,12 @@ export function FamilyPersonalInfoTab({ family }: { family: HostFamily }) {
                   <span className="text-sm font-semibold text-fg">
                     {m.name}, {m.age}
                   </span>
+                  {m.klasseLabel ? (
+                    <span className="ml-auto inline-flex items-center gap-1 rounded-full bg-school/15 px-2.5 py-0.5 text-[11px] font-bold text-school">
+                      <GraduationCap className="size-3" strokeWidth={2.4} />
+                      {m.klasseLabel}
+                    </span>
+                  ) : null}
                 </li>
               ))}
             </ul>

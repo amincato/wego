@@ -85,6 +85,7 @@ export const dashboardHostFamilies: HostFamily[] = [
         age: 41,
         photoUrl: "/families/mueller/father.png",
         role: "Father",
+        klasseLabel: "11. Klasse",
       },
       {
         name: "Jonas",
