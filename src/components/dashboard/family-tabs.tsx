@@ -1,6 +1,13 @@
 import Link from "next/link";
 import Image from "next/image";
-import { GraduationCap, Home, UserRound } from "lucide-react";
+import {
+  Download,
+  GraduationCap,
+  Home,
+  IdCard,
+  UserRound,
+  type LucideIcon,
+} from "lucide-react";
 import { cn } from "@/lib/utils";
 import { InfoCard, InfoGrid, InfoRow } from "./info-card";
 import { ChatPanel } from "./chat-panel";
@@ -248,48 +255,86 @@ export function FamilyApplicationSummaryTab({
   application: FamilyApplication;
 }) {
   return (
-    <InfoCard title="Application summary">
-      <ul className="space-y-1">
-        <InfoRow
-          label="Submitted"
-          value={new Date(application.submittedAt).toLocaleDateString("en-US", {
-            month: "long",
-            day: "numeric",
-            year: "numeric",
-          })}
+    <div className="grid gap-6 lg:grid-cols-2 lg:items-stretch">
+      {/* Left column: summary */}
+      <InfoCard title="Application summary">
+        <InfoGrid
+          items={[
+            {
+              label: "Submitted",
+              value: new Date(application.submittedAt).toLocaleDateString(
+                "en-US",
+                { month: "long", day: "numeric", year: "numeric" },
+              ),
+            },
+            {
+              label: "Site visit",
+              value: application.siteVisitDate
+                ? new Date(application.siteVisitDate).toLocaleDateString(
+                    "en-US",
+                    { month: "long", day: "numeric", year: "numeric" },
+                  )
+                : "Not scheduled",
+            },
+          ]}
         />
-        <InfoRow
-          label="Site visit"
-          value={
-            application.siteVisitDate
-              ? new Date(application.siteVisitDate).toLocaleDateString("en-US", {
-                  month: "long",
-                  day: "numeric",
-                  year: "numeric",
-                })
-              : "Not scheduled"
-          }
-        />
-        <InfoRow
-          label="Current state"
-          value={<FamilyStatusPill state={application.state} />}
-        />
-        <InfoRow
-          label="Matched with"
-          value={
-            application.matchedStudentId
-              ? students.find((s) => s.id === application.matchedStudentId)
-                  ?.firstName ?? "—"
-              : "—"
-          }
-        />
-      </ul>
-      {application.notes ? (
-        <p className="mt-4 rounded-input bg-bg p-3 text-sm leading-relaxed text-fg-muted ring-1 ring-divider">
-          {application.notes}
-        </p>
-      ) : null}
-    </InfoCard>
+      </InfoCard>
+
+      {/* Right column: downloadable documents */}
+      <div className="flex flex-col gap-6">
+        <InfoCard title="Student's ID">
+          <DocumentDownloadRow
+            filename="matthis_student_id.pdf"
+            meta="PDF · uploaded by student"
+            icon={IdCard}
+          />
+        </InfoCard>
+
+        <InfoCard title="Parents' ID">
+          <div className="space-y-2">
+            <DocumentDownloadRow
+              filename="philippe_bernard_id.pdf"
+              meta="Father · PDF"
+              icon={IdCard}
+            />
+            <DocumentDownloadRow
+              filename="camille_dubois_id.pdf"
+              meta="Mother · PDF"
+              icon={IdCard}
+            />
+          </div>
+        </InfoCard>
+      </div>
+    </div>
+  );
+}
+
+function DocumentDownloadRow({
+  filename,
+  meta,
+  icon: Icon,
+}: {
+  filename: string;
+  meta: string;
+  icon: LucideIcon;
+}) {
+  return (
+    <div className="flex items-center gap-3 rounded-input bg-bg px-3 py-3 ring-1 ring-divider">
+      <span className="grid size-10 place-items-center rounded-lg bg-student/15 text-student">
+        <Icon className="size-5" />
+      </span>
+      <div className="min-w-0 flex-1">
+        <div className="truncate text-sm font-bold text-fg">{filename}</div>
+        <div className="text-xs text-fg-muted">{meta}</div>
+      </div>
+      <button
+        type="button"
+        aria-label={`Download ${filename}`}
+        className="grid size-9 shrink-0 place-items-center rounded-full bg-fg text-white hover:bg-fg/90"
+      >
+        <Download className="size-4" strokeWidth={2.4} />
+      </button>
+    </div>
   );
 }
 
