@@ -1,8 +1,21 @@
 "use client";
 
-import { useMemo, useState } from "react";
-import { ChevronLeft, ChevronRight, Plus } from "lucide-react";
+import { Suspense, useEffect, useMemo, useState } from "react";
+import Link from "next/link";
+import { useRouter, useSearchParams } from "next/navigation";
+import {
+  CalendarDays,
+  ChevronLeft,
+  ChevronRight,
+  Plus,
+  X,
+} from "lucide-react";
 import { cn } from "@/lib/utils";
+import {
+  dashboardHostFamilies,
+  familyApplications,
+} from "@/lib/mock/dashboard-families";
+import { ScheduleVisitModal } from "@/components/dashboard/schedule-visit-modal";
 
 type View = "day" | "week" | "month" | "year";
 
@@ -110,9 +123,45 @@ function fmtTime(d: Date) {
 }
 
 export default function CalendarPage() {
+  return (
+    <Suspense fallback={null}>
+      <CalendarPageInner />
+    </Suspense>
+  );
+}
+
+function CalendarPageInner() {
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const scheduleAppId = searchParams.get("schedule");
+
+  const application = useMemo(
+    () =>
+      scheduleAppId
+        ? familyApplications.find((a) => a.id === scheduleAppId) ?? null
+        : null,
+    [scheduleAppId],
+  );
+  const family = useMemo(
+    () =>
+      application
+        ? dashboardHostFamilies.find((f) => f.id === application.familyId) ??
+          null
+        : null,
+    [application],
+  );
+  const isSchedulingMode = !!(application && family);
+
   const [view, setView] = useState<View>("month");
   const today = useMemo(() => new Date(), []);
   const [cursor, setCursor] = useState<Date>(today);
+
+  const [proposedDate, setProposedDate] = useState<Date | null>(null);
+  const [openTimeModal, setOpenTimeModal] = useState(false);
+
+  useEffect(() => {
+    if (isSchedulingMode && view !== "month") setView("month");
+  }, [isSchedulingMode, view]);
 
   const events = useMemo(buildEvents, []);
   const eventsByDay = useMemo(() => {
@@ -125,6 +174,26 @@ export default function CalendarPage() {
     }
     return map;
   }, [events]);
+
+  const todayMidnight = useMemo(() => {
+    const d = new Date(today);
+    d.setHours(0, 0, 0, 0);
+    return d;
+  }, [today]);
+
+  const onDayPick = (d: Date) => {
+    if (!isSchedulingMode) return;
+    if (d < todayMidnight) return;
+    setProposedDate(d);
+    setOpenTimeModal(true);
+  };
+
+  const handleSendProposal = () => {
+    setOpenTimeModal(false);
+    if (scheduleAppId) {
+      router.push(`/families/applications/${scheduleAppId}`);
+    }
+  };
 
   const headerLabel = useMemo(() => {
     if (view === "year") return `${cursor.getFullYear()}`;
@@ -169,27 +238,57 @@ export default function CalendarPage() {
 
   return (
     <div className="flex h-[calc(100dvh-7rem)] flex-col">
+      {isSchedulingMode && family ? (
+        <div className="mb-4 flex flex-wrap items-center justify-between gap-3 rounded-card-lg bg-fg p-4 text-white">
+          <div className="flex items-center gap-3">
+            <div className="grid size-10 place-items-center rounded-full bg-white/15">
+              <CalendarDays className="size-5" />
+            </div>
+            <div>
+              <div className="text-sm font-bold">
+                Schedule site visit for {family.familyName}
+              </div>
+              <div className="text-xs opacity-75">
+                Pick a day to propose a slot — your existing events are still
+                visible below.
+              </div>
+            </div>
+          </div>
+          <Link
+            href={`/families/applications/${scheduleAppId}`}
+            className="inline-flex items-center gap-1.5 rounded-full bg-white/15 px-4 py-2 text-xs font-bold text-white hover:bg-white/25"
+          >
+            <X className="size-3.5" strokeWidth={2.6} />
+            Cancel
+          </Link>
+        </div>
+      ) : null}
+
       <div className="mb-4 flex flex-wrap items-center gap-4">
         <h1 className="h-display text-fg">
           {headerLabel} {subLabel}
         </h1>
 
-        <div className="mx-auto inline-flex items-center rounded-full bg-chip p-1">
-          {VIEWS.map((v) => (
-            <button
-              key={v.id}
-              onClick={() => setView(v.id)}
-              className={cn(
-                "rounded-full px-4 py-1.5 text-sm font-semibold transition-colors",
-                view === v.id
-                  ? "bg-surface text-fg shadow-sm"
-                  : "text-fg-muted hover:text-fg",
-              )}
-            >
-              {v.label}
-            </button>
-          ))}
-        </div>
+        {!isSchedulingMode ? (
+          <div className="mx-auto inline-flex items-center rounded-full bg-chip p-1">
+            {VIEWS.map((v) => (
+              <button
+                key={v.id}
+                onClick={() => setView(v.id)}
+                className={cn(
+                  "rounded-full px-4 py-1.5 text-sm font-semibold transition-colors",
+                  view === v.id
+                    ? "bg-surface text-fg shadow-sm"
+                    : "text-fg-muted hover:text-fg",
+                )}
+              >
+                {v.label}
+              </button>
+            ))}
+          </div>
+        ) : (
+          <div className="mx-auto" />
+        )}
 
         <div className="flex items-center gap-2">
           <div className="inline-flex items-center rounded-full bg-surface ring-1 ring-divider">
@@ -218,13 +317,15 @@ export default function CalendarPage() {
             </button>
           </div>
 
-          <button
-            type="button"
-            className="inline-flex items-center gap-2 rounded-full bg-fg px-4 py-2 text-sm font-bold text-white hover:bg-fg/90"
-          >
-            <Plus className="size-4" strokeWidth={2.4} />
-            Add event
-          </button>
+          {!isSchedulingMode ? (
+            <button
+              type="button"
+              className="inline-flex items-center gap-2 rounded-full bg-fg px-4 py-2 text-sm font-bold text-white hover:bg-fg/90"
+            >
+              <Plus className="size-4" strokeWidth={2.4} />
+              Add event
+            </button>
+          ) : null}
         </div>
       </div>
 
@@ -234,6 +335,9 @@ export default function CalendarPage() {
             cursor={cursor}
             today={today}
             eventsByDay={eventsByDay}
+            selectable={isSchedulingMode}
+            selectedDate={proposedDate}
+            onPickDay={onDayPick}
           />
         ) : view === "week" ? (
           <WeekView
@@ -255,6 +359,16 @@ export default function CalendarPage() {
           />
         )}
       </div>
+
+      {family ? (
+        <ScheduleVisitModal
+          open={openTimeModal}
+          onOpenChange={setOpenTimeModal}
+          familyName={family.familyName}
+          date={proposedDate}
+          onSend={handleSendProposal}
+        />
+      ) : null}
     </div>
   );
 }
@@ -265,13 +379,24 @@ function MonthGrid({
   cursor,
   today,
   eventsByDay,
+  selectable,
+  selectedDate,
+  onPickDay,
 }: {
   cursor: Date;
   today: Date;
   eventsByDay: Map<string, CalEvent[]>;
+  selectable?: boolean;
+  selectedDate?: Date | null;
+  onPickDay?: (d: Date) => void;
 }) {
   const cells = useMemo(() => buildMonthGrid(cursor), [cursor]);
   const cursorMonth = cursor.getMonth();
+  const todayMidnight = useMemo(() => {
+    const d = new Date(today);
+    d.setHours(0, 0, 0, 0);
+    return d;
+  }, [today]);
 
   return (
     <div className="flex h-full flex-col overflow-hidden rounded-card-lg bg-surface ring-1 ring-divider">
@@ -293,16 +418,11 @@ function MonthGrid({
           const evts = eventsByDay.get(d.toDateString()) ?? [];
           const rightBorder = (i + 1) % 7 !== 0;
           const bottomBorder = i < 35;
-          return (
-            <div
-              key={i}
-              className={cn(
-                "min-h-0 overflow-hidden p-2 transition-colors",
-                rightBorder ? "border-r border-divider" : "",
-                bottomBorder ? "border-b border-divider" : "",
-                !isCurMonth ? "bg-bg/40" : "",
-              )}
-            >
+          const isSelected = !!selectedDate && sameDay(d, selectedDate);
+          const isPast = d < todayMidnight;
+
+          const cellInner = (
+            <>
               <div className="mb-1 flex justify-end">
                 {isToday ? (
                   <span className="grid size-8 place-items-center rounded-full bg-fg text-sm font-bold text-white">
@@ -338,6 +458,40 @@ function MonthGrid({
                   </span>
                 ) : null}
               </div>
+            </>
+          );
+
+          const baseCls = cn(
+            "min-h-0 overflow-hidden p-2 text-left transition-colors",
+            rightBorder ? "border-r border-divider" : "",
+            bottomBorder ? "border-b border-divider" : "",
+            !isCurMonth ? "bg-bg/40" : "",
+          );
+
+          if (selectable) {
+            return (
+              <button
+                key={i}
+                type="button"
+                disabled={isPast}
+                onClick={() => onPickDay?.(d)}
+                className={cn(
+                  baseCls,
+                  isPast
+                    ? "cursor-not-allowed opacity-40"
+                    : isSelected
+                      ? "bg-family/15 ring-2 ring-family ring-inset"
+                      : "hover:bg-family/5",
+                )}
+              >
+                {cellInner}
+              </button>
+            );
+          }
+
+          return (
+            <div key={i} className={baseCls}>
+              {cellInner}
             </div>
           );
         })}

@@ -31,7 +31,7 @@ export default async function FamilyApplicationPage({
       <FamilyHeader
         family={family}
         backHref="/families"
-        actions={<FamilyApplicationActions familyName={family.familyName} />}
+        actions={<FamilyApplicationActions applicationId={application.id} />}
       />
 
       <ProfileTabs
