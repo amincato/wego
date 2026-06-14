@@ -255,8 +255,8 @@ export function FamilyApplicationSummaryTab({
   application: FamilyApplication;
 }) {
   return (
-    <div className="grid gap-6 lg:grid-cols-2 lg:items-start">
-      {/* Left column: summary */}
+    <div className="grid gap-6 lg:grid-cols-2">
+      {/* Row 1, left: summary — stretches to match Student's ID on its right */}
       <InfoCard title="Application summary">
         <InfoGrid
           items={[
@@ -280,31 +280,30 @@ export function FamilyApplicationSummaryTab({
         />
       </InfoCard>
 
-      {/* Right column: downloadable documents */}
-      <div className="flex flex-col gap-6">
-        <InfoCard title="Student's ID">
+      {/* Row 1, right */}
+      <InfoCard title="Student's ID">
+        <DocumentDownloadRow
+          filename="matthis_student_id.pdf"
+          meta="PDF · uploaded by student"
+          icon={IdCard}
+        />
+      </InfoCard>
+
+      {/* Row 2, right (left cell intentionally empty) */}
+      <InfoCard title="Parents' ID" className="lg:col-start-2">
+        <div className="space-y-2">
           <DocumentDownloadRow
-            filename="matthis_student_id.pdf"
-            meta="PDF · uploaded by student"
+            filename="philippe_bernard_id.pdf"
+            meta="Father · PDF"
             icon={IdCard}
           />
-        </InfoCard>
-
-        <InfoCard title="Parents' ID">
-          <div className="space-y-2">
-            <DocumentDownloadRow
-              filename="philippe_bernard_id.pdf"
-              meta="Father · PDF"
-              icon={IdCard}
-            />
-            <DocumentDownloadRow
-              filename="camille_dubois_id.pdf"
-              meta="Mother · PDF"
-              icon={IdCard}
-            />
-          </div>
-        </InfoCard>
-      </div>
+          <DocumentDownloadRow
+            filename="camille_dubois_id.pdf"
+            meta="Mother · PDF"
+            icon={IdCard}
+          />
+        </div>
+      </InfoCard>
     </div>
   );
 }
