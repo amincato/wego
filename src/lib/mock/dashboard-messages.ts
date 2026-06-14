@@ -15,7 +15,14 @@ export interface InboxConversation {
   id: string;
   withName: string;
   withAvatarUrl: string;
-  withRole: "student" | "family" | "buddy" | "school";
+  withRole:
+    | "hosted_student"
+    | "incoming_student"
+    | "outgoing_student"
+    | "abroad_student"
+    | "hosting_family"
+    | "future_family"
+    | "partner_school";
   lastMessage: string;
   lastAt: string;
   unread: number;
@@ -23,12 +30,12 @@ export interface InboxConversation {
 }
 
 export const inboxConversations: InboxConversation[] = [
-  /* ---- Students ---- */
+  /* ---- Hosted students ---- */
   {
     id: "conv_carlo",
     withName: "Carlo Liberti",
     withAvatarUrl: "/carlo-liberti.png",
-    withRole: "student",
+    withRole: "hosted_student",
     lastMessage: "Just submitted my mid-term report card — let me know!",
     lastAt: minsAgo(12),
     unread: 2,
@@ -39,7 +46,7 @@ export const inboxConversations: InboxConversation[] = [
     withName: "Alessandro Greco",
     withAvatarUrl:
       "https://images.unsplash.com/photo-1564564321837-a57b7070ac4f?auto=format&fit=crop&w=200&q=80",
-    withRole: "student",
+    withRole: "hosted_student",
     lastMessage: "Could I get the schedule for next week's orientation?",
     lastAt: hoursAgo(2),
     unread: 1,
@@ -48,7 +55,7 @@ export const inboxConversations: InboxConversation[] = [
     id: "conv_sophie",
     withName: "Sophie Laurent",
     withAvatarUrl: "/students/confirmed/p6.png",
-    withRole: "student",
+    withRole: "hosted_student",
     lastMessage: "Thanks for the welcome packet, see you Monday!",
     lastAt: hoursAgo(6),
     unread: 0,
@@ -57,17 +64,47 @@ export const inboxConversations: InboxConversation[] = [
     id: "conv_carmen",
     withName: "Carmen Ruiz",
     withAvatarUrl: "/students/confirmed/p7.png",
-    withRole: "student",
+    withRole: "hosted_student",
     lastMessage: "Quick question about the bus pass paperwork.",
     lastAt: daysAgo(1),
     unread: 0,
   },
-  /* ---- Host families ---- */
+  /* ---- Incoming students ---- */
+  {
+    id: "conv_lily",
+    withName: "Lily Louise Jacob",
+    withAvatarUrl: "/students/confirmed/p8.png",
+    withRole: "incoming_student",
+    lastMessage: "What's the deadline for the housing preferences form?",
+    lastAt: hoursAgo(5),
+    unread: 1,
+  },
+  /* ---- Outgoing students ---- */
+  {
+    id: "conv_jonas",
+    withName: "Jonas Weber",
+    withAvatarUrl: "/lukas-weber.png",
+    withRole: "outgoing_student",
+    lastMessage: "My visa appointment is confirmed for next Tuesday.",
+    lastAt: hoursAgo(8),
+    unread: 0,
+  },
+  /* ---- Students currently abroad ---- */
+  {
+    id: "conv_giorgia",
+    withName: "Giorgia Bernardi",
+    withAvatarUrl: "/matthis-bernard.jpg",
+    withRole: "abroad_student",
+    lastMessage: "Settled in nicely at Lycée Thiers — sending photos soon!",
+    lastAt: daysAgo(2),
+    unread: 0,
+  },
+  /* ---- Hosting families ---- */
   {
     id: "conv_family_rath",
     withName: "Family Rath",
     withAvatarUrl: "/families/rath/avatar.png",
-    withRole: "family",
+    withRole: "hosting_family",
     lastMessage: "Carlo settled in nicely — we'll send photos tonight!",
     lastAt: minsAgo(45),
     unread: 1,
@@ -77,7 +114,7 @@ export const inboxConversations: InboxConversation[] = [
     withName: "Family Taununsanlage",
     withAvatarUrl:
       "https://images.unsplash.com/photo-1609220136736-443140cffec6?auto=format&fit=crop&w=200&q=80",
-    withRole: "family",
+    withRole: "hosting_family",
     lastMessage: "Could we reschedule the site visit to next Wednesday?",
     lastAt: hoursAgo(4),
     unread: 0,
@@ -86,7 +123,7 @@ export const inboxConversations: InboxConversation[] = [
     id: "conv_family_lenz",
     withName: "Family Lenz",
     withAvatarUrl: "/families/lenz.jpg",
-    withRole: "family",
+    withRole: "hosting_family",
     lastMessage: "Alessandro's room is ready, looking forward to it!",
     lastAt: hoursAgo(9),
     unread: 0,
@@ -95,28 +132,20 @@ export const inboxConversations: InboxConversation[] = [
     id: "conv_family_stiefel",
     withName: "Family Stiefel",
     withAvatarUrl: "/families/stiefel.jpg",
-    withRole: "family",
+    withRole: "hosting_family",
     lastMessage: "We have a couple of house rules we'd like to share.",
     lastAt: daysAgo(2),
     unread: 0,
   },
-  /* ---- Buddies ---- */
+  /* ---- Future host families ---- */
   {
-    id: "conv_alex_willheim",
-    withName: "Alex Willheim",
-    withAvatarUrl: "/community/buddy-alex-willheim.png",
-    withRole: "buddy",
-    lastMessage: "I can take Carlo around the city centre this weekend.",
-    lastAt: hoursAgo(1),
-    unread: 1,
-  },
-  {
-    id: "conv_amelie_rotwurf",
-    withName: "Amélie Rotwürf",
-    withAvatarUrl: "/community/buddy-amelie-rotwurf.png",
-    withRole: "buddy",
-    lastMessage: "Sent Sophie the school WhatsApp group invite, thanks!",
-    lastAt: daysAgo(1),
+    id: "conv_family_schmidt",
+    withName: "Family Schmidt",
+    withAvatarUrl:
+      "https://images.unsplash.com/photo-1581952976147-5a2d15560349?auto=format&fit=crop&w=200&q=80",
+    withRole: "future_family",
+    lastMessage: "We finished the paperwork — ready to be matched.",
+    lastAt: daysAgo(3),
     unread: 0,
   },
   /* ---- Partner schools ---- */
@@ -124,7 +153,7 @@ export const inboxConversations: InboxConversation[] = [
     id: "conv_thiers",
     withName: "Lycée Thiers",
     withAvatarUrl: "/schools/lycee-thiers.png",
-    withRole: "school",
+    withRole: "partner_school",
     lastMessage: "Carlo's mid-term grades have just been uploaded.",
     lastAt: hoursAgo(3),
     unread: 0,
@@ -133,7 +162,7 @@ export const inboxConversations: InboxConversation[] = [
     id: "conv_goethe",
     withName: "Goethe Gymnasium",
     withAvatarUrl: "/schools/goethe-gymnasium.png",
-    withRole: "school",
+    withRole: "partner_school",
     lastMessage: "Welcome to our partner network — looking forward!",
     lastAt: daysAgo(3),
     unread: 0,

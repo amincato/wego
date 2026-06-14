@@ -14,43 +14,58 @@ import { cn } from "@/lib/utils";
 import type { InboxConversation } from "@/lib/mock/dashboard-messages";
 
 const ROLE_LABEL: Record<InboxConversation["withRole"], string> = {
-  student: "Student",
-  family: "Host family",
-  buddy: "Buddy",
-  school: "Partner school",
+  hosted_student: "Hosted student",
+  incoming_student: "Incoming student",
+  outgoing_student: "Outgoing student",
+  abroad_student: "Student abroad",
+  hosting_family: "Hosting family",
+  future_family: "Future host family",
+  partner_school: "Partner school",
 };
 
 const ROLE_TONE: Record<InboxConversation["withRole"], string> = {
-  student: "bg-student/15 text-student",
-  family: "bg-family/15 text-family",
-  buddy: "bg-fg/10 text-fg",
-  school: "bg-school/15 text-school",
+  hosted_student: "bg-student/15 text-student",
+  incoming_student: "bg-student/15 text-student",
+  outgoing_student: "bg-student/15 text-student",
+  abroad_student: "bg-student/15 text-student",
+  hosting_family: "bg-family/15 text-family",
+  future_family: "bg-family/15 text-family",
+  partner_school: "bg-school/15 text-school",
 };
 
 type RoleFilter = "all" | InboxConversation["withRole"];
 
 const FILTER_LABEL: Record<RoleFilter, string> = {
   all: "All",
-  student: "Students",
-  family: "Host families",
-  buddy: "Buddies",
-  school: "Partner schools",
+  hosted_student: "Hosted students",
+  incoming_student: "Incoming students",
+  outgoing_student: "Outgoing students",
+  abroad_student: "Students abroad",
+  hosting_family: "Hosting families",
+  future_family: "Future host families",
+  partner_school: "Partner schools",
 };
 
 const FILTER_ACTIVE: Record<RoleFilter, string> = {
   all: "bg-fg text-white",
-  student: "bg-student text-white",
-  family: "bg-family text-white",
-  buddy: "bg-fg text-white",
-  school: "bg-school text-white",
+  hosted_student: "bg-student text-white",
+  incoming_student: "bg-student text-white",
+  outgoing_student: "bg-student text-white",
+  abroad_student: "bg-student text-white",
+  hosting_family: "bg-family text-white",
+  future_family: "bg-family text-white",
+  partner_school: "bg-school text-white",
 };
 
 const FILTERS: RoleFilter[] = [
   "all",
-  "student",
-  "family",
-  "buddy",
-  "school",
+  "hosted_student",
+  "incoming_student",
+  "outgoing_student",
+  "abroad_student",
+  "hosting_family",
+  "future_family",
+  "partner_school",
 ];
 
 function fmt(iso: string) {
