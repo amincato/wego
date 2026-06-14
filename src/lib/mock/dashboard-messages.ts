@@ -47,8 +47,7 @@ export const inboxConversations: InboxConversation[] = [
   {
     id: "conv_sophie",
     withName: "Sophie Laurent",
-    withAvatarUrl:
-      "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&w=200&q=80",
+    withAvatarUrl: "/students/confirmed/p6.png",
     withRole: "student",
     lastMessage: "Thanks for the welcome packet, see you Monday!",
     lastAt: hoursAgo(6),
@@ -57,8 +56,7 @@ export const inboxConversations: InboxConversation[] = [
   {
     id: "conv_carmen",
     withName: "Carmen Ruiz",
-    withAvatarUrl:
-      "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=200&q=80",
+    withAvatarUrl: "/students/confirmed/p7.png",
     withRole: "student",
     lastMessage: "Quick question about the bus pass paperwork.",
     lastAt: daysAgo(1),
@@ -87,8 +85,7 @@ export const inboxConversations: InboxConversation[] = [
   {
     id: "conv_family_lenz",
     withName: "Family Lenz",
-    withAvatarUrl:
-      "https://images.unsplash.com/photo-1581952976147-5a2d15560349?auto=format&fit=crop&w=200&q=80",
+    withAvatarUrl: "/families/lenz.jpg",
     withRole: "family",
     lastMessage: "Alessandro's room is ready, looking forward to it!",
     lastAt: hoursAgo(9),
@@ -97,8 +94,7 @@ export const inboxConversations: InboxConversation[] = [
   {
     id: "conv_family_stiefel",
     withName: "Family Stiefel",
-    withAvatarUrl:
-      "https://images.unsplash.com/photo-1602407294553-6ac9170de9eb?auto=format&fit=crop&w=200&q=80",
+    withAvatarUrl: "/families/stiefel.jpg",
     withRole: "family",
     lastMessage: "We have a couple of house rules we'd like to share.",
     lastAt: daysAgo(2),
