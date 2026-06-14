@@ -91,9 +91,20 @@ export interface HostFamily {
   photoUrl: string;
   bio: string;
   members: string[]; // e.g. ["Mother Anna, 45", "Father Klaus, 47", ...]
+  /** Optional richer profile for each family member — when present, takes
+   * precedence over the string-based `members` field for rendering. */
+  memberProfiles?: FamilyMemberProfile[];
   homeType: "apartment" | "house";
   hasPets: boolean;
   spareRooms: number;
+}
+
+export interface FamilyMemberProfile {
+  name: string;
+  age: number;
+  photoUrl: string;
+  /** Used only as the alt text and a11y label, not displayed in the UI. */
+  role: "Mother" | "Father" | "Son" | "Daughter" | "Other";
 }
 
 /* ---- School ---- */

@@ -73,6 +73,32 @@ export const dashboardHostFamilies: HostFamily[] = [
       "Son Jonas, 14",
       "Daughter Mia, 11",
     ],
+    memberProfiles: [
+      {
+        name: "Anna",
+        age: 39,
+        photoUrl: "/families/mueller/mother.png",
+        role: "Mother",
+      },
+      {
+        name: "Lukas",
+        age: 41,
+        photoUrl: "/families/mueller/father.png",
+        role: "Father",
+      },
+      {
+        name: "Jonas",
+        age: 14,
+        photoUrl: "/families/mueller/son.png",
+        role: "Son",
+      },
+      {
+        name: "Mia",
+        age: 11,
+        photoUrl: "/families/mueller/daughter.png",
+        role: "Daughter",
+      },
+    ],
     homeType: "apartment",
     hasPets: true,
     spareRooms: 1,

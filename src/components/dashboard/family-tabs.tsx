@@ -32,7 +32,7 @@ export function FamilyPersonalInfoTab({ family }: { family: HostFamily }) {
       </section>
 
       {/* Personal info + Members */}
-      <div className="grid gap-6 lg:grid-cols-2">
+      <div className="grid gap-6 lg:grid-cols-2 lg:items-start">
         <InfoCard title="Personal info">
           <InfoGrid
             items={[
@@ -45,19 +45,40 @@ export function FamilyPersonalInfoTab({ family }: { family: HostFamily }) {
         </InfoCard>
 
         <InfoCard title="Members">
-          <ul className="flex flex-col gap-2">
-            {family.members.map((m) => (
-              <li
-                key={m}
-                className="flex items-center gap-3 rounded-input bg-bg px-3 py-2 ring-1 ring-divider"
-              >
-                <span className="grid size-8 place-items-center rounded-full bg-family/15 text-family">
-                  <UserRound className="size-4" />
-                </span>
-                <span className="text-sm font-semibold text-fg">{m}</span>
-              </li>
-            ))}
-          </ul>
+          {family.memberProfiles ? (
+            <ul className="flex flex-col gap-2">
+              {family.memberProfiles.map((m) => (
+                <li
+                  key={`${m.name}-${m.age}`}
+                  className="flex items-center gap-3 rounded-input bg-bg px-3 py-2 ring-1 ring-divider"
+                >
+                  <span
+                    role="img"
+                    aria-label={`${m.role} ${m.name}`}
+                    className="size-9 shrink-0 rounded-full bg-chip bg-cover bg-center"
+                    style={{ backgroundImage: `url(${m.photoUrl})` }}
+                  />
+                  <span className="text-sm font-semibold text-fg">
+                    {m.name}, {m.age}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <ul className="flex flex-col gap-2">
+              {family.members.map((m) => (
+                <li
+                  key={m}
+                  className="flex items-center gap-3 rounded-input bg-bg px-3 py-2 ring-1 ring-divider"
+                >
+                  <span className="grid size-8 place-items-center rounded-full bg-family/15 text-family">
+                    <UserRound className="size-4" />
+                  </span>
+                  <span className="text-sm font-semibold text-fg">{m}</span>
+                </li>
+              ))}
+            </ul>
+          )}
         </InfoCard>
       </div>
     </div>
