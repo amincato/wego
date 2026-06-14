@@ -114,6 +114,11 @@ export const dashboardHostFamilies: HostFamily[] = [
       dailyHabits: "Flexible routine",
       foodDiet: "No diet",
     },
+    galleryUrls: [
+      "/families/mueller/gallery-1.png",
+      "/families/mueller/gallery-2.png",
+      "/families/mueller/gallery-3.png",
+    ],
     homeType: "apartment",
     hasPets: true,
     spareRooms: 1,

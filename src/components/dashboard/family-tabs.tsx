@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { GraduationCap, Home, UserRound } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { InfoCard, InfoGrid, InfoRow } from "./info-card";
@@ -193,6 +194,28 @@ export function FamilyPersonalInfoTab({ family }: { family: HostFamily }) {
           ) : null}
         </div>
       </div>
+
+      {/* Photos — full width, only when the family has a gallery */}
+      {family.galleryUrls && family.galleryUrls.length > 0 ? (
+        <InfoCard title="Photos">
+          <div className="grid gap-3 md:grid-cols-3">
+            {family.galleryUrls.map((src, i) => (
+              <div
+                key={i}
+                className="relative aspect-square w-full overflow-hidden rounded-input bg-chip"
+              >
+                <Image
+                  src={src}
+                  alt={`${family.familyName} – photo ${i + 1}`}
+                  fill
+                  sizes="(max-width: 768px) 100vw, 33vw"
+                  className="object-cover"
+                />
+              </div>
+            ))}
+          </div>
+        </InfoCard>
+      ) : null}
     </div>
   );
 }

@@ -100,6 +100,8 @@ export interface HostFamily {
   hobbies?: string[];
   /** Optional free-text lifestyle summary, rendered as a label/value list. */
   lifestyle?: FamilyLifestyle;
+  /** Optional photo gallery shown in the Profile tab (square thumbnails). */
+  galleryUrls?: string[];
   homeType: "apartment" | "house";
   hasPets: boolean;
   spareRooms: number;
