@@ -300,12 +300,12 @@ export function ApplicationSummaryTab({
             <DocumentDownloadRow
               filename="philippe_bernard_id.pdf"
               meta="Father · PDF"
-              icon={UserRound}
+              icon={IdCard}
             />
             <DocumentDownloadRow
               filename="camille_dubois_id.pdf"
               meta="Mother · PDF"
-              icon={UserRound}
+              icon={IdCard}
             />
           </div>
         </InfoCard>
