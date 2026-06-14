@@ -50,7 +50,7 @@ export default async function FamilyHostingPage({
           },
           {
             id: "summary",
-            label: "Application summary",
+            label: "Application details",
             content: application ? (
               <FamilyApplicationSummaryTab application={application} />
             ) : (

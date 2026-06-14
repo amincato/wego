@@ -44,7 +44,7 @@ export default async function FamilyApplicationPage({
           },
           {
             id: "summary",
-            label: "Application summary",
+            label: "Application details",
             content: <FamilyApplicationSummaryTab application={application} />,
           },
           {
