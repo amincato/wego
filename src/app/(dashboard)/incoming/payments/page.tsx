@@ -1,4 +1,7 @@
+"use client";
+
 import Link from "next/link";
+import { useState } from "react";
 import {
   CheckCircle2,
   ChevronLeft,
@@ -108,7 +111,26 @@ const STATUS_PILL: Record<
   },
 };
 
+type Filter = "all" | PayStatus;
+
+const FILTERS: { id: Filter; label: string }[] = [
+  { id: "all", label: "All" },
+  { id: "paid", label: "Paid" },
+  { id: "pending", label: "Pending payment" },
+];
+
+const FILTER_ACTIVE: Record<Filter, string> = {
+  all: "bg-fg text-white",
+  paid: "bg-success-bg/50 text-success-fg",
+  pending: "bg-family/15 text-family",
+};
+
 export default function FeePaymentsPage() {
+  const [filter, setFilter] = useState<Filter>("all");
+  const visible = payments.filter(
+    (p) => filter === "all" || p.status === filter,
+  );
+
   return (
     <>
       <Link
@@ -124,8 +146,26 @@ export default function FeePaymentsPage() {
         subtitle="Track which matched students have settled the school fee."
       />
 
-      <ul className="mt-6 flex flex-col gap-2">
-        {payments.map((p) => (
+      <div className="mb-4 flex flex-wrap gap-2">
+        {FILTERS.map((f) => (
+          <button
+            key={f.id}
+            type="button"
+            onClick={() => setFilter(f.id)}
+            className={cn(
+              "inline-flex items-center rounded-full px-4 py-2 text-xs font-bold transition-colors",
+              filter === f.id
+                ? cn(FILTER_ACTIVE[f.id], "shadow-sm")
+                : "bg-chip text-fg-muted hover:text-fg",
+            )}
+          >
+            {f.label}
+          </button>
+        ))}
+      </div>
+
+      <ul className="flex flex-col gap-2">
+        {visible.map((p) => (
           <li key={p.id}>
             <Link
               href={`/incoming/applicants/${p.id}`}
