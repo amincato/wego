@@ -56,7 +56,7 @@ export function ChatPanel({
   };
 
   return (
-    <div className="flex h-[calc(100dvh-28rem)] min-h-[420px] flex-col overflow-hidden rounded-card-lg ring-1 ring-divider">
+    <div className="flex h-full min-h-[420px] flex-col overflow-hidden rounded-card-lg ring-1 ring-divider">
       <header className="flex items-center gap-3 border-b border-divider bg-surface px-4 py-3">
         <span
           className="size-9 rounded-full bg-chip bg-cover bg-center"

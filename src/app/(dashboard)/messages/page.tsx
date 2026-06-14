@@ -169,7 +169,7 @@ export default function MessagesPage() {
         </aside>
 
         {/* Active conversation */}
-        <div className="min-h-0">
+        <div className="h-full min-h-0">
           {active ? (
             <ChatPanel
               withName={active.withName}

@@ -296,10 +296,12 @@ export function ApplicationSummaryTab({
 
 export function ContactTab({ student }: { student: StudentProfile }) {
   return (
-    <ChatPanel
-      withName={`${student.firstName} ${student.lastName}`}
-      withAvatar={student.photoUrl}
-    />
+    <div className="h-[calc(100dvh-28rem)]">
+      <ChatPanel
+        withName={`${student.firstName} ${student.lastName}`}
+        withAvatar={student.photoUrl}
+      />
+    </div>
   );
 }
 
