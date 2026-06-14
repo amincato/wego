@@ -191,7 +191,9 @@ function CalendarPageInner() {
           id: p.id,
           title: p.title,
           date: new Date(p.date),
-          tone: p.tone,
+          // Any stored proposal is unconfirmed by definition — always render
+          // grey, regardless of what tone was persisted earlier.
+          tone: "pending",
         })),
       );
     } catch {
