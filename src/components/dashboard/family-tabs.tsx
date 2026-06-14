@@ -60,35 +60,80 @@ export function FamilyPersonalInfoTab({ family }: { family: HostFamily }) {
           />
         </InfoCard>
 
-        <InfoCard title="Languages">
-          {family.languages && family.languages.length > 0 ? (
-            <ul className="flex flex-col gap-2">
-              {family.languages.map((l) => (
-                <li
-                  key={l.code}
-                  className="flex items-center justify-between gap-3 rounded-input bg-bg px-3 py-2.5 ring-1 ring-divider"
-                >
-                  <span className="inline-flex items-center gap-2 text-sm font-semibold text-fg">
-                    <span className="text-base leading-none">
-                      {LANG_FLAG[l.code] ?? "🌐"}
-                    </span>
-                    {l.code.toUpperCase()}
-                  </span>
-                  <span
-                    className={cn(
-                      "rounded-full px-2.5 py-0.5 text-xs font-bold capitalize",
-                      LANG_LEVEL_TONE[l.level] ?? "bg-chip text-fg-muted",
-                    )}
+        <div className="space-y-6">
+          <InfoCard title="Members">
+            {family.memberProfiles ? (
+              <ul className="flex flex-col gap-2">
+                {family.memberProfiles.map((m) => (
+                  <li
+                    key={`${m.name}-${m.age}`}
+                    className="flex items-center gap-3 rounded-input bg-bg px-3 py-2 ring-1 ring-divider"
                   >
-                    {l.level}
-                  </span>
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <p className="text-sm text-fg-muted">No languages declared.</p>
-          )}
-        </InfoCard>
+                    <span
+                      role="img"
+                      aria-label={`${m.role} ${m.name}`}
+                      className="size-9 shrink-0 rounded-full bg-chip bg-cover bg-center"
+                      style={{ backgroundImage: `url(${m.photoUrl})` }}
+                    />
+                    <span className="text-sm font-semibold text-fg">
+                      {m.name}, {m.age}
+                    </span>
+                    {m.klasseLabel ? (
+                      <span className="inline-flex items-center gap-1 rounded-full bg-school/15 px-2.5 py-0.5 text-[11px] font-bold text-school">
+                        <GraduationCap className="size-3" strokeWidth={2.4} />
+                        {m.klasseLabel}
+                      </span>
+                    ) : null}
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <ul className="flex flex-col gap-2">
+                {family.members.map((m) => (
+                  <li
+                    key={m}
+                    className="flex items-center gap-3 rounded-input bg-bg px-3 py-2 ring-1 ring-divider"
+                  >
+                    <span className="grid size-8 place-items-center rounded-full bg-family/15 text-family">
+                      <UserRound className="size-4" />
+                    </span>
+                    <span className="text-sm font-semibold text-fg">{m}</span>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </InfoCard>
+
+          <InfoCard title="Languages">
+            {family.languages && family.languages.length > 0 ? (
+              <ul className="flex flex-col gap-2">
+                {family.languages.map((l) => (
+                  <li
+                    key={l.code}
+                    className="flex items-center justify-between gap-3 rounded-input bg-bg px-3 py-2.5 ring-1 ring-divider"
+                  >
+                    <span className="inline-flex items-center gap-2 text-sm font-semibold text-fg">
+                      <span className="text-base leading-none">
+                        {LANG_FLAG[l.code] ?? "🌐"}
+                      </span>
+                      {l.code.toUpperCase()}
+                    </span>
+                    <span
+                      className={cn(
+                        "rounded-full px-2.5 py-0.5 text-xs font-bold capitalize",
+                        LANG_LEVEL_TONE[l.level] ?? "bg-chip text-fg-muted",
+                      )}
+                    >
+                      {l.level}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p className="text-sm text-fg-muted">No languages declared.</p>
+            )}
+          </InfoCard>
+        </div>
       </div>
     </div>
   );
