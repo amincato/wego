@@ -88,7 +88,7 @@ function buildEvents(): CalEvent[] {
   return [
     {
       id: "cal_site_visit",
-      title: "Site visit",
+      title: "Family Weber site visit",
       date: new Date("2026-06-18T11:00:00.000Z"),
       tone: "family",
     },
