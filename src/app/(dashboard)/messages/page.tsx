@@ -195,7 +195,7 @@ export default function MessagesPage() {
                     </p>
                   </div>
                   {c.unread > 0 ? (
-                    <span className="ml-2 grid size-5 shrink-0 place-items-center rounded-full bg-student text-[10px] font-bold leading-none text-white">
+                    <span className="ml-2 grid size-5 shrink-0 place-items-center rounded-full bg-success-fg text-[10px] font-bold leading-none text-white">
                       {c.unread}
                     </span>
                   ) : null}
