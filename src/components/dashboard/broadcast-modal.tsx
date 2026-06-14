@@ -59,13 +59,19 @@ export function BroadcastModal({
   const [selectedIds, setSelectedIds] = useState<Set<string>>(
     () => new Set(recipients.map((r) => r.id)),
   );
+  /* When true, the user picked "All" explicitly. In that mode only
+   * the All chip is highlighted; the per-role chips render inactive
+   * even though every member is technically in selectedIds. As soon
+   * as the user touches anything else, this flag flips off. */
+  const [allMode, setAllMode] = useState(true);
   const [message, setMessage] = useState("");
 
   // Re-seed selection every time the modal opens so the form starts
-  // fresh (defaulting to "send to everyone").
+  // fresh (defaulting to "send to everyone" via All mode).
   useEffect(() => {
     if (open) {
       setSelectedIds(new Set(recipients.map((r) => r.id)));
+      setAllMode(true);
       setMessage("");
     }
   }, [open, recipients]);
@@ -81,21 +87,31 @@ export function BroadcastModal({
     return map;
   }, [recipients]);
 
-  const isAllSelected = selectedIds.size === recipients.length;
   const isRoleSelected = (role: AudienceRole) =>
     idsByRole[role].length > 0 &&
     idsByRole[role].every((id) => selectedIds.has(id));
 
   const toggleAudience = (a: Audience) => {
+    if (a === "all") {
+      if (allMode) {
+        // Already in All mode → switch off, clear selection.
+        setAllMode(false);
+        setSelectedIds(new Set());
+      } else {
+        // Enter All mode → pick everyone.
+        setAllMode(true);
+        setSelectedIds(new Set(recipients.map((r) => r.id)));
+      }
+      return;
+    }
+
+    setAllMode(false);
     setSelectedIds((prev) => {
       const next = new Set(prev);
-      if (a === "all") {
-        if (isAllSelected) next.clear();
-        else recipients.forEach((r) => next.add(r.id));
-        return next;
-      }
       const roleIds = idsByRole[a];
-      if (isRoleSelected(a)) {
+      const fullySelected =
+        roleIds.length > 0 && roleIds.every((id) => next.has(id));
+      if (fullySelected) {
         roleIds.forEach((id) => next.delete(id));
       } else {
         roleIds.forEach((id) => next.add(id));
@@ -105,6 +121,7 @@ export function BroadcastModal({
   };
 
   const removeRecipient = (id: string) => {
+    setAllMode(false);
     setSelectedIds((prev) => {
       const next = new Set(prev);
       next.delete(id);
@@ -166,7 +183,7 @@ export function BroadcastModal({
               <div className="flex flex-wrap gap-2">
                 {AUDIENCES.map((a) => {
                   const isActive =
-                    a === "all" ? isAllSelected : isRoleSelected(a);
+                    a === "all" ? allMode : !allMode && isRoleSelected(a);
                   return (
                     <button
                       key={a}
