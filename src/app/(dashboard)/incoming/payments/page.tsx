@@ -113,10 +113,18 @@ const STATUS_PILL: Record<
 
 type Filter = "all" | PayStatus;
 
-const FILTERS: { id: Filter; label: string }[] = [
+const FILTERS: { id: Filter; label: string; icon?: React.ReactNode }[] = [
   { id: "all", label: "All" },
-  { id: "paid", label: "Paid" },
-  { id: "pending", label: "Pending payment" },
+  {
+    id: "paid",
+    label: "Paid",
+    icon: <CheckCircle2 className="size-3.5" strokeWidth={2.4} />,
+  },
+  {
+    id: "pending",
+    label: "Pending payment",
+    icon: <Clock className="size-3.5" strokeWidth={2.4} />,
+  },
 ];
 
 const FILTER_ACTIVE: Record<Filter, string> = {
@@ -153,12 +161,13 @@ export default function FeePaymentsPage() {
             type="button"
             onClick={() => setFilter(f.id)}
             className={cn(
-              "inline-flex items-center rounded-full px-4 py-2 text-xs font-bold transition-colors",
+              "inline-flex items-center gap-1.5 rounded-full px-4 py-2 text-xs font-bold transition-colors",
               filter === f.id
                 ? cn(FILTER_ACTIVE[f.id], "shadow-sm")
                 : "bg-chip text-fg-muted hover:text-fg",
             )}
           >
+            {f.icon}
             {f.label}
           </button>
         ))}
