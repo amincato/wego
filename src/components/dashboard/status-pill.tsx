@@ -44,8 +44,12 @@ const FAMILY_STATE: Record<
     tone: "bg-success-bg/40 text-success-fg",
   },
   matched_with_student: {
-    label: "Matched",
+    label: "Student matched",
     tone: "bg-success-bg/60 text-success-fg",
+  },
+  final_confirmation: {
+    label: "Final confirmation",
+    tone: "bg-success-bg/70 text-success-fg",
   },
   rejected: { label: "Rejected", tone: "bg-danger-bg/60 text-danger-fg" },
 };
