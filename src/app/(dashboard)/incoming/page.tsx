@@ -274,7 +274,7 @@ export default function IncomingPage() {
                 <div className="flex flex-col gap-3">
                   <Link
                     href="/incoming/payments"
-                    className="group flex items-center gap-4 rounded-input bg-student/25 px-4 py-4 ring-1 ring-student/30 transition-colors hover:bg-student/30"
+                    className="group flex items-center gap-4 rounded-input bg-student/10 px-4 py-4 ring-1 ring-student/20 transition-colors hover:bg-student/15"
                   >
                     <span className="grid size-12 place-items-center rounded-xl bg-student text-white">
                       <CreditCard className="size-5" strokeWidth={2.2} />
