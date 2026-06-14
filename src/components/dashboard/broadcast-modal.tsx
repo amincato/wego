@@ -82,22 +82,28 @@ export function BroadcastModal({
   return (
     <Dialog.Root open={open} onOpenChange={onOpenChange}>
       <Dialog.Portal>
-        <Dialog.Overlay className="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0" />
-        <Dialog.Content className="fixed left-1/2 top-1/2 z-50 w-[calc(100%-48px)] max-w-[560px] -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-card-lg bg-surface text-fg shadow-2xl ring-1 ring-divider data-[state=open]:animate-in data-[state=closed]:animate-out">
+        <Dialog.Overlay className="fixed inset-0 z-50 bg-black/60 backdrop-blur-md data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0" />
+        <Dialog.Content
+          style={{
+            backgroundColor: "#ffffff",
+            color: "#0a0a0a",
+          }}
+          className="fixed left-1/2 top-1/2 z-50 w-[calc(100%-48px)] max-w-[560px] -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-[20px] shadow-2xl ring-1 ring-black/10 data-[state=open]:animate-in data-[state=closed]:animate-out"
+        >
           {/* Header */}
-          <div className="flex items-start justify-between gap-4 border-b border-divider px-6 py-5">
+          <div className="flex items-start justify-between gap-4 border-b border-black/10 px-6 py-5">
             <div>
-              <Dialog.Title className="text-lg font-bold text-fg">
+              <Dialog.Title className="text-lg font-bold text-black">
                 Send broadcast message
               </Dialog.Title>
-              <Dialog.Description className="mt-1 text-sm text-fg-muted">
+              <Dialog.Description className="mt-1 text-sm text-neutral-600">
                 Reach one or more groups in your school community at
                 once.
               </Dialog.Description>
             </div>
             <Dialog.Close
               aria-label="Close"
-              className="grid size-8 shrink-0 place-items-center rounded-full text-fg-muted hover:bg-chip hover:text-fg"
+              className="grid size-8 shrink-0 place-items-center rounded-full text-neutral-600 hover:bg-neutral-100 hover:text-black"
             >
               <X className="size-4" />
             </Dialog.Close>
@@ -106,7 +112,7 @@ export function BroadcastModal({
           {/* Body */}
           <div className="space-y-5 px-6 py-5">
             <section>
-              <div className="mb-2 text-xs font-bold uppercase tracking-wider text-fg-subtle">
+              <div className="mb-2 text-xs font-bold uppercase tracking-wider text-neutral-500">
                 Audience
               </div>
               <div className="flex flex-wrap gap-2">
@@ -121,7 +127,7 @@ export function BroadcastModal({
                         "inline-flex items-center rounded-full px-4 py-1.5 text-xs font-bold transition-colors",
                         isActive
                           ? cn(AUDIENCE_ACTIVE[a], "shadow-sm")
-                          : "bg-chip text-fg-muted hover:text-fg",
+                          : "bg-neutral-100 text-neutral-600 hover:text-black",
                       )}
                     >
                       {AUDIENCE_LABEL[a]}
@@ -129,9 +135,9 @@ export function BroadcastModal({
                   );
                 })}
               </div>
-              <p className="mt-2 inline-flex items-center gap-1.5 text-xs text-fg-muted">
+              <p className="mt-2 inline-flex items-center gap-1.5 text-xs text-neutral-600">
                 <Users className="size-3.5" />
-                Will reach <span className="font-bold text-fg">
+                Will reach <span className="font-bold text-black">
                   {total}
                 </span>{" "}
                 {total === 1 ? "person" : "people"}.
@@ -139,7 +145,7 @@ export function BroadcastModal({
             </section>
 
             <section>
-              <div className="mb-2 text-xs font-bold uppercase tracking-wider text-fg-subtle">
+              <div className="mb-2 text-xs font-bold uppercase tracking-wider text-neutral-500">
                 Message
               </div>
               <textarea
@@ -147,20 +153,20 @@ export function BroadcastModal({
                 onChange={(e) => setMessage(e.target.value)}
                 rows={5}
                 placeholder="Write your broadcast message…"
-                className="w-full resize-none rounded-input bg-bg p-3 text-sm text-fg placeholder:text-fg-subtle outline-none ring-1 ring-divider focus:ring-2 focus:ring-student"
+                className="w-full resize-none rounded-[14px] bg-neutral-50 p-3 text-sm text-black placeholder:text-neutral-400 outline-none ring-1 ring-black/10 focus:ring-2 focus:ring-student"
               />
-              <div className="mt-1 text-right text-[11px] text-fg-subtle">
+              <div className="mt-1 text-right text-[11px] text-neutral-400">
                 {message.length} / 500
               </div>
             </section>
           </div>
 
           {/* Footer */}
-          <div className="flex items-center justify-end gap-3 border-t border-divider bg-bg/40 px-6 py-4">
+          <div className="flex items-center justify-end gap-3 border-t border-black/10 bg-neutral-50 px-6 py-4">
             <button
               type="button"
               onClick={() => onOpenChange(false)}
-              className="rounded-full px-4 py-2 text-sm font-bold text-fg-muted hover:bg-chip hover:text-fg"
+              className="rounded-full px-4 py-2 text-sm font-bold text-neutral-600 hover:bg-neutral-100 hover:text-black"
             >
               Cancel
             </button>
@@ -168,7 +174,7 @@ export function BroadcastModal({
               type="button"
               onClick={handleSend}
               disabled={!canSend}
-              className="inline-flex items-center gap-2 rounded-full bg-fg px-5 py-2 text-sm font-bold text-white hover:bg-fg/90 disabled:cursor-not-allowed disabled:bg-fg/40"
+              className="inline-flex items-center gap-2 rounded-full bg-black px-5 py-2 text-sm font-bold text-white hover:bg-black/90 disabled:cursor-not-allowed disabled:bg-black/40"
             >
               <Send className="size-4" strokeWidth={2.4} />
               Send broadcast
