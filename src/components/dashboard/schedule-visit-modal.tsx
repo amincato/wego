@@ -162,7 +162,7 @@ export function ScheduleVisitModal({
           <div className="flex-1 px-7 py-5">
             <div className="grid gap-5 md:grid-cols-[1fr_220px]">
               {/* Calendar */}
-              <section>
+              <section className="flex flex-col">
                 <div className="mb-2 flex items-center justify-between">
                   <div className="text-xs font-bold uppercase tracking-wider text-neutral-500">
                     Date
@@ -191,20 +191,23 @@ export function ScheduleVisitModal({
                   </div>
                 </div>
 
-                <div className="overflow-hidden rounded-[14px] ring-1 ring-black/10">
+                <div className="flex flex-1 flex-col overflow-hidden rounded-[14px] ring-1 ring-black/10">
                   {/* Weekday header */}
-                  <div className="grid grid-cols-7 border-b border-black/10 bg-neutral-50">
+                  <div className="grid shrink-0 grid-cols-7 border-b border-black/10 bg-neutral-50">
                     {WEEKDAYS.map((wd) => (
                       <div
                         key={wd}
-                        className="px-2 py-1.5 text-center text-[10px] font-bold uppercase tracking-wider text-neutral-500"
+                        className="px-2 py-2 text-center text-[10px] font-bold uppercase tracking-wider text-neutral-500"
                       >
                         {wd}
                       </div>
                     ))}
                   </div>
                   {/* Days */}
-                  <div className="grid grid-cols-7">
+                  <div
+                    className="grid flex-1 grid-cols-7"
+                    style={{ gridTemplateRows: "repeat(6, minmax(0, 1fr))" }}
+                  >
                     {cells.map((d, i) => {
                       const isCurMonth = d.getMonth() === cursor.getMonth();
                       const isToday = sameDay(d, today);
@@ -219,7 +222,7 @@ export function ScheduleVisitModal({
                           disabled={isPast}
                           onClick={() => setSelectedDate(new Date(d))}
                           className={cn(
-                            "relative grid h-9 place-items-center transition-colors",
+                            "relative grid min-h-[44px] place-items-center transition-colors",
                             rightBorder && "border-r border-black/5",
                             bottomBorder && "border-b border-black/5",
                             isPast
