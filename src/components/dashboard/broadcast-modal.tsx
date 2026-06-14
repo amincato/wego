@@ -153,7 +153,7 @@ export function BroadcastModal({
             backgroundColor: "#ffffff",
             color: "#0a0a0a",
           }}
-          className="fixed left-1/2 top-1/2 z-50 flex max-h-[90dvh] w-[calc(100%-48px)] max-w-[860px] -translate-x-1/2 -translate-y-1/2 flex-col overflow-hidden rounded-[20px] shadow-2xl ring-1 ring-black/10 data-[state=open]:animate-in data-[state=closed]:animate-out"
+          className="fixed left-1/2 top-1/2 z-50 flex max-h-[90dvh] w-[calc(100%-48px)] max-w-[640px] -translate-x-1/2 -translate-y-1/2 flex-col overflow-hidden rounded-[20px] shadow-2xl ring-1 ring-black/10 data-[state=open]:animate-in data-[state=closed]:animate-out"
         >
           {/* Header */}
           <div className="flex items-start justify-between gap-4 border-b border-black/10 px-7 py-5">
@@ -224,29 +224,29 @@ export function BroadcastModal({
                   recipient list.
                 </p>
               ) : (
-                <ul className="flex flex-wrap gap-2.5">
+                <ul className="flex flex-wrap gap-2">
                   {selectedRecipients.map((r) => (
                     <li
                       key={r.id}
-                      className="inline-flex items-center gap-2 rounded-full bg-neutral-50 py-1 pl-1 pr-3 ring-1 ring-black/10"
+                      className="inline-flex items-center gap-1.5 rounded-full bg-neutral-50 py-1 pl-1 pr-2.5 ring-1 ring-black/10"
                     >
                       <span
                         className={cn(
-                          "block size-9 shrink-0 rounded-full bg-neutral-200 bg-cover bg-center ring-2",
+                          "block size-7 shrink-0 rounded-full bg-neutral-200 bg-cover bg-center ring-2",
                           AUDIENCE_DOT[r.role],
                         )}
                         style={{ backgroundImage: `url(${r.avatarUrl})` }}
                       />
-                      <span className="text-sm font-semibold text-black">
+                      <span className="text-xs font-semibold text-black">
                         {r.name}
                       </span>
                       <button
                         type="button"
                         onClick={() => removeRecipient(r.id)}
                         aria-label={`Remove ${r.name} from broadcast`}
-                        className="grid size-6 shrink-0 place-items-center rounded-full text-neutral-500 hover:bg-neutral-200 hover:text-black"
+                        className="grid size-5 shrink-0 place-items-center rounded-full text-neutral-500 hover:bg-neutral-200 hover:text-black"
                       >
-                        <X className="size-3.5" strokeWidth={2.4} />
+                        <X className="size-3" strokeWidth={2.4} />
                       </button>
                     </li>
                   ))}
