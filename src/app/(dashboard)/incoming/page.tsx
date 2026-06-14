@@ -160,6 +160,9 @@ const HOST_FAMILY_PILL: Record<
 
 const HOSTED_CLASS: Record<string, string> = {
   student_carlo: "11. Klasse",
+  student_alessandro_greco: "11. Klasse",
+  student_sophie_laurent: "10. Klasse",
+  student_carmen_ruiz: "10. Klasse",
 };
 
 export default function IncomingPage() {
