@@ -12,7 +12,7 @@ export const schools: School[] = [
     city: "Marseille",
     country: "France",
     description:
-      "Lycée Thiers is one of the oldest and most prestigious high schools in southern France, with a strong tradition in literature, arts and sciences.",
+      "Founded in 1890, Lycée Thiers is one of the most renowned and historic high schools in Marseille, France, and among the largest in terms of student population. The school is strongly committed to internationalization projects and actively promotes cultural exchange experiences for both local and international students.\n\nInternational students are encouraged to fully immerse themselves in the French educational system through a wide range of academic and extracurricular activities designed to support integration and cultural discovery. The school offers several educational tracks and specialized sections, allowing students to choose the academic path that best matches their interests and future goals.",
     imageUrl: "/schools/lycee-thiers.png",
     galleryItems: [
       {
@@ -29,6 +29,7 @@ export const schools: School[] = [
     mobilityOptions: [
       { durationMonths: 3, priceEur: 2700 },
       { durationMonths: 6, priceEur: 2400 },
+      { durationMonths: 10, priceEur: 2200 },
     ],
     highlights: {
       admission: [
