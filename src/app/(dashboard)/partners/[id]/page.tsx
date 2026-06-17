@@ -228,9 +228,21 @@ function AcademicTab({ school }: { school: School }) {
         {/* Admission stats + important note */}
         <InfoCard title="Admission">
           <div className="grid grid-cols-3 divide-x divide-divider rounded-input bg-bg ring-1 ring-divider">
-            <StatCell label="Capacity" value={d.capacity} tone="neutral" />
-            <StatCell label="Confirmed" value={d.confirmed} tone="student" />
-            <StatCell label="Remaining" value={remaining} tone="success" />
+            <StatCell
+              label="School capacity"
+              value={d.capacity}
+              tone="neutral"
+            />
+            <StatCell
+              label="Confirmed spots"
+              value={d.confirmed}
+              tone="student"
+            />
+            <StatCell
+              label="Remaining spots"
+              value={remaining}
+              tone="success"
+            />
           </div>
           {d.admissionNote ? (
             <div className="mt-3 flex items-start gap-2 rounded-input bg-bg px-3 py-2 ring-1 ring-divider">
