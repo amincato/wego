@@ -21,7 +21,7 @@ export const schools: School[] = [
           "https://images.unsplash.com/photo-1491841651911-c44c30c34548?auto=format&fit=crop&w=800&q=80",
       },
     ],
-    spotsLeft: 15,
+    spotsLeft: 11,
     orientation: "classic",
     language: "fr",
     destinationType: "large_city",
