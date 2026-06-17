@@ -98,7 +98,7 @@ export default async function PartnerSchoolPage({
 
 function DescriptionTab({ school }: { school: School }) {
   return (
-    <div className="grid gap-6 lg:grid-cols-[1fr_360px] lg:items-start">
+    <div className="grid gap-6 lg:grid-cols-[1fr_440px] lg:items-start">
       <section>
         <h3 className="h-section mb-2 text-fg">About</h3>
         <p className="whitespace-pre-line text-sm leading-relaxed text-fg">
@@ -111,9 +111,9 @@ function DescriptionTab({ school }: { school: School }) {
         action={
           <button
             type="button"
-            className="inline-flex items-center gap-1.5 rounded-full bg-fg px-3.5 py-1.5 text-xs font-bold text-white hover:bg-fg/90"
+            className="inline-flex items-center gap-2 rounded-full bg-fg px-4 py-2 text-sm font-semibold text-white hover:bg-fg/90"
           >
-            <MessageSquare className="size-3.5" strokeWidth={2.4} />
+            <MessageSquare className="size-4" strokeWidth={2.4} />
             Contact
           </button>
         }
