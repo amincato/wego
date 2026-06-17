@@ -233,10 +233,10 @@ function AcademicTab({ school }: { school: School }) {
             <StatCell label="Remaining" value={remaining} tone="success" />
           </div>
           {d.admissionNote ? (
-            <div className="mt-3 flex items-start gap-2 rounded-input bg-student/10 px-3 py-2 ring-1 ring-student/25">
-              <Info className="mt-0.5 size-3.5 shrink-0 text-student" />
+            <div className="mt-3 flex items-start gap-2 rounded-input bg-danger-bg/20 px-3 py-2 ring-1 ring-danger-bg/50">
+              <Info className="mt-0.5 size-3.5 shrink-0 text-danger-fg" />
               <p className="text-xs leading-relaxed text-fg">
-                <span className="font-bold text-student">Important:</span>{" "}
+                <span className="font-bold text-danger-fg">Important:</span>{" "}
                 {d.admissionNote}
               </p>
             </div>
