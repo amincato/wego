@@ -48,7 +48,7 @@ export default async function PartnerSchoolPage({
           />
         </div>
         <div className="absolute left-5 top-5">
-          <span className="inline-flex items-center gap-2 rounded-full bg-surface/95 px-4 py-2 text-sm font-semibold text-fg ring-1 ring-divider backdrop-blur-sm">
+          <span className="inline-flex items-center gap-2 rounded-full bg-surface/50 px-4 py-2 text-sm font-semibold text-fg ring-1 ring-white/40 backdrop-blur-md">
             <MapPin className="size-4" />
             {school.city}, {school.country}
           </span>
