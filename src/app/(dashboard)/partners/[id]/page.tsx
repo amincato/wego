@@ -68,7 +68,7 @@ export default async function PartnerSchoolPage({
             </span>
           ))}
         </div>
-        <span className="rounded-full bg-success-bg/60 px-3 py-1 text-xs font-bold text-success-fg">
+        <span className="rounded-full bg-success-bg/60 px-4 py-2 text-sm font-semibold text-success-fg">
           {school.spotsLeft} spots available
         </span>
       </div>
