@@ -40,6 +40,11 @@ export const schools: School[] = [
         imageUrl: "/schools/thiers/gallery-5.png",
         caption: "Courtyard",
       },
+      {
+        id: "g_thiers_italian_section",
+        imageUrl: "/schools/thiers/gallery-6.png",
+        caption: "Italian section",
+      },
     ],
     spotsLeft: 11,
     orientation: "classic",
