@@ -74,6 +74,7 @@ export default async function PartnerSchoolPage({
       </div>
 
       <ProfileTabs
+        accent="neutral"
         tabs={[
           {
             id: "description",
