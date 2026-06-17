@@ -171,11 +171,24 @@ export interface School {
     schoolSchedule: string[];
     subjectsAndActivities: string[];
   };
+  /** Optional structured academic info — when present the school profile
+   * renders the new Academic-tab layout (capacity stats, schedule rows,
+   * subject chips). Falls back to the `highlights` bullet lists otherwise. */
+  academicDetails?: AcademicDetails;
   coordinator: {
     name: string;
     avatarUrl: string;
   };
   testimonials: Testimonial[];
+}
+
+export interface AcademicDetails {
+  capacity: number;
+  confirmed: number;
+  admissionNote?: string;
+  scheduleRows: { day: string; time: string }[];
+  coreSubjects: string[];
+  extracurricular?: string[];
 }
 
 /* ---- Application ---- */

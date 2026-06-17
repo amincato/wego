@@ -43,6 +43,29 @@ export const schools: School[] = [
         "Theater, debate club",
       ],
     },
+    academicDetails: {
+      capacity: 15,
+      confirmed: 4,
+      admissionNote:
+        "Students are assigned a spot ONLY after confirming a host family.",
+      scheduleRows: [
+        { day: "Monday – Friday", time: "8:30 AM – 2:30 PM" },
+        { day: "Saturday", time: "No lessons" },
+        { day: "Afternoon classes", time: "2 days a week, 3:30 – 5:00 PM" },
+      ],
+      coreSubjects: [
+        "German",
+        "English",
+        "Spanish/French",
+        "Mathematics",
+        "Chemistry/Biology",
+        "History",
+        "Philosophy",
+        "Art",
+        "Sport",
+      ],
+      extracurricular: ["Theater", "Debate", "Music", "Volleyball Team"],
+    },
     coordinator: {
       name: "Marie Dubois",
       avatarUrl:

@@ -1,6 +1,13 @@
 import Link from "next/link";
 import Image from "next/image";
-import { ChevronLeft, MapPin, MessageSquare } from "lucide-react";
+import {
+  CalendarClock,
+  ChevronLeft,
+  Info,
+  Languages,
+  MapPin,
+  MessageSquare,
+} from "lucide-react";
 import { notFound } from "next/navigation";
 import { ProfileTabs } from "@/components/dashboard/profile-tabs";
 import { InfoCard } from "@/components/dashboard/info-card";
@@ -13,6 +20,14 @@ const LANGUAGE_LABEL: Record<School["language"], string> = {
   de: "German",
   es: "Spanish",
   en: "English",
+};
+
+const LANGUAGE_FLAG: Record<School["language"], string> = {
+  it: "🇮🇹",
+  fr: "🇫🇷",
+  de: "🇩🇪",
+  es: "🇪🇸",
+  en: "🇬🇧",
 };
 
 export default async function PartnerSchoolPage({
@@ -141,46 +156,179 @@ function DescriptionTab({ school }: { school: School }) {
 }
 
 function AcademicTab({ school }: { school: School }) {
+  const d = school.academicDetails;
+
+  // Fallback to the old bullet-list view for schools without structured data.
+  if (!d) {
+    return (
+      <div className="grid gap-6 lg:grid-cols-3">
+        <InfoCard title="Admission requirements">
+          <ul className="space-y-2 text-sm leading-relaxed text-fg">
+            {school.highlights.admission.map((h) => (
+              <li key={h} className="flex gap-2">
+                <span className="mt-1.5 size-1.5 shrink-0 rounded-full bg-school" />
+                {h}
+              </li>
+            ))}
+          </ul>
+        </InfoCard>
+        <InfoCard title="School schedule">
+          <ul className="space-y-2 text-sm leading-relaxed text-fg">
+            {school.highlights.schoolSchedule.map((h) => (
+              <li key={h} className="flex gap-2">
+                <span className="mt-1.5 size-1.5 shrink-0 rounded-full bg-school" />
+                {h}
+              </li>
+            ))}
+          </ul>
+        </InfoCard>
+        <InfoCard title="Subjects & activities">
+          <ul className="space-y-2 text-sm leading-relaxed text-fg">
+            {school.highlights.subjectsAndActivities.map((h) => (
+              <li key={h} className="flex gap-2">
+                <span className="mt-1.5 size-1.5 shrink-0 rounded-full bg-school" />
+                {h}
+              </li>
+            ))}
+          </ul>
+        </InfoCard>
+        <InfoCard title="Language">
+          <p className="text-sm font-semibold text-fg">
+            Teaching language:{" "}
+            <span className="text-school">
+              {LANGUAGE_LABEL[school.language]}
+            </span>
+          </p>
+        </InfoCard>
+      </div>
+    );
+  }
+
+  const remaining = Math.max(d.capacity - d.confirmed, 0);
+
   return (
-    <div className="grid gap-6 lg:grid-cols-3">
-      <InfoCard title="Admission requirements">
-        <ul className="space-y-2 text-sm leading-relaxed text-fg">
-          {school.highlights.admission.map((h) => (
-            <li key={h} className="flex gap-2">
-              <span className="mt-1.5 size-1.5 shrink-0 rounded-full bg-school" />
-              {h}
-            </li>
-          ))}
-        </ul>
-      </InfoCard>
-      <InfoCard title="School schedule">
-        <ul className="space-y-2 text-sm leading-relaxed text-fg">
-          {school.highlights.schoolSchedule.map((h) => (
-            <li key={h} className="flex gap-2">
-              <span className="mt-1.5 size-1.5 shrink-0 rounded-full bg-school" />
-              {h}
-            </li>
-          ))}
-        </ul>
-      </InfoCard>
-      <InfoCard title="Subjects & activities">
-        <ul className="space-y-2 text-sm leading-relaxed text-fg">
-          {school.highlights.subjectsAndActivities.map((h) => (
-            <li key={h} className="flex gap-2">
-              <span className="mt-1.5 size-1.5 shrink-0 rounded-full bg-school" />
-              {h}
-            </li>
-          ))}
-        </ul>
-      </InfoCard>
-      <InfoCard title="Language">
-        <p className="text-sm font-semibold text-fg">
-          Teaching language:{" "}
-          <span className="text-school">
+    <div className="space-y-6">
+      {/* Teaching language — surfaced at the top of the tab */}
+      <div className="flex items-center gap-3 rounded-card-lg bg-surface p-4 ring-1 ring-divider">
+        <Languages className="size-5 shrink-0 text-fg" strokeWidth={2.2} />
+        <div className="flex-1">
+          <div className="text-[11px] font-bold uppercase tracking-wider text-fg-subtle">
+            Teaching language
+          </div>
+          <div className="mt-0.5 text-base font-bold text-fg">
+            <span className="mr-2 text-lg leading-none">
+              {LANGUAGE_FLAG[school.language]}
+            </span>
             {LANGUAGE_LABEL[school.language]}
-          </span>
-        </p>
+          </div>
+        </div>
+      </div>
+
+      <div className="grid gap-6 lg:grid-cols-2">
+        {/* Admission stats + important note */}
+        <InfoCard title="Admission">
+          <div className="grid grid-cols-3 gap-3">
+            <Stat label="Capacity" value={d.capacity} tone="neutral" />
+            <Stat label="Confirmed" value={d.confirmed} tone="student" />
+            <Stat label="Remaining" value={remaining} tone="success" />
+          </div>
+          {d.admissionNote ? (
+            <div className="mt-4 flex items-start gap-3 rounded-input bg-student/10 p-3 ring-1 ring-student/25">
+              <Info className="mt-0.5 size-4 shrink-0 text-student" />
+              <p className="text-sm leading-relaxed text-fg">
+                <span className="font-bold text-student">Important:</span>{" "}
+                {d.admissionNote}
+              </p>
+            </div>
+          ) : null}
+        </InfoCard>
+
+        {/* Schedule rows */}
+        <InfoCard title="School schedule">
+          <ul className="divide-y divide-divider/60">
+            {d.scheduleRows.map((r) => (
+              <li
+                key={r.day}
+                className="flex items-center justify-between gap-3 py-2.5 first:pt-0 last:pb-0"
+              >
+                <span className="inline-flex items-center gap-2 text-sm font-bold text-fg">
+                  <CalendarClock
+                    className="size-4 text-fg-subtle"
+                    strokeWidth={2.2}
+                  />
+                  {r.day}
+                </span>
+                <span className="text-sm font-semibold text-fg-muted">
+                  {r.time}
+                </span>
+              </li>
+            ))}
+          </ul>
+        </InfoCard>
+      </div>
+
+      {/* Subjects + extracurricular */}
+      <InfoCard title="Subjects & activities">
+        <div className="space-y-5">
+          <section>
+            <h4 className="mb-3 text-[11px] font-bold uppercase tracking-wider text-fg-subtle">
+              Core subjects
+            </h4>
+            <div className="flex flex-wrap gap-2">
+              {d.coreSubjects.map((s) => (
+                <span
+                  key={s}
+                  className="rounded-full bg-fg px-3.5 py-1.5 text-xs font-bold text-white"
+                >
+                  {s}
+                </span>
+              ))}
+            </div>
+          </section>
+          {d.extracurricular && d.extracurricular.length > 0 ? (
+            <section>
+              <h4 className="mb-3 text-[11px] font-bold uppercase tracking-wider text-fg-subtle">
+                Extracurricular activities
+              </h4>
+              <div className="flex flex-wrap gap-2">
+                {d.extracurricular.map((s) => (
+                  <span
+                    key={s}
+                    className="rounded-full bg-chip px-3.5 py-1.5 text-xs font-bold text-fg"
+                  >
+                    {s}
+                  </span>
+                ))}
+              </div>
+            </section>
+          ) : null}
+        </div>
       </InfoCard>
+    </div>
+  );
+}
+
+function Stat({
+  label,
+  value,
+  tone,
+}: {
+  label: string;
+  value: number;
+  tone: "neutral" | "student" | "success";
+}) {
+  const valueTone =
+    tone === "student"
+      ? "text-student"
+      : tone === "success"
+        ? "text-success-fg"
+        : "text-fg";
+  return (
+    <div className="rounded-input bg-bg p-3 text-center ring-1 ring-divider">
+      <div className="text-[11px] font-bold uppercase tracking-wider text-fg-subtle">
+        {label}
+      </div>
+      <div className={`mt-1 text-3xl font-bold ${valueTone}`}>{value}</div>
     </div>
   );
 }
