@@ -321,7 +321,7 @@ function StatCell({
     tone === "student"
       ? "text-student"
       : tone === "success"
-        ? "text-success-fg"
+        ? "text-emerald-600"
         : "text-fg";
   return (
     <div className="px-3 py-2.5 text-center">
