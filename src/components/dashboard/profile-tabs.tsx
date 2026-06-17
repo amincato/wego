@@ -54,7 +54,7 @@ export function ProfileTabs({
   };
 
   return (
-    <div ref={rootRef} className="mt-6 scroll-mt-6">
+    <div ref={rootRef} className="mt-6 scroll-mt-32">
       <div className="flex items-end justify-between gap-4 border-b border-divider">
         <div className="overflow-x-auto no-scrollbar">
           <div className="flex gap-1">
