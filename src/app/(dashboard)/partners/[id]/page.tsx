@@ -98,7 +98,7 @@ export default async function PartnerSchoolPage({
 
 function DescriptionTab({ school }: { school: School }) {
   return (
-    <div className="grid gap-6 lg:grid-cols-[1fr_440px] lg:items-start">
+    <div className="grid gap-6 lg:grid-cols-[1fr_440px] lg:items-stretch">
       <section>
         <h3 className="h-section mb-2 text-fg">About</h3>
         <p className="whitespace-pre-line text-sm leading-relaxed text-fg">
