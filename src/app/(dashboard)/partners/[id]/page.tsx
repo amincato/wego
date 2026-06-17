@@ -368,13 +368,6 @@ function GalleryTab({ school }: { school: School }) {
               sizes="(max-width: 768px) 100vw, 33vw"
               className="object-cover"
             />
-            {g.caption ? (
-              <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-fg/75 via-fg/40 to-transparent p-3">
-                <span className="text-xs font-bold text-white">
-                  {g.caption}
-                </span>
-              </div>
-            ) : null}
           </div>
         ))}
       </div>
