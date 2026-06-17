@@ -51,7 +51,7 @@ const NAV: NavItem[] = [
     href: "/partners",
     label: "Partner schools",
     icon: <Building2 className="size-5" strokeWidth={2} />,
-    accent: "text-school",
+    accent: "text-fg",
   },
   {
     href: "/my-school",
