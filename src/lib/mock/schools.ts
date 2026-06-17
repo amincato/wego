@@ -16,9 +16,29 @@ export const schools: School[] = [
     imageUrl: "/schools/lycee-thiers.png",
     galleryItems: [
       {
-        id: "g_thiers_1",
-        imageUrl:
-          "https://images.unsplash.com/photo-1491841651911-c44c30c34548?auto=format&fit=crop&w=800&q=80",
+        id: "g_thiers_cafeteria",
+        imageUrl: "/schools/thiers/gallery-1.png",
+        caption: "School cafeteria",
+      },
+      {
+        id: "g_thiers_classroom",
+        imageUrl: "/schools/thiers/gallery-2.png",
+        caption: "Classroom",
+      },
+      {
+        id: "g_thiers_gym",
+        imageUrl: "/schools/thiers/gallery-3.png",
+        caption: "Sports hall",
+      },
+      {
+        id: "g_thiers_lounge",
+        imageUrl: "/schools/thiers/gallery-4.png",
+        caption: "Student lounge",
+      },
+      {
+        id: "g_thiers_courtyard",
+        imageUrl: "/schools/thiers/gallery-5.png",
+        caption: "Courtyard",
       },
     ],
     spotsLeft: 11,

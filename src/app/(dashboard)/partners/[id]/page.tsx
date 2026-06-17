@@ -359,7 +359,7 @@ function GalleryTab({ school }: { school: School }) {
         {school.galleryItems.map((g) => (
           <div
             key={g.id}
-            className="relative aspect-[4/3] overflow-hidden rounded-input bg-chip"
+            className="relative aspect-square w-full overflow-hidden rounded-input bg-chip"
           >
             <Image
               src={g.imageUrl}
@@ -369,7 +369,7 @@ function GalleryTab({ school }: { school: School }) {
               className="object-cover"
             />
             {g.caption ? (
-              <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-fg/70 to-transparent p-3">
+              <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-fg/75 via-fg/40 to-transparent p-3">
                 <span className="text-xs font-bold text-white">
                   {g.caption}
                 </span>
