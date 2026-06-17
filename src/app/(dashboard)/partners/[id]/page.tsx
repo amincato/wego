@@ -294,7 +294,7 @@ function AcademicTab({ school }: { school: School }) {
                 {d.extracurricular.map((s) => (
                   <span
                     key={s}
-                    className="rounded-full bg-chip px-3.5 py-1.5 text-xs font-bold text-fg"
+                    className="rounded-full bg-bg px-4 py-2.5 text-sm font-semibold text-fg"
                   >
                     {s}
                   </span>
