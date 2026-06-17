@@ -1,6 +1,6 @@
 "use client";
 
-import { ReactNode, useState } from "react";
+import { ReactNode, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
 
 export interface TabDef {
@@ -38,9 +38,23 @@ export function ProfileTabs({
 }) {
   const [active, setActive] = useState(defaultTab ?? tabs[0]?.id);
   const current = tabs.find((t) => t.id === active);
+  const rootRef = useRef<HTMLDivElement>(null);
+  const firstRender = useRef(true);
+
+  const handleSelect = (id: string) => {
+    setActive(id);
+    // Skip scrolling on the initial mount; only scroll on actual user clicks.
+    if (firstRender.current) {
+      firstRender.current = false;
+      return;
+    }
+    requestAnimationFrame(() => {
+      rootRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+  };
 
   return (
-    <div className="mt-6">
+    <div ref={rootRef} className="mt-6 scroll-mt-6">
       <div className="flex items-end justify-between gap-4 border-b border-divider">
         <div className="overflow-x-auto no-scrollbar">
           <div className="flex gap-1">
@@ -49,7 +63,7 @@ export function ProfileTabs({
               return (
                 <button
                   key={tab.id}
-                  onClick={() => setActive(tab.id)}
+                  onClick={() => handleSelect(tab.id)}
                   className={cn(
                     "relative whitespace-nowrap px-4 py-3 text-sm transition-colors",
                     isActive

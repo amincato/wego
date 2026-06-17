@@ -227,15 +227,15 @@ function AcademicTab({ school }: { school: School }) {
       <div className="grid gap-6 lg:grid-cols-2">
         {/* Admission stats + important note */}
         <InfoCard title="Admission">
-          <div className="grid grid-cols-3 gap-3">
-            <Stat label="Capacity" value={d.capacity} tone="neutral" />
-            <Stat label="Confirmed" value={d.confirmed} tone="student" />
-            <Stat label="Remaining" value={remaining} tone="success" />
+          <div className="grid grid-cols-3 divide-x divide-divider rounded-input bg-bg ring-1 ring-divider">
+            <StatCell label="Capacity" value={d.capacity} tone="neutral" />
+            <StatCell label="Confirmed" value={d.confirmed} tone="student" />
+            <StatCell label="Remaining" value={remaining} tone="success" />
           </div>
           {d.admissionNote ? (
-            <div className="mt-4 flex items-start gap-3 rounded-input bg-student/10 p-3 ring-1 ring-student/25">
-              <Info className="mt-0.5 size-4 shrink-0 text-student" />
-              <p className="text-sm leading-relaxed text-fg">
+            <div className="mt-3 flex items-start gap-2 rounded-input bg-student/10 px-3 py-2 ring-1 ring-student/25">
+              <Info className="mt-0.5 size-3.5 shrink-0 text-student" />
+              <p className="text-xs leading-relaxed text-fg">
                 <span className="font-bold text-student">Important:</span>{" "}
                 {d.admissionNote}
               </p>
@@ -308,7 +308,7 @@ function AcademicTab({ school }: { school: School }) {
   );
 }
 
-function Stat({
+function StatCell({
   label,
   value,
   tone,
@@ -324,11 +324,11 @@ function Stat({
         ? "text-success-fg"
         : "text-fg";
   return (
-    <div className="rounded-input bg-bg p-3 text-center ring-1 ring-divider">
-      <div className="text-[11px] font-bold uppercase tracking-wider text-fg-subtle">
+    <div className="px-3 py-2.5 text-center">
+      <div className="text-[10px] font-bold uppercase tracking-wider text-fg-subtle">
         {label}
       </div>
-      <div className={`mt-1 text-3xl font-bold ${valueTone}`}>{value}</div>
+      <div className={`mt-0.5 text-xl font-bold ${valueTone}`}>{value}</div>
     </div>
   );
 }
