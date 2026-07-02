@@ -53,7 +53,7 @@ export default function PartnersPage() {
       />
 
       <section className="mb-5 rounded-card-lg bg-surface p-4 ring-1 ring-divider">
-        <div className="flex flex-wrap items-start gap-x-6 gap-y-3">
+        <div className="flex flex-wrap items-start gap-x-[20px] gap-y-3">
           <FilterRow label="Country">
             {COUNTRIES.map((c) => (
               <Chip
@@ -114,7 +114,7 @@ function FilterRow({
 }) {
   return (
     <div className="flex flex-wrap items-center gap-2">
-      <span className="text-xs font-semibold uppercase tracking-wider text-fg-subtle">
+      <span className="whitespace-nowrap text-xs font-semibold uppercase tracking-wider text-fg-subtle">
         {label}
       </span>
       <div className="flex flex-wrap gap-1.5">{children}</div>
