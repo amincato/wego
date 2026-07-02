@@ -37,10 +37,13 @@ const DISPLAY = {
 };
 
 /** Natural desktop viewport we want the dashboard to render at.
- * The height is derived from the display area's aspect ratio (≈1.54,
- * matching the MBP 14" native 3024×1964 panel) so the iframe fits the
- * display slot perfectly with no overflow / letterboxing. */
-const VIEWPORT_W = 1440;
+ * 1728px matches the MacBook Pro 14" native "More Space" resolution
+ * (1728×1117) — the layout Hans sees when running the dashboard full-
+ * screen on the actual hardware. Height is derived from the display
+ * area's aspect ratio (≈1.54, matching the MBP 14" panel) so the
+ * iframe fits the display slot perfectly with no overflow /
+ * letterboxing. */
+const VIEWPORT_W = 1728;
 const DISPLAY_ASPECT =
   ((DISPLAY.right - DISPLAY.left) * MOCKUP_W) /
   ((DISPLAY.bottom - DISPLAY.top) * MOCKUP_H);
