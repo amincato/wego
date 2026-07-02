@@ -37,11 +37,13 @@ const DISPLAY = {
 };
 
 /** Natural desktop viewport we want the dashboard to render at.
- * 1792×1120 matches Hans' MacBook Pro 16" (2019) default "Looks like"
- * resolution — so the layout inside the mockup is byte-identical to
- * what he sees running the app full-screen on his real hardware. */
+ * Width still matches Hans' MacBook Pro 16" (2019) full-screen so the
+ * horizontal layout (sidebar, filter rows, card grids) is unchanged.
+ * Height is bumped to match the display area's aspect ratio (1.54)
+ * exactly — so the iframe fills the display slot bottom-to-top with
+ * no white letterbox strip above the bezel. */
 const VIEWPORT_W = 1792;
-const VIEWPORT_H = 1120;
+const VIEWPORT_H = 1164; // 1792 / (7735 / 5023) — matches DISPLAY aspect
 
 function MockupPageInner() {
   const params = useSearchParams();

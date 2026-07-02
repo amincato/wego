@@ -103,12 +103,12 @@ body {
 
 html {
   color-scheme: light;
-  /* Bumped from the default 16px → 18px so every rem-based Tailwind
+  /* Bumped from the default 16px → 19px so every rem-based Tailwind
    * size (text, padding, gap, line-height…) reads clearly larger for
    * demo/screen-recording use. Fixed-pixel widths (sidebar w-[260px],
    * mockup canvas max-w, etc.) are unaffected — so element widths
-   * stay the same, only heights and text scale up ~12.5%. */
-  font-size: 18px;
+   * stay the same, only heights and text scale up ~19%. */
+  font-size: 19px;
 }
 html.dark {
   color-scheme: dark;
