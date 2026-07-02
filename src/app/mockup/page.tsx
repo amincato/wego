@@ -1,12 +1,17 @@
 "use client";
 
-import { Suspense } from "react";
+import { Suspense, useEffect, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
 
 /**
  * Screen-recording helper: renders the dashboard inside a MacBook Pro 14
- * mockup frame. Open /mockup to preview /dashboard inside it, or override
- * the embedded route via ?src=/some/path (e.g. /mockup?src=/families).
+ * mockup frame WITHOUT altering the layout of the embedded route. The
+ * iframe is rendered at its natural desktop viewport (1440×900) and
+ * CSS-scaled down to fit the display area — so what you see inside the
+ * mockup is byte-for-byte the same layout you'd see visiting the page
+ * directly, just visually smaller.
+ *
+ * Default target: /dashboard. Override with ?src=/some/path.
  */
 export default function MockupPage() {
   return (
@@ -16,98 +21,176 @@ export default function MockupPage() {
   );
 }
 
+/** MacBook Pro 14" screen aspect ratio — Apple ships 3024×1964 native. */
+const SCREEN_W = 3024;
+const SCREEN_H = 1964;
+
+/** Natural desktop viewport we want the dashboard to render at. */
+const VIEWPORT_W = 1440;
+const VIEWPORT_H = 934; // 1440 × (1964/3024) rounded → keeps display aspect
+
 function MockupPageInner() {
   const params = useSearchParams();
   const src = params.get("src") ?? "/dashboard";
 
+  const displayRef = useRef<HTMLDivElement>(null);
+  const [scale, setScale] = useState(1);
+
+  useEffect(() => {
+    const el = displayRef.current;
+    if (!el) return;
+    const update = () => {
+      setScale(el.clientWidth / VIEWPORT_W);
+    };
+    update();
+    const ro = new ResizeObserver(update);
+    ro.observe(el);
+    window.addEventListener("resize", update);
+    return () => {
+      ro.disconnect();
+      window.removeEventListener("resize", update);
+    };
+  }, []);
+
   return (
     <div
-      className="flex min-h-dvh w-full flex-col items-center justify-center bg-neutral-200 p-8"
+      className="flex min-h-dvh w-full flex-col items-center justify-center p-6"
       style={{
+        background: "#e5e5e7",
         fontFamily:
-          "ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif",
+          "ui-sans-serif, system-ui, -apple-system, 'SF Pro Display', 'Segoe UI', sans-serif",
       }}
     >
-      <div className="mb-4 w-full max-w-[1240px] pl-2 text-sm font-semibold text-violet-600">
+      <div className="mb-4 w-full max-w-[1320px] pl-1 text-sm font-semibold text-violet-600">
         <span className="mr-1 align-middle">◆</span> MacBook Pro 14
       </div>
 
-      <div className="relative w-full max-w-[1240px]">
-        {/* Space-gray screen shell (rounded top, flat bottom) */}
+      <div className="relative w-full max-w-[1320px]">
+        {/* Space-gray screen shell */}
         <div
-          className="relative bg-neutral-800 shadow-[0_30px_60px_-20px_rgba(0,0,0,0.35)]"
+          className="relative"
           style={{
-            padding: "14px 14px 16px 14px",
-            borderRadius: "22px 22px 6px 6px",
+            background: "#1c1c1e",
+            padding: "18px 18px 22px 18px",
+            borderRadius: "26px 26px 8px 8px",
+            boxShadow:
+              "0 30px 60px -20px rgba(0,0,0,0.35), inset 0 0 0 1px #2a2a2c",
           }}
         >
-          {/* Notch */}
+          {/* Notch — matte black rounded pill overlaying the top bezel */}
           <div
-            className="pointer-events-none absolute left-1/2 top-[14px] z-20 -translate-x-1/2 bg-neutral-900"
+            aria-hidden
             style={{
-              height: "16px",
-              width: "170px",
-              borderBottomLeftRadius: "10px",
-              borderBottomRightRadius: "10px",
+              position: "absolute",
+              left: "50%",
+              top: "18px",
+              transform: "translateX(-50%)",
+              width: "190px",
+              height: "22px",
+              background: "#0a0a0a",
+              borderBottomLeftRadius: "12px",
+              borderBottomRightRadius: "12px",
+              zIndex: 2,
             }}
           />
 
-          {/* Display */}
+          {/* Display area — natural desktop, scaled */}
           <div
-            className="relative aspect-[16/10.3] w-full overflow-hidden bg-white"
-            style={{ borderRadius: "10px" }}
+            ref={displayRef}
+            className="relative w-full overflow-hidden bg-white"
+            style={{
+              aspectRatio: `${SCREEN_W} / ${SCREEN_H}`,
+              borderRadius: "12px",
+            }}
           >
-            <iframe
-              src={src}
-              title="Wego dashboard preview"
-              className="absolute inset-0 h-full w-full border-0"
-              allow="clipboard-read; clipboard-write"
-            />
+            <div
+              style={{
+                width: `${VIEWPORT_W}px`,
+                height: `${VIEWPORT_H}px`,
+                transform: `scale(${scale})`,
+                transformOrigin: "top left",
+              }}
+            >
+              <iframe
+                src={src}
+                title="Wego dashboard preview"
+                style={{
+                  width: `${VIEWPORT_W}px`,
+                  height: `${VIEWPORT_H}px`,
+                  border: 0,
+                  display: "block",
+                }}
+                allow="clipboard-read; clipboard-write"
+              />
+            </div>
           </div>
         </div>
 
-        {/* Hinge / base — slightly wider than the screen shell */}
+        {/* Bottom lip / hinge — slightly wider than the shell, silver */}
         <div
-          className="relative mx-auto -mt-[2px]"
-          style={{ width: "calc(100% + 44px)" }}
+          className="relative mx-auto"
+          style={{
+            width: "calc(100% + 60px)",
+            marginTop: "-2px",
+          }}
         >
+          {/* Thin silver band the whole width */}
           <div
-            className="mx-auto"
             style={{
-              height: "14px",
+              height: "18px",
               background:
-                "linear-gradient(180deg, #d8d8db 0%, #b5b5ba 55%, #96969a 100%)",
-              borderBottomLeftRadius: "8px",
-              borderBottomRightRadius: "8px",
-              boxShadow: "0 8px 18px -6px rgba(0,0,0,0.25)",
+                "linear-gradient(180deg, #d9d9dc 0%, #b6b6bb 55%, #8f8f94 100%)",
+              borderBottomLeftRadius: "10px",
+              borderBottomRightRadius: "10px",
+              boxShadow: "0 12px 24px -8px rgba(0,0,0,0.28)",
+              position: "relative",
             }}
           >
-            {/* Small trapezoidal hinge notch */}
+            {/* Little trapezoidal hinge cutout in the middle */}
             <div
-              className="mx-auto"
               style={{
+                position: "absolute",
+                top: 0,
+                left: "50%",
+                transform: "translateX(-50%)",
+                width: "190px",
                 height: "100%",
-                width: "170px",
                 background:
-                  "linear-gradient(180deg, #b1b1b6 0%, #7c7c81 100%)",
-                borderBottomLeftRadius: "6px",
-                borderBottomRightRadius: "6px",
+                  "linear-gradient(180deg, #a8a8ac 0%, #75757a 100%)",
+                borderBottomLeftRadius: "8px",
+                borderBottomRightRadius: "8px",
               }}
             />
           </div>
         </div>
       </div>
 
-      {/* Tiny helper: hint how to embed a different page */}
-      <p className="mt-6 max-w-[520px] text-center text-[11px] leading-relaxed text-neutral-500">
-        Embedded route:{" "}
-        <code className="rounded bg-neutral-100 px-1.5 py-0.5 text-[11px] text-neutral-700">
+      <p className="mt-6 max-w-[560px] text-center text-[11px] leading-relaxed text-neutral-500">
+        Route embedded:{" "}
+        <code
+          style={{
+            background: "#f4f4f5",
+            padding: "2px 6px",
+            borderRadius: 4,
+            color: "#404046",
+          }}
+        >
           {src}
         </code>
-        . Change with{" "}
-        <code className="rounded bg-neutral-100 px-1.5 py-0.5 text-[11px] text-neutral-700">
+        . Cambia con{" "}
+        <code
+          style={{
+            background: "#f4f4f5",
+            padding: "2px 6px",
+            borderRadius: 4,
+            color: "#404046",
+          }}
+        >
           ?src=/…
         </code>
+        . Il layout dentro il display è renderizzato a{" "}
+        {VIEWPORT_W}×{VIEWPORT_H} e scalato — nessuna modifica alle
+        interfacce.
       </p>
     </div>
   );
