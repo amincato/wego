@@ -105,7 +105,7 @@ export function LeafletMap({
   );
 
   return (
-    <div className="relative h-[calc(100dvh-13rem)] min-h-[600px] overflow-hidden rounded-card-lg ring-1 ring-divider">
+    <div className="relative h-[calc(100dvh-13rem)] min-h-[600px] overflow-hidden rounded-card-lg">
       <style>{`
         @keyframes wegoPinPulse {
           0% { transform: scale(0.8); opacity: 0.55; }
