@@ -54,8 +54,8 @@ export default function DestinationsPage() {
         }
       />
 
-      <div className="grid gap-6 xl:grid-cols-3">
-        <div className="xl:col-span-2">
+      <div className="grid gap-6 xl:grid-cols-[3fr_2fr]">
+        <div>
           <LeafletMap
             schools={schools}
             highlightedIds={filtered.map((s) => s.id)}
