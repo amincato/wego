@@ -37,11 +37,13 @@ const DISPLAY = {
 };
 
 /** Natural desktop viewport we want the dashboard to render at.
- * 1792×1120 matches Hans' MacBook Pro 16" (2019) default "Looks like"
- * resolution — so the layout inside the mockup is byte-identical to
- * what he sees running the app full-screen on his real hardware. */
-const VIEWPORT_W = 1792;
-const VIEWPORT_H = 1120;
+ * We pick a viewport that gives the same *layout* as Hans' MacBook Pro
+ * 16" (2019) at 1792×1120 — but slightly smaller in absolute pixels —
+ * so text and cards read a hair larger when the iframe is scaled down
+ * into the mockup display. Filter rows and other 1728px-safe layouts
+ * still fit without wrapping. */
+const VIEWPORT_W = 1600;
+const VIEWPORT_H = 1000;
 
 function MockupPageInner() {
   const params = useSearchParams();
@@ -95,20 +97,16 @@ function MockupPageInner() {
 
   return (
     <div
-      className="flex min-h-dvh w-full flex-col items-center justify-center p-6"
+      className="flex min-h-dvh w-full flex-col items-center justify-center p-3"
       style={{
         background: "#e5e5e7",
         fontFamily:
           "ui-sans-serif, system-ui, -apple-system, 'SF Pro Display', 'Segoe UI', sans-serif",
       }}
     >
-      <div className="mb-4 w-full max-w-[1600px] pl-1 text-sm font-semibold text-violet-600">
-        <span className="mr-1 align-middle">◆</span> MacBook Pro 14
-      </div>
-
       {/* Mockup canvas keeps the PNG's exact aspect ratio */}
       <div
-        className="relative w-full max-w-[1600px]"
+        className="relative w-full max-w-[2000px]"
         style={{ aspectRatio: `${MOCKUP_W} / ${MOCKUP_H}` }}
       >
         {/* MacBook chassis PNG — sits at the back so its bezel + hinge
@@ -161,30 +159,6 @@ function MockupPageInner() {
         </div>
       </div>
 
-      <p className="mt-6 max-w-[560px] text-center text-[11px] leading-relaxed text-neutral-500">
-        Route embedded:{" "}
-        <code
-          style={{
-            background: "#f4f4f5",
-            padding: "2px 6px",
-            borderRadius: 4,
-            color: "#404046",
-          }}
-        >
-          {src}
-        </code>
-        . Cambia con{" "}
-        <code
-          style={{
-            background: "#f4f4f5",
-            padding: "2px 6px",
-            borderRadius: 4,
-            color: "#404046",
-          }}
-        >
-          ?src=/…
-        </code>
-      </p>
     </div>
   );
 }
