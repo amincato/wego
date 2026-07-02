@@ -1,6 +1,10 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  // Hide the small "N" dev-tools indicator Next.js draws in the corner
+  // during `next dev`. It shows up inside the mockup preview and spoils
+  // the screen-recording demo. Build/runtime errors are still surfaced.
+  devIndicators: false,
   // Persistent Turbopack cache across `next dev` runs — re-uses compiled
   // modules instead of re-compiling on every start. Default in Next 16.1+,
   // set explicitly here for safety.
