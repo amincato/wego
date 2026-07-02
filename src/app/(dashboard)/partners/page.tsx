@@ -53,7 +53,7 @@ export default function PartnersPage() {
       />
 
       <section className="mb-5 rounded-card-lg bg-surface p-4 ring-1 ring-divider">
-        <div className="flex flex-wrap items-start gap-x-[20px] gap-y-3">
+        <div className="flex flex-nowrap items-center gap-x-4 overflow-x-auto">
           <FilterRow label="Country">
             {COUNTRIES.map((c) => (
               <Chip
@@ -113,11 +113,11 @@ function FilterRow({
   children: React.ReactNode;
 }) {
   return (
-    <div className="flex flex-wrap items-center gap-2">
+    <div className="flex shrink-0 flex-nowrap items-center gap-2">
       <span className="whitespace-nowrap text-xs font-semibold uppercase tracking-wider text-fg-subtle">
         {label}
       </span>
-      <div className="flex flex-wrap gap-1.5">{children}</div>
+      <div className="flex flex-nowrap gap-1.5">{children}</div>
     </div>
   );
 }
@@ -135,7 +135,7 @@ function Chip({
     <button
       onClick={onClick}
       className={cn(
-        "rounded-full px-3 py-1 text-xs font-bold capitalize transition-colors",
+        "shrink-0 whitespace-nowrap rounded-full px-3 py-1 text-xs font-bold capitalize transition-colors",
         active
           ? "bg-fg text-white"
           : "bg-chip text-fg-muted hover:bg-chip/70",
