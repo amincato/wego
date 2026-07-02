@@ -26,6 +26,7 @@ export async function updateSession(request: NextRequest) {
     pathname.startsWith("/profile") ||
     pathname.startsWith("/calendar") ||
     pathname.startsWith("/community") ||
+    pathname.startsWith("/mockup") ||
     pathname.startsWith("/_next") ||
     pathname.startsWith("/api") ||
     pathname.startsWith("/favicon") ||
