@@ -104,7 +104,7 @@ export function SidebarNav() {
               >
                 {item.icon}
               </span>
-              <span>{item.label}</span>
+              <span className="whitespace-nowrap">{item.label}</span>
               {active ? (
                 <span
                   className={cn(
