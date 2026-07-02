@@ -89,7 +89,16 @@ function MockupPageInner() {
         className="relative w-full max-w-[1600px]"
         style={{ aspectRatio: `${MOCKUP_W} / ${MOCKUP_H}` }}
       >
-        {/* Live dashboard, positioned exactly over the display area */}
+        {/* MacBook chassis PNG — sits at the back so its bezel + hinge
+            wrap the iframe on top */}
+        <img
+          src="/macbook-pro-14.png"
+          alt="MacBook Pro 14"
+          className="pointer-events-none absolute inset-0 h-full w-full select-none"
+          draggable={false}
+        />
+
+        {/* Live dashboard, layered ON TOP of the PNG's grey screen area */}
         <div
           ref={displayRef}
           className="absolute overflow-hidden bg-white"
@@ -121,15 +130,6 @@ function MockupPageInner() {
             />
           </div>
         </div>
-
-        {/* MacBook shell overlaid on top so its notch + bezel cover the
-            edges of the iframe */}
-        <img
-          src="/macbook-pro-14.png"
-          alt="MacBook Pro 14"
-          className="pointer-events-none absolute inset-0 h-full w-full select-none"
-          draggable={false}
-        />
       </div>
 
       <p className="mt-6 max-w-[560px] text-center text-[11px] leading-relaxed text-neutral-500">
