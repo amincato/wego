@@ -37,13 +37,13 @@ const DISPLAY = {
 };
 
 /** Natural desktop viewport we want the dashboard to render at.
- * We pick a viewport that gives the same *layout* as Hans' MacBook Pro
- * 16" (2019) at 1792×1120 — but slightly smaller in absolute pixels —
- * so text and cards read a hair larger when the iframe is scaled down
- * into the mockup display. Filter rows and other 1728px-safe layouts
- * still fit without wrapping. */
-const VIEWPORT_W = 1600;
-const VIEWPORT_H = 1000;
+ * 1792×1120 matches Hans' MacBook Pro 16" (2019) default "Looks like"
+ * resolution — layout inside the mockup is byte-identical to what he
+ * sees running the app full-screen on his real hardware. The
+ * readability boost comes from a *bigger mockup canvas* on the page,
+ * not from resizing the viewport (which would reflow the layout). */
+const VIEWPORT_W = 1792;
+const VIEWPORT_H = 1120;
 
 function MockupPageInner() {
   const params = useSearchParams();
