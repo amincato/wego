@@ -48,7 +48,21 @@ function MockupPageInner() {
   const src = params.get("src") ?? "/dashboard";
 
   const displayRef = useRef<HTMLDivElement>(null);
+  const iframeRef = useRef<HTMLIFrameElement>(null);
   const [scale, setScale] = useState(1);
+
+  // Reset the iframe's own scroll to top whenever it navigates
+  // internally, so a stale scroll offset (e.g. from a nested route
+  // change) never leaves the sticky sidebar released or the tabs
+  // pushed off-screen.
+  const handleIframeLoad = () => {
+    const iframe = iframeRef.current;
+    try {
+      iframe?.contentWindow?.scrollTo({ top: 0, left: 0, behavior: "auto" });
+    } catch {
+      /* same-origin only; ignore if a cross-origin nav ever slips in */
+    }
+  };
 
   useEffect(() => {
     const el = displayRef.current;
@@ -131,8 +145,10 @@ function MockupPageInner() {
             }}
           >
             <iframe
+              ref={iframeRef}
               src={src}
               title="Wego dashboard preview"
+              onLoad={handleIframeLoad}
               style={{
                 width: `${VIEWPORT_W}px`,
                 height: `${VIEWPORT_H}px`,

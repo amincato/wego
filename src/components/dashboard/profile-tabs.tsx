@@ -48,6 +48,12 @@ export function ProfileTabs({
       firstRender.current = false;
       return;
     }
+    // When embedded in an iframe (e.g. the /mockup preview), scrolling
+    // the iframe's own document past its viewport top makes the
+    // sticky sidebar release from its top-pin — the sidebar appears
+    // to disappear. Skip the auto-scroll in that context; the mockup
+    // always shows the tabs already in view anyway.
+    if (typeof window !== "undefined" && window.self !== window.top) return;
     requestAnimationFrame(() => {
       rootRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
     });
