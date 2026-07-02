@@ -40,18 +40,17 @@ export default function DestinationsPage() {
 
   return (
     <>
+      <Link
+        href="/partners"
+        aria-label="Back to partner schools"
+        className="mb-3 inline-flex size-9 items-center justify-center rounded-full bg-surface text-fg ring-1 ring-divider hover:bg-chip"
+      >
+        <ChevronLeft className="size-5" />
+      </Link>
+
       <PageHeader
         title="Destinations"
         subtitle="A geographical view of our partner schools across Europe."
-        action={
-          <Link
-            href="/partners"
-            className="inline-flex items-center gap-1 rounded-full bg-surface px-3 py-2 text-sm font-bold text-fg ring-1 ring-divider hover:bg-chip"
-          >
-            <ChevronLeft className="size-4" />
-            Back to partner schools
-          </Link>
-        }
       />
 
       <div className="grid gap-6 xl:grid-cols-[3fr_2fr]">
