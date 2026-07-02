@@ -110,6 +110,10 @@ function MockupPageInner() {
             top: `${displayTopPct}%`,
             width: `${displayWidthPct}%`,
             height: `${displayHeightPct}%`,
+            // Match the MacBook's screen curvature at the top; leave the
+            // bottom square so the iframe meets the flat bezel/hinge edge.
+            borderTopLeftRadius: "14px",
+            borderTopRightRadius: "14px",
           }}
         >
           <div
