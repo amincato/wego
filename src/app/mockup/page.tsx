@@ -20,28 +20,31 @@ export default function MockupPage() {
   );
 }
 
-/** Natural desktop viewport we want the dashboard to render at. */
-const VIEWPORT_W = 1440;
-const VIEWPORT_H = 934;
-
 /** Full mockup PNG dimensions. */
 const MOCKUP_W = 9728;
 const MOCKUP_H = 5876;
 
 /**
  * Display-area rectangle inside the mockup PNG (as fractions of the
- * full image). Measured from the source PNG.
- *   x1 ≈ 900 / 9728  → 0.0925
- *   x2 ≈ 8830 / 9728 → 0.9077
- *   y1 ≈  72 / 5876  → 0.0123
- *   y2 ≈ 5030 / 5876 → 0.8560
+ * full image). Measured from the source PNG with PIL by scanning for
+ * the uniform grey screen region off-center (to avoid the notch).
  */
 const DISPLAY = {
-  left: 0.0925,
-  top: 0.0123,
-  right: 0.9077,
-  bottom: 0.856,
+  left: 0.1024, // 996 / 9728
+  top: 0.0245, // 144 / 5876
+  right: 0.8975, // 8731 / 9728
+  bottom: 0.8793, // 5167 / 5876
 };
+
+/** Natural desktop viewport we want the dashboard to render at.
+ * The height is derived from the display area's aspect ratio (≈1.54,
+ * matching the MBP 14" native 3024×1964 panel) so the iframe fits the
+ * display slot perfectly with no overflow / letterboxing. */
+const VIEWPORT_W = 1440;
+const DISPLAY_ASPECT =
+  ((DISPLAY.right - DISPLAY.left) * MOCKUP_W) /
+  ((DISPLAY.bottom - DISPLAY.top) * MOCKUP_H);
+const VIEWPORT_H = Math.round(VIEWPORT_W / DISPLAY_ASPECT);
 
 function MockupPageInner() {
   const params = useSearchParams();
