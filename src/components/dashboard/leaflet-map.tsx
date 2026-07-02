@@ -12,6 +12,7 @@ import {
   useMap,
 } from "react-leaflet";
 import Link from "next/link";
+import { ArrowUpRight } from "lucide-react";
 import { School } from "@/lib/types";
 import {
   mySchoolCoordinates,
@@ -124,6 +125,15 @@ export function LeafletMap({
           margin: 12px 14px;
           font-family: inherit;
         }
+        /* Override Leaflet's default link color so the "School profile"
+         * pill reads as solid white text on blue instead of Leaflet's
+         * default underlined link tone. */
+        .wego-leaflet .leaflet-popup-content a.wego-popup-cta,
+        .wego-leaflet .leaflet-popup-content a.wego-popup-cta:hover,
+        .wego-leaflet .leaflet-popup-content a.wego-popup-cta:visited {
+          color: #ffffff !important;
+          text-decoration: none !important;
+        }
       `}</style>
       <MapContainer
         center={[49, 6]}
@@ -171,9 +181,10 @@ export function LeafletMap({
                   </div>
                   <Link
                     href={`/partners/${s.id}`}
-                    className="mt-4 inline-flex items-center rounded-full bg-student px-4 py-2 text-sm font-bold text-white hover:brightness-105"
+                    className="wego-popup-cta mt-4 inline-flex items-center gap-1.5 rounded-full bg-student px-4 py-2 text-sm font-bold text-white hover:brightness-105"
                   >
-                    Open profile
+                    School profile
+                    <ArrowUpRight className="size-3.5" strokeWidth={2.4} />
                   </Link>
                 </div>
               </Popup>
@@ -199,9 +210,10 @@ export function LeafletMap({
               </div>
               <Link
                 href="/my-school"
-                className="mt-4 inline-flex items-center rounded-full bg-student px-4 py-2 text-sm font-bold text-white hover:brightness-105"
+                className="wego-popup-cta mt-4 inline-flex items-center gap-1.5 rounded-full bg-student px-4 py-2 text-sm font-bold text-white hover:brightness-105"
               >
-                Open profile
+                School profile
+                <ArrowUpRight className="size-3.5" strokeWidth={2.4} />
               </Link>
             </div>
           </Popup>
