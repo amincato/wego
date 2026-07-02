@@ -37,17 +37,11 @@ const DISPLAY = {
 };
 
 /** Natural desktop viewport we want the dashboard to render at.
- * 1728px matches the MacBook Pro 14" native "More Space" resolution
- * (1728×1117) — the layout Hans sees when running the dashboard full-
- * screen on the actual hardware. Height is derived from the display
- * area's aspect ratio (≈1.54, matching the MBP 14" panel) so the
- * iframe fits the display slot perfectly with no overflow /
- * letterboxing. */
-const VIEWPORT_W = 1728;
-const DISPLAY_ASPECT =
-  ((DISPLAY.right - DISPLAY.left) * MOCKUP_W) /
-  ((DISPLAY.bottom - DISPLAY.top) * MOCKUP_H);
-const VIEWPORT_H = Math.round(VIEWPORT_W / DISPLAY_ASPECT);
+ * 1792×1120 matches Hans' MacBook Pro 16" (2019) default "Looks like"
+ * resolution — so the layout inside the mockup is byte-identical to
+ * what he sees running the app full-screen on his real hardware. */
+const VIEWPORT_W = 1792;
+const VIEWPORT_H = 1120;
 
 function MockupPageInner() {
   const params = useSearchParams();
@@ -60,7 +54,15 @@ function MockupPageInner() {
     const el = displayRef.current;
     if (!el) return;
     const update = () => {
-      setScale(el.clientWidth / VIEWPORT_W);
+      const w = el.clientWidth;
+      const h = el.clientHeight;
+      if (w === 0 || h === 0) return;
+      // "Fit" scale: iframe never overflows the display slot in either
+      // dimension. If the mockup display aspect (~1.54, MBP 14 PNG) is
+      // slightly narrower than the iframe viewport aspect (1.60, MBP 16
+      // full-screen), the iframe stays inside with a tiny letterbox at
+      // the bottom instead of spilling past the bezel.
+      setScale(Math.min(w / VIEWPORT_W, h / VIEWPORT_H));
     };
     update();
     const ro = new ResizeObserver(update);
@@ -107,7 +109,7 @@ function MockupPageInner() {
         {/* Live dashboard, layered ON TOP of the PNG's grey screen area */}
         <div
           ref={displayRef}
-          className="absolute overflow-hidden bg-white"
+          className="absolute flex items-start justify-center overflow-hidden bg-white"
           style={{
             left: `${displayLeftPct}%`,
             top: `${displayTopPct}%`,
@@ -124,7 +126,8 @@ function MockupPageInner() {
               width: `${VIEWPORT_W}px`,
               height: `${VIEWPORT_H}px`,
               transform: `scale(${scale})`,
-              transformOrigin: "top left",
+              transformOrigin: "top center",
+              flexShrink: 0,
             }}
           >
             <iframe
