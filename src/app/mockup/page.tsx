@@ -99,7 +99,7 @@ function MockupPageInner() {
     <div
       className="flex min-h-dvh w-full flex-col items-center justify-center p-6"
       style={{
-        background: "#e5e5e7",
+        background: "#547BE0",
         fontFamily:
           "ui-sans-serif, system-ui, -apple-system, 'SF Pro Display', 'Segoe UI', sans-serif",
       }}
