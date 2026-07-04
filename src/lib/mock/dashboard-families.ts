@@ -173,6 +173,13 @@ export const familyApplications: FamilyApplication[] = [
     state: "site_visit_scheduled",
     submittedAt: "2025-09-15T09:00:00.000Z",
   },
+  {
+    id: "famapp_bianchi_new",
+    familyId: "family_bianchi",
+    state: "new_request",
+    submittedAt: daysAgo(2),
+    notes: "Second application — Family Bianchi wants to host again next semester.",
+  },
 ];
 
 export const getDashboardHostFamily = (id: string) =>
